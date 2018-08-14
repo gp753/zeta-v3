@@ -12,43 +12,45 @@ namespace zeta_v3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PRODUCTO
+    public partial class USUARIO
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PRODUCTO()
+        public USUARIO()
         {
             this.CALIFICACION = new HashSet<CALIFICACION>();
-            this.CANTIDAD_PRODUCTO = new HashSet<CANTIDAD_PRODUCTO>();
-            this.FOTO_PRODUCTO = new HashSet<FOTO_PRODUCTO>();
+            this.CARRITO = new HashSet<CARRITO>();
+            this.DIRECION = new HashSet<DIRECION>();
+            this.GASTO = new HashSet<GASTO>();
             this.INGRESO_PRODUCTO = new HashSet<INGRESO_PRODUCTO>();
-            this.RECLAMO = new HashSet<RECLAMO>();
             this.LISTA_DESEOS = new HashSet<LISTA_DESEOS>();
-            this.CATEGORIA_PRODUCTO = new HashSet<CATEGORIA_PRODUCTO>();
+            this.RECLAMO = new HashSet<RECLAMO>();
+            this.ROL = new HashSet<ROL>();
         }
     
-        public decimal ID_PRODUCTO { get; set; }
-        public string NOMBRE_PRODUCTO { get; set; }
-        public string DESCRIPCION_LARGA { get; set; }
-        public string DESCRIPCION_CORTA { get; set; }
-        public Nullable<decimal> PRECIO_VENTA { get; set; }
-        public Nullable<decimal> PRECIO_OFERTA { get; set; }
-        public Nullable<bool> ESTADO_OFERTA { get; set; }
-        public Nullable<System.DateTime> FECHA_PUBLICACION { get; set; }
-        public Nullable<int> ESTADO_PUBLICACION { get; set; }
+        public decimal ID_USUARIO { get; set; }
+        public string NOMBRE { get; set; }
+        public string APELLIDO { get; set; }
+        public string NICK { get; set; }
+        public string PAGINA_WEB { get; set; }
+        public Nullable<int> ESTADO { get; set; }
+        public string EMAIL { get; set; }
+        public Nullable<System.DateTime> FECHA_INGRESO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CALIFICACION> CALIFICACION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CANTIDAD_PRODUCTO> CANTIDAD_PRODUCTO { get; set; }
+        public virtual ICollection<CARRITO> CARRITO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FOTO_PRODUCTO> FOTO_PRODUCTO { get; set; }
+        public virtual ICollection<DIRECION> DIRECION { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GASTO> GASTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<INGRESO_PRODUCTO> INGRESO_PRODUCTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RECLAMO> RECLAMO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LISTA_DESEOS> LISTA_DESEOS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CATEGORIA_PRODUCTO> CATEGORIA_PRODUCTO { get; set; }
+        public virtual ICollection<RECLAMO> RECLAMO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ROL> ROL { get; set; }
     }
 }

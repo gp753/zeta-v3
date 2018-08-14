@@ -12,18 +12,22 @@ namespace zeta_v3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class FOTO
+    public partial class PAGOS_DELIVERY
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public FOTO()
+        public PAGOS_DELIVERY()
         {
-            this.PRODUCTO = new HashSet<PRODUCTO>();
+            this.ESTADO_DELIVERY = new HashSet<ESTADO_DELIVERY>();
         }
     
-        public decimal ID_IMAGEN { get; set; }
-        public string LINK_IMAGEN { get; set; }
+        public decimal ID_PAGOS_DELIVERY { get; set; }
+        public decimal ID_ESTADO_DELIVERY { get; set; }
+        public Nullable<System.DateTime> FECHA_PAGO_DELIVERY { get; set; }
+        public Nullable<System.DateTime> HORA_PAGO_DELIVERY { get; set; }
+        public string FACTURA_PAGO_DELIVERY { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRODUCTO> PRODUCTO { get; set; }
+        public virtual ICollection<ESTADO_DELIVERY> ESTADO_DELIVERY { get; set; }
+        public virtual ESTADO_DELIVERY ESTADO_DELIVERY1 { get; set; }
     }
 }

@@ -10,47 +10,48 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using zeta_v3.Models;
+using Microsoft.AspNet.Identity;
 
 namespace zeta_v3.Controllers
 {
-    public class CATEGORIAsController : ApiController
+    public class USUARIOsController : ApiController
     {
-        private zeta_bdEntities db = new zeta_bdEntities();
+        private zeta_bdEntities1 db = new zeta_bdEntities1();
 
-        // GET: api/CATEGORIAs
-        public IQueryable<CATEGORIA> GetCATEGORIA()
+        // GET: api/USUARIOs
+        public IQueryable<USUARIO> GetUSUARIO()
         {
-            return db.CATEGORIA;
+            return db.USUARIO;
         }
 
-        // GET: api/CATEGORIAs/5
-        [ResponseType(typeof(CATEGORIA))]
-        public async Task<IHttpActionResult> GetCATEGORIA(decimal id)
+        // GET: api/USUARIOs/5
+        [ResponseType(typeof(USUARIO))]
+        public async Task<IHttpActionResult> GetUSUARIO(decimal id)
         {
-            CATEGORIA cATEGORIA = await db.CATEGORIA.FindAsync(id);
-            if (cATEGORIA == null)
+            USUARIO uSUARIO = await db.USUARIO.FindAsync(id);
+            if (uSUARIO == null)
             {
                 return NotFound();
             }
 
-            return Ok(cATEGORIA);
+            return Ok(uSUARIO);
         }
 
-        // PUT: api/CATEGORIAs/5
+        // PUT: api/USUARIOs/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCATEGORIA(decimal id, CATEGORIA cATEGORIA)
+        public async Task<IHttpActionResult> PutUSUARIO(decimal id, USUARIO uSUARIO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != cATEGORIA.ID_CATEGORIA)
+            if (id != uSUARIO.ID_USUARIO)
             {
                 return BadRequest();
             }
 
-            db.Entry(cATEGORIA).State = EntityState.Modified;
+            db.Entry(uSUARIO).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +59,7 @@ namespace zeta_v3.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CATEGORIAExists(id))
+                if (!USUARIOExists(id))
                 {
                     return NotFound();
                 }
@@ -71,35 +72,36 @@ namespace zeta_v3.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/CATEGORIAs
-        [ResponseType(typeof(CATEGORIA))]
-        public async Task<IHttpActionResult> PostCATEGORIA(CATEGORIA cATEGORIA)
+        // POST: api/USUARIOs
+        [ResponseType(typeof(USUARIO))]
+        public async Task<IHttpActionResult> PostUSUARIO(USUARIO uSUARIO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            db.CATEGORIA.Add(cATEGORIA);
+            uSUARIO.ESTADO = 1; // sin habilitar
+            uSUARIO.FECHA_INGRESO = DateTime.Now;
+            db.USUARIO.Add(uSUARIO);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = cATEGORIA.ID_CATEGORIA }, cATEGORIA);
+            return CreatedAtRoute("DefaultApi", new { id = uSUARIO.ID_USUARIO }, uSUARIO);
         }
 
-        // DELETE: api/CATEGORIAs/5
-        [ResponseType(typeof(CATEGORIA))]
-        public async Task<IHttpActionResult> DeleteCATEGORIA(decimal id)
+        // DELETE: api/USUARIOs/5
+        [ResponseType(typeof(USUARIO))]
+        public async Task<IHttpActionResult> DeleteUSUARIO(decimal id)
         {
-            CATEGORIA cATEGORIA = await db.CATEGORIA.FindAsync(id);
-            if (cATEGORIA == null)
+            USUARIO uSUARIO = await db.USUARIO.FindAsync(id);
+            if (uSUARIO == null)
             {
                 return NotFound();
             }
 
-            db.CATEGORIA.Remove(cATEGORIA);
+            db.USUARIO.Remove(uSUARIO);
             await db.SaveChangesAsync();
 
-            return Ok(cATEGORIA);
+            return Ok(uSUARIO);
         }
 
         protected override void Dispose(bool disposing)
@@ -111,9 +113,9 @@ namespace zeta_v3.Controllers
             base.Dispose(disposing);
         }
 
-        private bool CATEGORIAExists(decimal id)
+        private bool USUARIOExists(decimal id)
         {
-            return db.CATEGORIA.Count(e => e.ID_CATEGORIA == id) > 0;
+            return db.USUARIO.Count(e => e.ID_USUARIO == id) > 0;
         }
     }
 }
