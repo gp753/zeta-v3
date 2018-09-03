@@ -21,7 +21,7 @@ namespace zeta_v3.Models
         }
     
         public decimal ID_RECLAMO { get; set; }
-        public decimal ID_USUARIO { get; set; }
+        public string ID_USUARIO { get; set; }
         public decimal ID_PRODUCTO { get; set; }
         public string DESCRIPCION_RECLAMO { get; set; }
         public Nullable<System.DateTime> FECHA_RECLAMO { get; set; }

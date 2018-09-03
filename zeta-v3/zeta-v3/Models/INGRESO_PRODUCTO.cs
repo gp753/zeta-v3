@@ -16,7 +16,7 @@ namespace zeta_v3.Models
     {
         public decimal ID_INGRESO_PRODUCTO { get; set; }
         public decimal ID_PRODUCTO { get; set; }
-        public decimal ID_USUARIO { get; set; }
+        public string ID_USUARIO { get; set; }
         public Nullable<int> CANTIDAD_INGRESO_PRODUCTO { get; set; }
     
         public virtual PRODUCTO PRODUCTO { get; set; }

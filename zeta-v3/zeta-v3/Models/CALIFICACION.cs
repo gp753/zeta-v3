@@ -16,7 +16,7 @@ namespace zeta_v3.Models
     {
         public decimal ID_CALIFICACION { get; set; }
         public decimal ID_PRODUCTO { get; set; }
-        public decimal ID_USUARIO { get; set; }
+        public string ID_USUARIO { get; set; }
         public Nullable<int> PUNTUACION { get; set; }
         public string TITULO_CALIFICACION { get; set; }
         public string TEXTO_CALIFICACION { get; set; }

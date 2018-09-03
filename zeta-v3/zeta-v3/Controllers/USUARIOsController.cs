@@ -10,13 +10,12 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using zeta_v3.Models;
-using Microsoft.AspNet.Identity;
 
 namespace zeta_v3.Controllers
 {
     public class USUARIOsController : ApiController
     {
-        private zeta_bdEntities1 db = new zeta_bdEntities1();
+        private zeta_bdEntities2 db = new zeta_bdEntities2();
 
         // GET: api/USUARIOs
         public IQueryable<USUARIO> GetUSUARIO()
@@ -26,7 +25,7 @@ namespace zeta_v3.Controllers
 
         // GET: api/USUARIOs/5
         [ResponseType(typeof(USUARIO))]
-        public async Task<IHttpActionResult> GetUSUARIO(decimal id)
+        public async Task<IHttpActionResult> GetUSUARIO(string id)
         {
             USUARIO uSUARIO = await db.USUARIO.FindAsync(id);
             if (uSUARIO == null)
@@ -39,7 +38,7 @@ namespace zeta_v3.Controllers
 
         // PUT: api/USUARIOs/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutUSUARIO(decimal id, USUARIO uSUARIO)
+        public async Task<IHttpActionResult> PutUSUARIO(string id, USUARIO uSUARIO)
         {
             if (!ModelState.IsValid)
             {
@@ -80,17 +79,31 @@ namespace zeta_v3.Controllers
             {
                 return BadRequest(ModelState);
             }
-            uSUARIO.ESTADO = 1; // sin habilitar
-            uSUARIO.FECHA_INGRESO = DateTime.Now;
+
             db.USUARIO.Add(uSUARIO);
-            await db.SaveChangesAsync();
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (USUARIOExists(uSUARIO.ID_USUARIO))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = uSUARIO.ID_USUARIO }, uSUARIO);
         }
 
         // DELETE: api/USUARIOs/5
         [ResponseType(typeof(USUARIO))]
-        public async Task<IHttpActionResult> DeleteUSUARIO(decimal id)
+        public async Task<IHttpActionResult> DeleteUSUARIO(string id)
         {
             USUARIO uSUARIO = await db.USUARIO.FindAsync(id);
             if (uSUARIO == null)
@@ -113,7 +126,7 @@ namespace zeta_v3.Controllers
             base.Dispose(disposing);
         }
 
-        private bool USUARIOExists(decimal id)
+        private bool USUARIOExists(string id)
         {
             return db.USUARIO.Count(e => e.ID_USUARIO == id) > 0;
         }

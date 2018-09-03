@@ -11,7 +11,7 @@
           </Key>
           <Property Name="ID_CALIFICACION" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="ID_USUARIO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="PUNTUACION" Type="int" />
           <Property Name="TITULO_CALIFICACION" Type="varchar" MaxLength="50" />
           <Property Name="TEXTO_CALIFICACION" Type="varchar" MaxLength="150" />
@@ -49,7 +49,7 @@
           </Key>
           <Property Name="ID_CARRITO" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_CHECKOUT" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="ID_USUARIO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="FECHA_CREACION_CARRITO" Type="datetime" />
           <Property Name="TIPO_CARRITO" Type="int" />
         </EntityType>
@@ -95,7 +95,7 @@
           </Key>
           <Property Name="ID_DIRECCION" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_CIUDAD" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="ID_USUARIO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="CALLE_1" Type="varchar" MaxLength="150" />
           <Property Name="CALLE_2" Type="varchar" MaxLength="150" />
           <Property Name="REFERENCIA" Type="varchar" MaxLength="200" />
@@ -144,7 +144,7 @@
             <PropertyRef Name="ID_GASTO" />
           </Key>
           <Property Name="ID_GASTO" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ID_USUARIO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="DETALLE_GASTO" Type="varchar" MaxLength="200" />
           <Property Name="FECHA_GASTO" Type="datetime" />
           <Property Name="MONTO_GASTO" Type="money" />
@@ -155,7 +155,7 @@
           </Key>
           <Property Name="ID_INGRESO_PRODUCTO" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="ID_USUARIO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="CANTIDAD_INGRESO_PRODUCTO" Type="int" />
         </EntityType>
         <EntityType Name="LISTA_DESEOS">
@@ -163,7 +163,7 @@
             <PropertyRef Name="ID_LISTA_DESEOS" />
           </Key>
           <Property Name="ID_LISTA_DESEOS" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ID_USUARIO" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ID_USUARIO" Type="varchar" MaxLength="100" />
           <Property Name="NOMBRE_LISTA" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="LISTAXPRODUCTO">
@@ -232,7 +232,7 @@
             <PropertyRef Name="ID_RECLAMO" />
           </Key>
           <Property Name="ID_RECLAMO" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ID_USUARIO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="DESCRIPCION_RECLAMO" Type="varchar" MaxLength="500" />
           <Property Name="FECHA_RECLAMO" Type="datetime" />
@@ -251,13 +251,13 @@
             <PropertyRef Name="ID_USUARIO" />
           </Key>
           <Property Name="ID_ROL" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="ID_USUARIO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="USUARIO">
           <Key>
             <PropertyRef Name="ID_USUARIO" />
           </Key>
-          <Property Name="ID_USUARIO" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="NOMBRE" Type="varchar" MaxLength="100" />
           <Property Name="APELLIDO" Type="varchar" MaxLength="100" />
           <Property Name="NICK" Type="varchar" MaxLength="30" />
@@ -850,7 +850,7 @@
           </Key>
           <Property Name="ID_CALIFICACION" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="ID_USUARIO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PUNTUACION" Type="Int32" />
           <Property Name="TITULO_CALIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TEXTO_CALIFICACION" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
@@ -896,7 +896,7 @@
           </Key>
           <Property Name="ID_CARRITO" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_CHECKOUT" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ID_USUARIO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FECHA_CREACION_CARRITO" Type="DateTime" Precision="3" />
           <Property Name="TIPO_CARRITO" Type="Int32" />
           <NavigationProperty Name="CANTIDAD_PRODUCTO" Relationship="Self.FK_CANTIDAD_CARRITO_C_CARRITO" FromRole="CARRITO" ToRole="CANTIDAD_PRODUCTO" />
@@ -958,7 +958,7 @@
           </Key>
           <Property Name="ID_DIRECCION" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_CIUDAD" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="ID_USUARIO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CALLE_1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="CALLE_2" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="REFERENCIA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
@@ -1015,7 +1015,7 @@
             <PropertyRef Name="ID_GASTO" />
           </Key>
           <Property Name="ID_GASTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ID_USUARIO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DETALLE_GASTO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="FECHA_GASTO" Type="DateTime" Precision="3" />
           <Property Name="MONTO_GASTO" Type="Decimal" Precision="19" Scale="4" />
@@ -1027,7 +1027,7 @@
           </Key>
           <Property Name="ID_INGRESO_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="ID_USUARIO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CANTIDAD_INGRESO_PRODUCTO" Type="Int32" />
           <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_INGRESO__INGRESOXP_PRODUCTO" FromRole="INGRESO_PRODUCTO" ToRole="PRODUCTO" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_INGRESO__USUARIOXI_USUARIO" FromRole="INGRESO_PRODUCTO" ToRole="USUARIO" />
@@ -1037,7 +1037,7 @@
             <PropertyRef Name="ID_LISTA_DESEOS" />
           </Key>
           <Property Name="ID_LISTA_DESEOS" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ID_USUARIO" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ID_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="NOMBRE_LISTA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_LISTA_DE_USUARIOXL_USUARIO" FromRole="LISTA_DESEOS" ToRole="USUARIO" />
           <NavigationProperty Name="PRODUCTO" Relationship="Self.LISTAXPRODUCTO" FromRole="LISTA_DESEOS" ToRole="PRODUCTO" />
@@ -1105,7 +1105,7 @@
             <PropertyRef Name="ID_RECLAMO" />
           </Key>
           <Property Name="ID_RECLAMO" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ID_USUARIO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="DESCRIPCION_RECLAMO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="FECHA_RECLAMO" Type="DateTime" Precision="3" />
@@ -1126,7 +1126,7 @@
           <Key>
             <PropertyRef Name="ID_USUARIO" />
           </Key>
-          <Property Name="ID_USUARIO" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NOMBRE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="APELLIDO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="NICK" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
@@ -1491,7 +1491,7 @@
           <End Role="ROL" Type="Self.ROL" Multiplicity="*" />
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="zeta_bdEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="zeta_bdEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CALIFICACION" EntityType="Self.CALIFICACION" />
           <EntitySet Name="CANCELACION" EntityType="Self.CANCELACION" />
           <EntitySet Name="CANTIDAD_PRODUCTO" EntityType="Self.CANTIDAD_PRODUCTO" />
@@ -1646,7 +1646,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="zeta_bdModelStoreContainer" CdmEntityContainer="zeta_bdEntities1">
+        <EntityContainerMapping StorageEntityContainer="zeta_bdModelStoreContainer" CdmEntityContainer="zeta_bdEntities2">
           <EntitySetMapping Name="CALIFICACION">
             <EntityTypeMapping TypeName="zeta_bdModel.CALIFICACION">
               <MappingFragment StoreEntitySet="CALIFICACION">

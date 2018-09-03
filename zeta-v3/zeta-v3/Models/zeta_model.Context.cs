@@ -13,10 +13,10 @@ namespace zeta_v3.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class zeta_bdEntities1 : DbContext
+    public partial class zeta_bdEntities2 : DbContext
     {
-        public zeta_bdEntities1()
-            : base("name=zeta_bdEntities1")
+        public zeta_bdEntities2()
+            : base("name=zeta_bdEntities2")
         {
         }
     

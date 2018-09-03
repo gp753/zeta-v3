@@ -23,7 +23,7 @@ namespace zeta_v3.Models
     
         public decimal ID_CARRITO { get; set; }
         public Nullable<decimal> ID_CHECKOUT { get; set; }
-        public decimal ID_USUARIO { get; set; }
+        public string ID_USUARIO { get; set; }
         public Nullable<System.DateTime> FECHA_CREACION_CARRITO { get; set; }
         public Nullable<int> TIPO_CARRITO { get; set; }
     

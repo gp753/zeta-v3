@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1ad1a72cdf3f413ba9ffc273eb653795" Name="Diagram1">
+      <Diagram DiagramId="5e9aa5892882446fa5c331ab17c13e4c" Name="Diagram1">
         <EntityTypeShape EntityType="zeta_bdModel.CALIFICACION" Width="1.5" PointX="5.25" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="zeta_bdModel.CANCELACION" Width="1.5" PointX="12.75" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="zeta_bdModel.CANTIDAD_PRODUCTO" Width="1.5" PointX="10.5" PointY="22.875" IsExpanded="true" />

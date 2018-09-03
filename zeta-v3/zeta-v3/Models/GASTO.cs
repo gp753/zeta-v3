@@ -15,7 +15,7 @@ namespace zeta_v3.Models
     public partial class GASTO
     {
         public decimal ID_GASTO { get; set; }
-        public decimal ID_USUARIO { get; set; }
+        public string ID_USUARIO { get; set; }
         public string DETALLE_GASTO { get; set; }
         public Nullable<System.DateTime> FECHA_GASTO { get; set; }
         public Nullable<decimal> MONTO_GASTO { get; set; }

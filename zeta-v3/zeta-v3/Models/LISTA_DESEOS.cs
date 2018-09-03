@@ -21,7 +21,7 @@ namespace zeta_v3.Models
         }
     
         public decimal ID_LISTA_DESEOS { get; set; }
-        public Nullable<decimal> ID_USUARIO { get; set; }
+        public string ID_USUARIO { get; set; }
         public string NOMBRE_LISTA { get; set; }
     
         public virtual USUARIO USUARIO { get; set; }

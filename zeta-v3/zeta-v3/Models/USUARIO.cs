@@ -27,7 +27,7 @@ namespace zeta_v3.Models
             this.ROL = new HashSet<ROL>();
         }
     
-        public decimal ID_USUARIO { get; set; }
+        public string ID_USUARIO { get; set; }
         public string NOMBRE { get; set; }
         public string APELLIDO { get; set; }
         public string NICK { get; set; }

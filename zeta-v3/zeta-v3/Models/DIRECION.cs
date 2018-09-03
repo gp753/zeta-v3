@@ -16,7 +16,7 @@ namespace zeta_v3.Models
     {
         public decimal ID_DIRECCION { get; set; }
         public decimal ID_CIUDAD { get; set; }
-        public decimal ID_USUARIO { get; set; }
+        public string ID_USUARIO { get; set; }
         public string CALLE_1 { get; set; }
         public string CALLE_2 { get; set; }
         public string REFERENCIA { get; set; }
