@@ -25,6 +25,7 @@ namespace zeta_v3.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+   
 
         public AccountController()
         {
@@ -329,7 +330,9 @@ namespace zeta_v3.Controllers
             }
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            
 
+            
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)

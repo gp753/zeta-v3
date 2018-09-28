@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -72,6 +73,7 @@ namespace zeta_v3.Controllers
         }
 
         // POST: api/USUARIOs
+        [Authorize]
         [ResponseType(typeof(USUARIO))]
         public async Task<IHttpActionResult> PostUSUARIO(USUARIO uSUARIO)
         {
@@ -79,6 +81,9 @@ namespace zeta_v3.Controllers
             {
                 return BadRequest(ModelState);
             }
+            string id_usr = User.Identity.GetUserId();
+
+            uSUARIO.ID_USUARIO = id_usr;
 
             db.USUARIO.Add(uSUARIO);
 
