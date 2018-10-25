@@ -18,7 +18,7 @@ namespace zeta_v3.Controllers
     {
         private const string V = "Creado con exito";
         private zeta_bdEntities2 db = new zeta_bdEntities2();
-
+        /*
         // GET: api/PRODUCTOs
         public IQueryable<PRODUCTO> GetPRODUCTO()
         {
@@ -36,6 +36,18 @@ namespace zeta_v3.Controllers
             }
 
             return Ok(pRODUCTO);
+        }
+        */
+
+        [Route ("api/productos_usuario")]
+        [Authorize]
+        public async Task<IHttpActionResult> GetPRODUCTO()
+        {
+            string id_usr = User.Identity.GetUserId();
+            var product = (from p in db.INGRESO_PRODUCTO
+                           where p.ID_USUARIO == id_usr
+                           select p);
+            return Ok(product);
         }
 
         // PUT: api/PRODUCTOs/5
@@ -100,6 +112,7 @@ namespace zeta_v3.Controllers
 
             //return CreatedAtRoute("DefaultApi", new { id = pRODUCTO.ID_PRODUCTO }, pRODUCTO);
             return Ok(pRODUCTO.ID_PRODUCTO);
+            //preguntarle a marco que quiere que le retorne aca
         }
 
 
