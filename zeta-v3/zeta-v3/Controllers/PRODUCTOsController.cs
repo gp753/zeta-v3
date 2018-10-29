@@ -38,15 +38,16 @@ namespace zeta_v3.Controllers
             return Ok(pRODUCTO);
         }
         */
-
+        //productos que pertenecen al usuario (para vender)
         [Route ("api/productos_usuario")]
         [Authorize]
         public async Task<IHttpActionResult> GetPRODUCTO()
         {
             string id_usr = User.Identity.GetUserId();
             var product = (from p in db.INGRESO_PRODUCTO
+                           join a in db.PRODUCTO on p.ID_PRODUCTO equals a.ID_PRODUCTO
                            where p.ID_USUARIO == id_usr
-                           select p);
+                           select a);
             return Ok(product);
         }
 
