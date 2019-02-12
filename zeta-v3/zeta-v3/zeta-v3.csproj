@@ -243,7 +243,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PRODUCTOsController.cs" />
-    <Compile Include="Controllers\USUARIOsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -251,92 +250,107 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CALIFICACION.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CANCELACION.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CANTIDAD_PRODUCTO.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CARACTERISTICAS.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CARRITO.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CATEGORIA_PRODUCTO.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CHECKOUT.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CIUDAD.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\COLOR.cs">
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DEPARTAMENTO.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DIRECION.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ESTADO_CANCELACION.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ESTADO_DELIVERY.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ESTADO_RECLAMO.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FACTURA_VENTA.cs">
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FOTO_PRODUCTO.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GASTO.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\INGRESO_PRODUCTO.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LISTA_DESEOS.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PAGOS_BANCARD.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PAGOS_DELIVERY.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PRODUCTO.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PRODUCTO_FACTURA.cs">
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RECIBO_BANCARD.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RECLAMO.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ROL.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TAMANO.cs">
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USUARIO.cs">
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\zeta_model.Context.cs">
+    <Compile Include="Models\VISITA_PRODUCTO.cs">
+      <DependentUpon>zetaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\zetaModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>zeta_model.Context.tt</DependentUpon>
+      <DependentUpon>zetaModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\zeta_model.cs">
+    <Compile Include="Models\zetaModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>zeta_model.tt</DependentUpon>
+      <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\zeta_model.Designer.cs">
+    <Compile Include="Models\zetaModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>zeta_model.edmx</DependentUpon>
+      <DependentUpon>zetaModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -352,15 +366,15 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\zeta_model.Context.tt">
+    <Content Include="Models\zetaModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>zeta_model.edmx</DependentUpon>
-      <LastGenOutput>zeta_model.Context.cs</LastGenOutput>
+      <DependentUpon>zetaModel.edmx</DependentUpon>
+      <LastGenOutput>zetaModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\zeta_model.tt">
+    <Content Include="Models\zetaModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>zeta_model.edmx</DependentUpon>
-      <LastGenOutput>zeta_model.cs</LastGenOutput>
+      <DependentUpon>zetaModel.edmx</DependentUpon>
+      <LastGenOutput>zetaModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -386,12 +400,12 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\zeta_model.edmx">
+    <EntityDeploy Include="Models\zetaModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>zeta_model.Designer.cs</LastGenOutput>
+      <LastGenOutput>zetaModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\zeta_model.edmx.diagram">
-      <DependentUpon>zeta_model.edmx</DependentUpon>
+    <Content Include="Models\zetaModel.edmx.diagram">
+      <DependentUpon>zetaModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />

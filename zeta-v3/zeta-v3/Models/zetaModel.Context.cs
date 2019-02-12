@@ -13,10 +13,10 @@ namespace zeta_v3.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class zeta_bdEntities2 : DbContext
+    public partial class zeta_bdEntities3 : DbContext
     {
-        public zeta_bdEntities2()
-            : base("name=zeta_bdEntities2")
+        public zeta_bdEntities3()
+            : base("name=zeta_bdEntities3")
         {
         }
     
@@ -33,11 +33,13 @@ namespace zeta_v3.Models
         public virtual DbSet<CATEGORIA_PRODUCTO> CATEGORIA_PRODUCTO { get; set; }
         public virtual DbSet<CHECKOUT> CHECKOUT { get; set; }
         public virtual DbSet<CIUDAD> CIUDAD { get; set; }
+        public virtual DbSet<COLOR> COLOR { get; set; }
         public virtual DbSet<DEPARTAMENTO> DEPARTAMENTO { get; set; }
         public virtual DbSet<DIRECION> DIRECION { get; set; }
         public virtual DbSet<ESTADO_CANCELACION> ESTADO_CANCELACION { get; set; }
         public virtual DbSet<ESTADO_DELIVERY> ESTADO_DELIVERY { get; set; }
         public virtual DbSet<ESTADO_RECLAMO> ESTADO_RECLAMO { get; set; }
+        public virtual DbSet<FACTURA_VENTA> FACTURA_VENTA { get; set; }
         public virtual DbSet<FOTO_PRODUCTO> FOTO_PRODUCTO { get; set; }
         public virtual DbSet<GASTO> GASTO { get; set; }
         public virtual DbSet<INGRESO_PRODUCTO> INGRESO_PRODUCTO { get; set; }
@@ -45,9 +47,12 @@ namespace zeta_v3.Models
         public virtual DbSet<PAGOS_BANCARD> PAGOS_BANCARD { get; set; }
         public virtual DbSet<PAGOS_DELIVERY> PAGOS_DELIVERY { get; set; }
         public virtual DbSet<PRODUCTO> PRODUCTO { get; set; }
+        public virtual DbSet<PRODUCTO_FACTURA> PRODUCTO_FACTURA { get; set; }
         public virtual DbSet<RECIBO_BANCARD> RECIBO_BANCARD { get; set; }
         public virtual DbSet<RECLAMO> RECLAMO { get; set; }
         public virtual DbSet<ROL> ROL { get; set; }
+        public virtual DbSet<TAMANO> TAMANO { get; set; }
         public virtual DbSet<USUARIO> USUARIO { get; set; }
+        public virtual DbSet<VISITA_PRODUCTO> VISITA_PRODUCTO { get; set; }
     }
 }

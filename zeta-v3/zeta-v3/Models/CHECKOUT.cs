@@ -19,6 +19,7 @@ namespace zeta_v3.Models
         {
             this.CANCELACION = new HashSet<CANCELACION>();
             this.CARRITO = new HashSet<CARRITO>();
+            this.FACTURA_VENTA1 = new HashSet<FACTURA_VENTA>();
             this.RECIBO_BANCARD1 = new HashSet<RECIBO_BANCARD>();
         }
     
@@ -26,6 +27,7 @@ namespace zeta_v3.Models
         public decimal ID_CARRITO { get; set; }
         public Nullable<decimal> ID_RECIBO_BANCARD { get; set; }
         public Nullable<decimal> ID_CANCELACION { get; set; }
+        public Nullable<decimal> ID_FACTURA { get; set; }
         public Nullable<decimal> ID_ESTADO_DELIVERY { get; set; }
         public Nullable<System.DateTime> FECHA_CHECKOUT { get; set; }
         public Nullable<System.DateTime> HORA_CHECKOUT { get; set; }
@@ -38,6 +40,9 @@ namespace zeta_v3.Models
         public virtual CARRITO CARRITO1 { get; set; }
         public virtual RECIBO_BANCARD RECIBO_BANCARD { get; set; }
         public virtual ESTADO_DELIVERY ESTADO_DELIVERY { get; set; }
+        public virtual FACTURA_VENTA FACTURA_VENTA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FACTURA_VENTA> FACTURA_VENTA1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RECIBO_BANCARD> RECIBO_BANCARD1 { get; set; }
     }

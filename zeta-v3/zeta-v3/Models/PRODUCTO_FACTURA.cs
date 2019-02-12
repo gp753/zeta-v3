@@ -12,14 +12,15 @@ namespace zeta_v3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CANTIDAD_PRODUCTO
+    public partial class PRODUCTO_FACTURA
     {
-        public decimal ID_CANTIDAD_PRODUCTO { get; set; }
+        public decimal ID_PRODUCTO_FACTURA { get; set; }
+        public decimal ID_FACTURA { get; set; }
         public decimal ID_PRODUCTO { get; set; }
-        public decimal ID_CARRITO { get; set; }
-        public Nullable<int> CANTIDAD_PRODUCTO_CARRITO { get; set; }
+        public Nullable<decimal> PRECIO_PRODUCTO_FACTURA { get; set; }
+        public Nullable<int> CANTIDAD_PRODUCTO_FACTURADO { get; set; }
     
+        public virtual FACTURA_VENTA FACTURA_VENTA { get; set; }
         public virtual PRODUCTO PRODUCTO { get; set; }
-        public virtual CARRITO CARRITO { get; set; }
     }
 }

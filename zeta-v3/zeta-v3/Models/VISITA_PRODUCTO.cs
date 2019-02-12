@@ -12,14 +12,20 @@ namespace zeta_v3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CANTIDAD_PRODUCTO
+    public partial class VISITA_PRODUCTO
     {
-        public decimal ID_CANTIDAD_PRODUCTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public VISITA_PRODUCTO()
+        {
+            this.USUARIO = new HashSet<USUARIO>();
+        }
+    
+        public decimal ID_VISITA { get; set; }
         public decimal ID_PRODUCTO { get; set; }
-        public decimal ID_CARRITO { get; set; }
-        public Nullable<int> CANTIDAD_PRODUCTO_CARRITO { get; set; }
+        public Nullable<System.DateTime> FECHA_VISITA { get; set; }
     
         public virtual PRODUCTO PRODUCTO { get; set; }
-        public virtual CARRITO CARRITO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<USUARIO> USUARIO { get; set; }
     }
 }

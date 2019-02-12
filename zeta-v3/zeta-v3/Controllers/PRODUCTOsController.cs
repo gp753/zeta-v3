@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -11,14 +10,16 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using zeta_v3.Models;
+using System.Web.Http.Cors;
 
 namespace zeta_v3.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class PRODUCTOsController : ApiController
     {
-        private const string V = "Creado con exito";
-        private zeta_bdEntities2 db = new zeta_bdEntities2();
-        /*
+        
+        private zeta_bdEntities3 db = new zeta_bdEntities3();
+
         // GET: api/PRODUCTOs
         public IQueryable<PRODUCTO> GetPRODUCTO()
         {
@@ -37,18 +38,54 @@ namespace zeta_v3.Controllers
 
             return Ok(pRODUCTO);
         }
-        */
-        //productos que pertenecen al usuario (para vender)
-        [Route ("api/productos_usuario")]
-        [Authorize]
-        public async Task<IHttpActionResult> GetPRODUCTO()
+
+        [Route("api/publicacion/baner")]
+        [HttpGet]
+        public async Task<IHttpActionResult> baner()
         {
-            string id_usr = User.Identity.GetUserId();
-            var product = (from p in db.INGRESO_PRODUCTO
-                           join a in db.PRODUCTO on p.ID_PRODUCTO equals a.ID_PRODUCTO
-                           where p.ID_USUARIO == id_usr
-                           select a);
-            return Ok(product);
+            
+            var link = "https://about.canva.com/wp-content/uploads/sites/3/2017/02/congratulations_-banner.png";
+            return Ok(new { link });
+        }
+        [Route("api/carritos/page")]
+        [HttpGet]
+        public async Task<IHttpActionResult> carrito_page()
+        {
+            
+            var banr = 350000;
+            return Ok(banr);
+        }
+        [Route ("api/productos/nuevos") ]
+        [HttpGet]
+        public async Task<IHttpActionResult> productos_nuevos()
+        {
+            var products = from PRODUCTO in db.PRODUCTO
+                           join FOTO_PRODUCTO in db.FOTO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals FOTO_PRODUCTO.ID_PRODUCTO
+                           select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA,  FOTO_PRODUCTO.LINK_FOTO };
+
+            return Ok(products);
+        }
+
+        [Route("api/productos/publicitados")]
+        [HttpGet]
+        public async Task<IHttpActionResult> productos_publicitados()
+        {
+            var products = from PRODUCTO in db.PRODUCTO
+                           join FOTO_PRODUCTO in db.FOTO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals FOTO_PRODUCTO.ID_PRODUCTO
+                           select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, FOTO_PRODUCTO.LINK_FOTO };
+
+            return Ok(products);
+        }
+
+        [Route("api/productos/populares")]
+        [HttpGet]
+        public async Task<IHttpActionResult> productos_populares()
+        {
+            var products = from PRODUCTO in db.PRODUCTO
+                           join FOTO_PRODUCTO in db.FOTO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals FOTO_PRODUCTO.ID_PRODUCTO
+                           select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, FOTO_PRODUCTO.LINK_FOTO };
+
+            return Ok(products);
         }
 
         // PUT: api/PRODUCTOs/5
@@ -87,14 +124,9 @@ namespace zeta_v3.Controllers
         }
 
         // POST: api/PRODUCTOs
-        [Authorize]
         [ResponseType(typeof(PRODUCTO))]
         public async Task<IHttpActionResult> PostPRODUCTO(PRODUCTO pRODUCTO)
         {
-            string id_usr = User.Identity.GetUserId();
-
-            USUARIO usr = db.USUARIO.Find(id_usr);
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -102,20 +134,9 @@ namespace zeta_v3.Controllers
 
             db.PRODUCTO.Add(pRODUCTO);
             await db.SaveChangesAsync();
-            INGRESO_PRODUCTO productoxusuario = new INGRESO_PRODUCTO();
-            productoxusuario.ID_PRODUCTO = pRODUCTO.ID_PRODUCTO;
-            productoxusuario.ID_USUARIO = id_usr;
-            productoxusuario.CANTIDAD_INGRESO_PRODUCTO = 0;
 
-            db.INGRESO_PRODUCTO.Add(productoxusuario);
-            await db.SaveChangesAsync();
-
-
-            //return CreatedAtRoute("DefaultApi", new { id = pRODUCTO.ID_PRODUCTO }, pRODUCTO);
-            return Ok(pRODUCTO.ID_PRODUCTO);
-            //preguntarle a marco que quiere que le retorne aca
+            return CreatedAtRoute("DefaultApi", new { id = pRODUCTO.ID_PRODUCTO }, pRODUCTO);
         }
-
 
         // DELETE: api/PRODUCTOs/5
         [ResponseType(typeof(PRODUCTO))]
