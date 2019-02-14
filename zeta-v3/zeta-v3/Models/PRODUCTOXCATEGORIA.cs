@@ -12,18 +12,13 @@ namespace zeta_v3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class INGRESO_PRODUCTO
+    public partial class PRODUCTOXCATEGORIA
     {
-        public decimal ID_INGRESO_PRODUCTO { get; set; }
-        public decimal ID_PRODUCTO { get; set; }
-        public string ID_USUARIO { get; set; }
-        public Nullable<decimal> ID_COLOR { get; set; }
-        public Nullable<decimal> ID_TAMANO { get; set; }
-        public Nullable<int> CANTIDAD_INGRESO_PRODUCTO { get; set; }
+        public decimal ID_PRODUCTOXCATEGORIA { get; set; }
+        public Nullable<decimal> ID_PRODUCTO { get; set; }
+        public Nullable<decimal> ID_CATEGORIA { get; set; }
     
-        public virtual COLOR COLOR { get; set; }
+        public virtual CATEGORIA_PRODUCTO CATEGORIA_PRODUCTO { get; set; }
         public virtual PRODUCTO PRODUCTO { get; set; }
-        public virtual USUARIO USUARIO { get; set; }
-        public virtual TAMANO TAMANO { get; set; }
     }
 }

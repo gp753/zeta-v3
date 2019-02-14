@@ -38,9 +38,9 @@ namespace zeta_v3.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARRITO> CARRITO { get; set; }
         public virtual CARRITO CARRITO1 { get; set; }
-        public virtual RECIBO_BANCARD RECIBO_BANCARD { get; set; }
         public virtual ESTADO_DELIVERY ESTADO_DELIVERY { get; set; }
         public virtual FACTURA_VENTA FACTURA_VENTA { get; set; }
+        public virtual RECIBO_BANCARD RECIBO_BANCARD { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FACTURA_VENTA> FACTURA_VENTA1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

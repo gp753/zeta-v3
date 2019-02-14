@@ -12,14 +12,13 @@ namespace zeta_v3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CANTIDAD_PRODUCTO
+    public partial class AspNetUserClaims
     {
-        public decimal ID_CANTIDAD_PRODUCTO { get; set; }
-        public decimal ID_PRODUCTO { get; set; }
-        public decimal ID_CARRITO { get; set; }
-        public Nullable<int> CANTIDAD_PRODUCTO_CARRITO { get; set; }
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string ClaimType { get; set; }
+        public string ClaimValue { get; set; }
     
-        public virtual CARRITO CARRITO { get; set; }
-        public virtual PRODUCTO PRODUCTO { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

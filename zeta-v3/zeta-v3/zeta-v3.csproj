@@ -249,6 +249,21 @@
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetRoles.cs">
+      <DependentUpon>zetaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserClaims.cs">
+      <DependentUpon>zetaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserLogins.cs">
+      <DependentUpon>zetaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUsers.cs">
+      <DependentUpon>zetaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BUSQUEDA.cs">
+      <DependentUpon>zetaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CALIFICACION.cs">
       <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
@@ -274,6 +289,9 @@
       <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\COLOR.cs">
+      <DependentUpon>zetaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DEPARTAMENTO.cs">
@@ -307,6 +325,9 @@
     <Compile Include="Models\LISTA_DESEOS.cs">
       <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LOG.cs">
+      <DependentUpon>zetaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PAGOS_BANCARD.cs">
       <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
@@ -314,6 +335,9 @@
       <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PRODUCTO.cs">
+      <DependentUpon>zetaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PRODUCTOXCATEGORIA.cs">
       <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PRODUCTO_FACTURA.cs">

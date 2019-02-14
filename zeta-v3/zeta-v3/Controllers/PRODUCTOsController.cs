@@ -18,7 +18,7 @@ namespace zeta_v3.Controllers
     public class PRODUCTOsController : ApiController
     {
         
-        private zeta_bdEntities3 db = new zeta_bdEntities3();
+        private zeta_bdEntities5 db = new zeta_bdEntities5();
 
         // GET: api/PRODUCTOs
         public IQueryable<PRODUCTO> GetPRODUCTO()

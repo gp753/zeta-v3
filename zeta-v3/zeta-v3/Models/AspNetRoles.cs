@@ -12,21 +12,18 @@ namespace zeta_v3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class COLOR
+    public partial class AspNetRoles
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public COLOR()
+        public AspNetRoles()
         {
-            this.INGRESO_PRODUCTO = new HashSet<INGRESO_PRODUCTO>();
+            this.AspNetUsers = new HashSet<AspNetUsers>();
         }
     
-        public decimal ID_COLOR { get; set; }
-        public decimal ID_PRODUCTO { get; set; }
-        public string NOMBRE_COLOR { get; set; }
-        public string LINK_FOTO_COLOR { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
     
-        public virtual PRODUCTO PRODUCTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<INGRESO_PRODUCTO> INGRESO_PRODUCTO { get; set; }
+        public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
     }
 }

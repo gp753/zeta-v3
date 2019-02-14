@@ -5,6 +5,75 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="zeta_bdModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BUSQUEDA">
+          <Key>
+            <PropertyRef Name="ID_BUSQUEDA" />
+          </Key>
+          <Property Name="ID_BUSQUEDA" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="varchar" MaxLength="100" />
+          <Property Name="TEXTO_BUSQUEDA" Type="varchar" MaxLength="150" />
+        </EntityType>
         <EntityType Name="CALIFICACION">
           <Key>
             <PropertyRef Name="ID_CALIFICACION" />
@@ -90,6 +159,7 @@
           <Property Name="ID_COLOR" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="NOMBRE_COLOR" Type="varchar" MaxLength="30" />
+          <Property Name="LINK_FOTO_COLOR" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="DEPARTAMENTO">
           <Key>
@@ -194,6 +264,14 @@
           <Property Name="ID_LISTA_DESEOS" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
+        <EntityType Name="LOG">
+          <Key>
+            <PropertyRef Name="ID_LOG" />
+          </Key>
+          <Property Name="ID_LOG" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="varchar" MaxLength="100" />
+          <Property Name="ACCION_LOG" Type="varchar" MaxLength="200" />
+        </EntityType>
         <EntityType Name="PAGOS_BANCARD">
           <Key>
             <PropertyRef Name="ID_PAGO_BANCARD" />
@@ -239,11 +317,11 @@
         </EntityType>
         <EntityType Name="PRODUCTOXCATEGORIA">
           <Key>
-            <PropertyRef Name="ID_CATEGORIA" />
-            <PropertyRef Name="ID_PRODUCTO" />
+            <PropertyRef Name="ID_PRODUCTOXCATEGORIA" />
           </Key>
-          <Property Name="ID_CATEGORIA" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_PRODUCTOXCATEGORIA" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ID_CATEGORIA" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="RECIBO_BANCARD">
           <Key>
@@ -320,7 +398,19 @@
           <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="FECHA_VISITA" Type="datetime" />
         </EntityType>
-        <Association Name="FK_CALIFICA_PRODUCTOX_PRODUCTO">
+        <Association Name="FK_BUSQUEDA_USUARIOXB_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="BUSQUEDA" Type="Self.BUSQUEDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID_USUARIO" />
+            </Principal>
+            <Dependent Role="BUSQUEDA">
+              <PropertyRef Name="ID_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CALIFICA_FK_CALIFI_PRODUCTO">
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="CALIFICACION" Type="Self.CALIFICACION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -332,7 +422,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CALIFICA_USUARIOXC_USUARIO">
+        <Association Name="FK_CALIFICA_FK_CALIFI_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="CALIFICACION" Type="Self.CALIFICACION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -344,7 +434,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CANCELAC_CHECKOUTX_CHECKOUT">
+        <Association Name="FK_CANCELAC_FK_CANCEL_CHECKOUT">
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="1" />
           <End Role="CANCELACION" Type="Self.CANCELACION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -356,7 +446,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CANTIDAD_CANTIDADX_PRODUCTO">
+        <Association Name="FK_CANTIDAD_FK_CANTID_CARRITO">
+          <End Role="CARRITO" Type="Self.CARRITO" Multiplicity="1" />
+          <End Role="CANTIDAD_PRODUCTO" Type="Self.CANTIDAD_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARRITO">
+              <PropertyRef Name="ID_CARRITO" />
+            </Principal>
+            <Dependent Role="CANTIDAD_PRODUCTO">
+              <PropertyRef Name="ID_CARRITO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CANTIDAD_FK_CANTID_PRODUCTO">
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="CANTIDAD_PRODUCTO" Type="Self.CANTIDAD_PRODUCTO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -368,19 +470,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CANTIDAD_CARRITO_C_CARRITO">
-          <End Role="CARRITO" Type="Self.CARRITO" Multiplicity="1" />
-          <End Role="CANTIDAD_PRODUCTO" Type="Self.CANTIDAD_PRODUCTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CARRITO">
-              <PropertyRef Name="ID_CARRITO" />
-            </Principal>
-            <Dependent Role="CANTIDAD_PRODUCTO">
-              <PropertyRef Name="ID_CARRITO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CARACTER_CARACTERI_CATEGORI">
+        <Association Name="FK_CARACTER_FK_CARACT_CATEGORI">
           <End Role="CATEGORIA_PRODUCTO" Type="Self.CATEGORIA_PRODUCTO" Multiplicity="1" />
           <End Role="CARACTERISTICAS" Type="Self.CARACTERISTICAS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -392,7 +482,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CARRITO_CHECKOUTX_CHECKOUT">
+        <Association Name="FK_CARRITO_FK_CARRIT_CHECKOUT">
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="0..1" />
           <End Role="CARRITO" Type="Self.CARRITO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -404,7 +494,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CARRITO_USUARIOXC_USUARIO">
+        <Association Name="FK_CARRITO_FK_CARRIT_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="CARRITO" Type="Self.CARRITO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -416,7 +506,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CHECKOUT_CHECKOUTX_CANCELAC">
+        <Association Name="FK_CHECKOUT_FK_CHECKO_CANCELAC">
           <End Role="CANCELACION" Type="Self.CANCELACION" Multiplicity="0..1" />
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="*" />
           <ReferentialConstraint>
@@ -428,7 +518,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CHECKOUT_CHECKOUTX_CARRITO">
+        <Association Name="FK_CHECKOUT_FK_CHECKO_CARRITO">
           <End Role="CARRITO" Type="Self.CARRITO" Multiplicity="1" />
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="*" />
           <ReferentialConstraint>
@@ -440,19 +530,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CHECKOUT_CHECKOUTX_RECIBO_B">
-          <End Role="RECIBO_BANCARD" Type="Self.RECIBO_BANCARD" Multiplicity="0..1" />
-          <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RECIBO_BANCARD">
-              <PropertyRef Name="ID_RECIBO_BANCARD" />
-            </Principal>
-            <Dependent Role="CHECKOUT">
-              <PropertyRef Name="ID_RECIBO_BANCARD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CHECKOUT_RELATIONS_ESTADO_D">
+        <Association Name="FK_CHECKOUT_FK_CHECKO_ESTADO_D">
           <End Role="ESTADO_DELIVERY" Type="Self.ESTADO_DELIVERY" Multiplicity="0..1" />
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="*" />
           <ReferentialConstraint>
@@ -464,7 +542,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CHECKOUT_RELATIONS_FACTURA_">
+        <Association Name="FK_CHECKOUT_FK_CHECKO_FACTURA_">
           <End Role="FACTURA_VENTA" Type="Self.FACTURA_VENTA" Multiplicity="0..1" />
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="*" />
           <ReferentialConstraint>
@@ -476,7 +554,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CIUDAD_DEPARTAME_DEPARTAM">
+        <Association Name="FK_CHECKOUT_FK_CHECKO_RECIBO_B">
+          <End Role="RECIBO_BANCARD" Type="Self.RECIBO_BANCARD" Multiplicity="0..1" />
+          <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RECIBO_BANCARD">
+              <PropertyRef Name="ID_RECIBO_BANCARD" />
+            </Principal>
+            <Dependent Role="CHECKOUT">
+              <PropertyRef Name="ID_RECIBO_BANCARD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CIUDAD_FK_CIUDAD_DEPARTAM">
           <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="1" />
           <End Role="CIUDAD" Type="Self.CIUDAD" Multiplicity="*" />
           <ReferentialConstraint>
@@ -500,7 +590,63 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DIRECION_CIUDADXDI_CIUDAD">
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIRECION_FK_DIRECI_CIUDAD">
           <End Role="CIUDAD" Type="Self.CIUDAD" Multiplicity="1" />
           <End Role="DIRECION" Type="Self.DIRECION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -512,7 +658,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DIRECION_DIRECCION_USUARIO">
+        <Association Name="FK_DIRECION_FK_DIRECI_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="DIRECION" Type="Self.DIRECION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -524,7 +670,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ESTADO_C_CANCELACI_CANCELAC">
+        <Association Name="FK_ESTADO_C_FK_ESTADO_CANCELAC">
           <End Role="CANCELACION" Type="Self.CANCELACION" Multiplicity="1" />
           <End Role="ESTADO_CANCELACION" Type="Self.ESTADO_CANCELACION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -536,7 +682,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ESTADO_D_PAGOSXDEL_PAGOS_DE">
+        <Association Name="FK_ESTADO_D_FK_ESTADO_PAGOS_DE">
           <End Role="PAGOS_DELIVERY" Type="Self.PAGOS_DELIVERY" Multiplicity="0..1" />
           <End Role="ESTADO_DELIVERY" Type="Self.ESTADO_DELIVERY" Multiplicity="*" />
           <ReferentialConstraint>
@@ -548,7 +694,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ESTADO_R_RECLAMOXE_RECLAMO">
+        <Association Name="FK_ESTADO_R_FK_ESTADO_RECLAMO">
           <End Role="RECLAMO" Type="Self.RECLAMO" Multiplicity="1" />
           <End Role="ESTADO_RECLAMO" Type="Self.ESTADO_RECLAMO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -560,7 +706,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FACTURA__RELATIONS_CHECKOUT">
+        <Association Name="FK_FACTURA__FK_FACTUR_CHECKOUT">
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="0..1" />
           <End Role="FACTURA_VENTA" Type="Self.FACTURA_VENTA" Multiplicity="*" />
           <ReferentialConstraint>
@@ -572,7 +718,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FOTO_PRO_FOTOXPROD_PRODUCTO">
+        <Association Name="FK_FOTO_PRO_FK_FOTO_P_PRODUCTO">
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="FOTO_PRODUCTO" Type="Self.FOTO_PRODUCTO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -584,7 +730,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_GASTO_GASTOXUSU_USUARIO">
+        <Association Name="FK_GASTO_FK_GASTO__USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="GASTO" Type="Self.GASTO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -592,6 +738,30 @@
               <PropertyRef Name="ID_USUARIO" />
             </Principal>
             <Dependent Role="GASTO">
+              <PropertyRef Name="ID_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INGRESO__FK_INGRES_PRODUCTO">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
+          <End Role="INGRESO_PRODUCTO" Type="Self.INGRESO_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Principal>
+            <Dependent Role="INGRESO_PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INGRESO__FK_INGRES_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="INGRESO_PRODUCTO" Type="Self.INGRESO_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID_USUARIO" />
+            </Principal>
+            <Dependent Role="INGRESO_PRODUCTO">
               <PropertyRef Name="ID_USUARIO" />
             </Dependent>
           </ReferentialConstraint>
@@ -620,31 +790,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_INGRESO__INGRESOXP_PRODUCTO">
-          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
-          <End Role="INGRESO_PRODUCTO" Type="Self.INGRESO_PRODUCTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PRODUCTO">
-              <PropertyRef Name="ID_PRODUCTO" />
-            </Principal>
-            <Dependent Role="INGRESO_PRODUCTO">
-              <PropertyRef Name="ID_PRODUCTO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_INGRESO__USUARIOXI_USUARIO">
-          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
-          <End Role="INGRESO_PRODUCTO" Type="Self.INGRESO_PRODUCTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USUARIO">
-              <PropertyRef Name="ID_USUARIO" />
-            </Principal>
-            <Dependent Role="INGRESO_PRODUCTO">
-              <PropertyRef Name="ID_USUARIO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LISTA_DE_USUARIOXL_USUARIO">
+        <Association Name="FK_LISTA_DE_FK_LISTA__USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
           <End Role="LISTA_DESEOS" Type="Self.LISTA_DESEOS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -656,7 +802,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LISTAXPR_LISTAXPRO_LISTA_DE">
+        <Association Name="FK_LISTAXPR_FK_LISTAX_LISTA_DE">
           <End Role="LISTA_DESEOS" Type="Self.LISTA_DESEOS" Multiplicity="1" />
           <End Role="LISTAXPRODUCTO" Type="Self.LISTAXPRODUCTO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -668,7 +814,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LISTAXPR_LISTAXPRO_PRODUCTO">
+        <Association Name="FK_LISTAXPR_FK_LISTAX_PRODUCTO">
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="LISTAXPRODUCTO" Type="Self.LISTAXPRODUCTO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -680,7 +826,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PAGOS_DE_PAGOSXDEL_ESTADO_D">
+        <Association Name="FK_LOG_LOGXUSUAR_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="LOG" Type="Self.LOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID_USUARIO" />
+            </Principal>
+            <Dependent Role="LOG">
+              <PropertyRef Name="ID_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PAGOS_DE_FK_PAGOS__ESTADO_D">
           <End Role="ESTADO_DELIVERY" Type="Self.ESTADO_DELIVERY" Multiplicity="1" />
           <End Role="PAGOS_DELIVERY" Type="Self.PAGOS_DELIVERY" Multiplicity="*" />
           <ReferentialConstraint>
@@ -692,20 +850,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PRODUCTO_PRODUCTO__PRODUCTO">
-          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
-          <End Role="PRODUCTO_FACTURA" Type="Self.PRODUCTO_FACTURA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PRODUCTO">
-              <PropertyRef Name="ID_PRODUCTO" />
-            </Principal>
-            <Dependent Role="PRODUCTO_FACTURA">
-              <PropertyRef Name="ID_PRODUCTO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PRODUCTO_PRODUCTOX_CATEGORI">
-          <End Role="CATEGORIA_PRODUCTO" Type="Self.CATEGORIA_PRODUCTO" Multiplicity="1" />
+        <Association Name="FK_PRODUCTO_CATEGORIA_CATEGORI">
+          <End Role="CATEGORIA_PRODUCTO" Type="Self.CATEGORIA_PRODUCTO" Multiplicity="0..1" />
           <End Role="PRODUCTOXCATEGORIA" Type="Self.PRODUCTOXCATEGORIA" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CATEGORIA_PRODUCTO">
@@ -716,19 +862,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PRODUCTO_PRODUCTOX_PRODUCTO">
-          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
-          <End Role="PRODUCTOXCATEGORIA" Type="Self.PRODUCTOXCATEGORIA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PRODUCTO">
-              <PropertyRef Name="ID_PRODUCTO" />
-            </Principal>
-            <Dependent Role="PRODUCTOXCATEGORIA">
-              <PropertyRef Name="ID_PRODUCTO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PRODUCTO_RELATIONS_FACTURA_">
+        <Association Name="FK_PRODUCTO_FK_PRODUC_FACTURA_">
           <End Role="FACTURA_VENTA" Type="Self.FACTURA_VENTA" Multiplicity="1" />
           <End Role="PRODUCTO_FACTURA" Type="Self.PRODUCTO_FACTURA" Multiplicity="*" />
           <ReferentialConstraint>
@@ -740,7 +874,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RECIBO_B_CHECKOUTX_CHECKOUT">
+        <Association Name="FK_PRODUCTO_FK_PRODUC_PRODUCTO">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
+          <End Role="PRODUCTO_FACTURA" Type="Self.PRODUCTO_FACTURA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Principal>
+            <Dependent Role="PRODUCTO_FACTURA">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_PRODUCTO__PRODUCTO">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="0..1" />
+          <End Role="PRODUCTOXCATEGORIA" Type="Self.PRODUCTOXCATEGORIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Principal>
+            <Dependent Role="PRODUCTOXCATEGORIA">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECIBO_B_FK_RECIBO_CHECKOUT">
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="1" />
           <End Role="RECIBO_BANCARD" Type="Self.RECIBO_BANCARD" Multiplicity="*" />
           <ReferentialConstraint>
@@ -752,7 +910,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RECIBO_B_RELATIONS_PAGOS_BA">
+        <Association Name="FK_RECIBO_B_FK_RECIBO_PAGOS_BA">
           <End Role="PAGOS_BANCARD" Type="Self.PAGOS_BANCARD" Multiplicity="1" />
           <End Role="RECIBO_BANCARD" Type="Self.RECIBO_BANCARD" Multiplicity="*" />
           <ReferentialConstraint>
@@ -764,7 +922,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RECLAMO_RECLAMOXP_PRODUCTO">
+        <Association Name="FK_RECLAMO_FK_RECLAM_PRODUCTO">
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="RECLAMO" Type="Self.RECLAMO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -776,7 +934,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RECLAMO_USUARIOXR_USUARIO">
+        <Association Name="FK_RECLAMO_FK_RECLAM_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="RECLAMO" Type="Self.RECLAMO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -788,7 +946,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ROL_USUA_ROL_USUAR_ROL">
+        <Association Name="FK_ROL_USUA_FK_ROL_US_ROL">
           <End Role="ROL" Type="Self.ROL" Multiplicity="1" />
           <End Role="ROL_USUARIO" Type="Self.ROL_USUARIO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -800,7 +958,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ROL_USUA_ROL_USUAR_USUARIO">
+        <Association Name="FK_ROL_USUA_FK_ROL_US_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="ROL_USUARIO" Type="Self.ROL_USUARIO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -824,7 +982,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_USUARIO__USUARIO_V_USUARIO">
+        <Association Name="FK_USUARIO__FK_USUARI_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="USUARIO_VISITA" Type="Self.USUARIO_VISITA" Multiplicity="*" />
           <ReferentialConstraint>
@@ -836,7 +994,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_USUARIO__USUARIO_V_VISITA_P">
+        <Association Name="FK_USUARIO__FK_USUARI_VISITA_P">
           <End Role="VISITA_PRODUCTO" Type="Self.VISITA_PRODUCTO" Multiplicity="1" />
           <End Role="USUARIO_VISITA" Type="Self.USUARIO_VISITA" Multiplicity="*" />
           <ReferentialConstraint>
@@ -848,7 +1006,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VISITA_P_PRODUCTO__PRODUCTO">
+        <Association Name="FK_VISITA_P_FK_VISITA_PRODUCTO">
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="VISITA_PRODUCTO" Type="Self.VISITA_PRODUCTO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -861,6 +1019,13 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="zeta_bdModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BUSQUEDA" EntityType="Self.BUSQUEDA" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="CALIFICACION" EntityType="Self.CALIFICACION" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="CANCELACION" EntityType="Self.CANCELACION" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="CANTIDAD_PRODUCTO" EntityType="Self.CANTIDAD_PRODUCTO" Schema="zeta_bd" store:Type="Tables" />
@@ -881,6 +1046,7 @@
           <EntitySet Name="INGRESO_PRODUCTO" EntityType="Self.INGRESO_PRODUCTO" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="LISTA_DESEOS" EntityType="Self.LISTA_DESEOS" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="LISTAXPRODUCTO" EntityType="Self.LISTAXPRODUCTO" Schema="zeta_bd" store:Type="Tables" />
+          <EntitySet Name="LOG" EntityType="Self.LOG" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="PAGOS_BANCARD" EntityType="Self.PAGOS_BANCARD" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="PAGOS_DELIVERY" EntityType="Self.PAGOS_DELIVERY" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="zeta_bd" store:Type="Tables" />
@@ -894,59 +1060,63 @@
           <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="USUARIO_VISITA" EntityType="Self.USUARIO_VISITA" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="VISITA_PRODUCTO" EntityType="Self.VISITA_PRODUCTO" Schema="zeta_bd" store:Type="Tables" />
-          <AssociationSet Name="FK_CALIFICA_PRODUCTOX_PRODUCTO" Association="Self.FK_CALIFICA_PRODUCTOX_PRODUCTO">
+          <AssociationSet Name="FK_BUSQUEDA_USUARIOXB_USUARIO" Association="Self.FK_BUSQUEDA_USUARIOXB_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="BUSQUEDA" EntitySet="BUSQUEDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CALIFICA_FK_CALIFI_PRODUCTO" Association="Self.FK_CALIFICA_FK_CALIFI_PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="CALIFICACION" EntitySet="CALIFICACION" />
           </AssociationSet>
-          <AssociationSet Name="FK_CALIFICA_USUARIOXC_USUARIO" Association="Self.FK_CALIFICA_USUARIOXC_USUARIO">
+          <AssociationSet Name="FK_CALIFICA_FK_CALIFI_USUARIO" Association="Self.FK_CALIFICA_FK_CALIFI_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="CALIFICACION" EntitySet="CALIFICACION" />
           </AssociationSet>
-          <AssociationSet Name="FK_CANCELAC_CHECKOUTX_CHECKOUT" Association="Self.FK_CANCELAC_CHECKOUTX_CHECKOUT">
+          <AssociationSet Name="FK_CANCELAC_FK_CANCEL_CHECKOUT" Association="Self.FK_CANCELAC_FK_CANCEL_CHECKOUT">
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
             <End Role="CANCELACION" EntitySet="CANCELACION" />
           </AssociationSet>
-          <AssociationSet Name="FK_CANTIDAD_CANTIDADX_PRODUCTO" Association="Self.FK_CANTIDAD_CANTIDADX_PRODUCTO">
-            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
-            <End Role="CANTIDAD_PRODUCTO" EntitySet="CANTIDAD_PRODUCTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CANTIDAD_CARRITO_C_CARRITO" Association="Self.FK_CANTIDAD_CARRITO_C_CARRITO">
+          <AssociationSet Name="FK_CANTIDAD_FK_CANTID_CARRITO" Association="Self.FK_CANTIDAD_FK_CANTID_CARRITO">
             <End Role="CARRITO" EntitySet="CARRITO" />
             <End Role="CANTIDAD_PRODUCTO" EntitySet="CANTIDAD_PRODUCTO" />
           </AssociationSet>
-          <AssociationSet Name="FK_CARACTER_CARACTERI_CATEGORI" Association="Self.FK_CARACTER_CARACTERI_CATEGORI">
+          <AssociationSet Name="FK_CANTIDAD_FK_CANTID_PRODUCTO" Association="Self.FK_CANTIDAD_FK_CANTID_PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="CANTIDAD_PRODUCTO" EntitySet="CANTIDAD_PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARACTER_FK_CARACT_CATEGORI" Association="Self.FK_CARACTER_FK_CARACT_CATEGORI">
             <End Role="CATEGORIA_PRODUCTO" EntitySet="CATEGORIA_PRODUCTO" />
             <End Role="CARACTERISTICAS" EntitySet="CARACTERISTICAS" />
           </AssociationSet>
-          <AssociationSet Name="FK_CARRITO_CHECKOUTX_CHECKOUT" Association="Self.FK_CARRITO_CHECKOUTX_CHECKOUT">
+          <AssociationSet Name="FK_CARRITO_FK_CARRIT_CHECKOUT" Association="Self.FK_CARRITO_FK_CARRIT_CHECKOUT">
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
             <End Role="CARRITO" EntitySet="CARRITO" />
           </AssociationSet>
-          <AssociationSet Name="FK_CARRITO_USUARIOXC_USUARIO" Association="Self.FK_CARRITO_USUARIOXC_USUARIO">
+          <AssociationSet Name="FK_CARRITO_FK_CARRIT_USUARIO" Association="Self.FK_CARRITO_FK_CARRIT_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="CARRITO" EntitySet="CARRITO" />
           </AssociationSet>
-          <AssociationSet Name="FK_CHECKOUT_CHECKOUTX_CANCELAC" Association="Self.FK_CHECKOUT_CHECKOUTX_CANCELAC">
+          <AssociationSet Name="FK_CHECKOUT_FK_CHECKO_CANCELAC" Association="Self.FK_CHECKOUT_FK_CHECKO_CANCELAC">
             <End Role="CANCELACION" EntitySet="CANCELACION" />
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
           </AssociationSet>
-          <AssociationSet Name="FK_CHECKOUT_CHECKOUTX_CARRITO" Association="Self.FK_CHECKOUT_CHECKOUTX_CARRITO">
+          <AssociationSet Name="FK_CHECKOUT_FK_CHECKO_CARRITO" Association="Self.FK_CHECKOUT_FK_CHECKO_CARRITO">
             <End Role="CARRITO" EntitySet="CARRITO" />
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
           </AssociationSet>
-          <AssociationSet Name="FK_CHECKOUT_CHECKOUTX_RECIBO_B" Association="Self.FK_CHECKOUT_CHECKOUTX_RECIBO_B">
-            <End Role="RECIBO_BANCARD" EntitySet="RECIBO_BANCARD" />
-            <End Role="CHECKOUT" EntitySet="CHECKOUT" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CHECKOUT_RELATIONS_ESTADO_D" Association="Self.FK_CHECKOUT_RELATIONS_ESTADO_D">
+          <AssociationSet Name="FK_CHECKOUT_FK_CHECKO_ESTADO_D" Association="Self.FK_CHECKOUT_FK_CHECKO_ESTADO_D">
             <End Role="ESTADO_DELIVERY" EntitySet="ESTADO_DELIVERY" />
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
           </AssociationSet>
-          <AssociationSet Name="FK_CHECKOUT_RELATIONS_FACTURA_" Association="Self.FK_CHECKOUT_RELATIONS_FACTURA_">
+          <AssociationSet Name="FK_CHECKOUT_FK_CHECKO_FACTURA_" Association="Self.FK_CHECKOUT_FK_CHECKO_FACTURA_">
             <End Role="FACTURA_VENTA" EntitySet="FACTURA_VENTA" />
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
           </AssociationSet>
-          <AssociationSet Name="FK_CIUDAD_DEPARTAME_DEPARTAM" Association="Self.FK_CIUDAD_DEPARTAME_DEPARTAM">
+          <AssociationSet Name="FK_CHECKOUT_FK_CHECKO_RECIBO_B" Association="Self.FK_CHECKOUT_FK_CHECKO_RECIBO_B">
+            <End Role="RECIBO_BANCARD" EntitySet="RECIBO_BANCARD" />
+            <End Role="CHECKOUT" EntitySet="CHECKOUT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CIUDAD_FK_CIUDAD_DEPARTAM" Association="Self.FK_CIUDAD_FK_CIUDAD_DEPARTAM">
             <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
             <End Role="CIUDAD" EntitySet="CIUDAD" />
           </AssociationSet>
@@ -954,37 +1124,61 @@
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="COLOR" EntitySet="COLOR" />
           </AssociationSet>
-          <AssociationSet Name="FK_DIRECION_CIUDADXDI_CIUDAD" Association="Self.FK_DIRECION_CIUDADXDI_CIUDAD">
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIRECION_FK_DIRECI_CIUDAD" Association="Self.FK_DIRECION_FK_DIRECI_CIUDAD">
             <End Role="CIUDAD" EntitySet="CIUDAD" />
             <End Role="DIRECION" EntitySet="DIRECION" />
           </AssociationSet>
-          <AssociationSet Name="FK_DIRECION_DIRECCION_USUARIO" Association="Self.FK_DIRECION_DIRECCION_USUARIO">
+          <AssociationSet Name="FK_DIRECION_FK_DIRECI_USUARIO" Association="Self.FK_DIRECION_FK_DIRECI_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="DIRECION" EntitySet="DIRECION" />
           </AssociationSet>
-          <AssociationSet Name="FK_ESTADO_C_CANCELACI_CANCELAC" Association="Self.FK_ESTADO_C_CANCELACI_CANCELAC">
+          <AssociationSet Name="FK_ESTADO_C_FK_ESTADO_CANCELAC" Association="Self.FK_ESTADO_C_FK_ESTADO_CANCELAC">
             <End Role="CANCELACION" EntitySet="CANCELACION" />
             <End Role="ESTADO_CANCELACION" EntitySet="ESTADO_CANCELACION" />
           </AssociationSet>
-          <AssociationSet Name="FK_ESTADO_D_PAGOSXDEL_PAGOS_DE" Association="Self.FK_ESTADO_D_PAGOSXDEL_PAGOS_DE">
+          <AssociationSet Name="FK_ESTADO_D_FK_ESTADO_PAGOS_DE" Association="Self.FK_ESTADO_D_FK_ESTADO_PAGOS_DE">
             <End Role="PAGOS_DELIVERY" EntitySet="PAGOS_DELIVERY" />
             <End Role="ESTADO_DELIVERY" EntitySet="ESTADO_DELIVERY" />
           </AssociationSet>
-          <AssociationSet Name="FK_ESTADO_R_RECLAMOXE_RECLAMO" Association="Self.FK_ESTADO_R_RECLAMOXE_RECLAMO">
+          <AssociationSet Name="FK_ESTADO_R_FK_ESTADO_RECLAMO" Association="Self.FK_ESTADO_R_FK_ESTADO_RECLAMO">
             <End Role="RECLAMO" EntitySet="RECLAMO" />
             <End Role="ESTADO_RECLAMO" EntitySet="ESTADO_RECLAMO" />
           </AssociationSet>
-          <AssociationSet Name="FK_FACTURA__RELATIONS_CHECKOUT" Association="Self.FK_FACTURA__RELATIONS_CHECKOUT">
+          <AssociationSet Name="FK_FACTURA__FK_FACTUR_CHECKOUT" Association="Self.FK_FACTURA__FK_FACTUR_CHECKOUT">
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
             <End Role="FACTURA_VENTA" EntitySet="FACTURA_VENTA" />
           </AssociationSet>
-          <AssociationSet Name="FK_FOTO_PRO_FOTOXPROD_PRODUCTO" Association="Self.FK_FOTO_PRO_FOTOXPROD_PRODUCTO">
+          <AssociationSet Name="FK_FOTO_PRO_FK_FOTO_P_PRODUCTO" Association="Self.FK_FOTO_PRO_FK_FOTO_P_PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="FOTO_PRODUCTO" EntitySet="FOTO_PRODUCTO" />
           </AssociationSet>
-          <AssociationSet Name="FK_GASTO_GASTOXUSU_USUARIO" Association="Self.FK_GASTO_GASTOXUSU_USUARIO">
+          <AssociationSet Name="FK_GASTO_FK_GASTO__USUARIO" Association="Self.FK_GASTO_FK_GASTO__USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="GASTO" EntitySet="GASTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INGRESO__FK_INGRES_PRODUCTO" Association="Self.FK_INGRESO__FK_INGRES_PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="INGRESO_PRODUCTO" EntitySet="INGRESO_PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INGRESO__FK_INGRES_USUARIO" Association="Self.FK_INGRESO__FK_INGRES_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="INGRESO_PRODUCTO" EntitySet="INGRESO_PRODUCTO" />
           </AssociationSet>
           <AssociationSet Name="FK_INGRESO__INGRESO_C_COLOR" Association="Self.FK_INGRESO__INGRESO_C_COLOR">
             <End Role="COLOR" EntitySet="COLOR" />
@@ -994,67 +1188,63 @@
             <End Role="TAMANO" EntitySet="TAMANO" />
             <End Role="INGRESO_PRODUCTO" EntitySet="INGRESO_PRODUCTO" />
           </AssociationSet>
-          <AssociationSet Name="FK_INGRESO__INGRESOXP_PRODUCTO" Association="Self.FK_INGRESO__INGRESOXP_PRODUCTO">
-            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
-            <End Role="INGRESO_PRODUCTO" EntitySet="INGRESO_PRODUCTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_INGRESO__USUARIOXI_USUARIO" Association="Self.FK_INGRESO__USUARIOXI_USUARIO">
-            <End Role="USUARIO" EntitySet="USUARIO" />
-            <End Role="INGRESO_PRODUCTO" EntitySet="INGRESO_PRODUCTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LISTA_DE_USUARIOXL_USUARIO" Association="Self.FK_LISTA_DE_USUARIOXL_USUARIO">
+          <AssociationSet Name="FK_LISTA_DE_FK_LISTA__USUARIO" Association="Self.FK_LISTA_DE_FK_LISTA__USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="LISTA_DESEOS" EntitySet="LISTA_DESEOS" />
           </AssociationSet>
-          <AssociationSet Name="FK_LISTAXPR_LISTAXPRO_LISTA_DE" Association="Self.FK_LISTAXPR_LISTAXPRO_LISTA_DE">
+          <AssociationSet Name="FK_LISTAXPR_FK_LISTAX_LISTA_DE" Association="Self.FK_LISTAXPR_FK_LISTAX_LISTA_DE">
             <End Role="LISTA_DESEOS" EntitySet="LISTA_DESEOS" />
             <End Role="LISTAXPRODUCTO" EntitySet="LISTAXPRODUCTO" />
           </AssociationSet>
-          <AssociationSet Name="FK_LISTAXPR_LISTAXPRO_PRODUCTO" Association="Self.FK_LISTAXPR_LISTAXPRO_PRODUCTO">
+          <AssociationSet Name="FK_LISTAXPR_FK_LISTAX_PRODUCTO" Association="Self.FK_LISTAXPR_FK_LISTAX_PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="LISTAXPRODUCTO" EntitySet="LISTAXPRODUCTO" />
           </AssociationSet>
-          <AssociationSet Name="FK_PAGOS_DE_PAGOSXDEL_ESTADO_D" Association="Self.FK_PAGOS_DE_PAGOSXDEL_ESTADO_D">
+          <AssociationSet Name="FK_LOG_LOGXUSUAR_USUARIO" Association="Self.FK_LOG_LOGXUSUAR_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="LOG" EntitySet="LOG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PAGOS_DE_FK_PAGOS__ESTADO_D" Association="Self.FK_PAGOS_DE_FK_PAGOS__ESTADO_D">
             <End Role="ESTADO_DELIVERY" EntitySet="ESTADO_DELIVERY" />
             <End Role="PAGOS_DELIVERY" EntitySet="PAGOS_DELIVERY" />
           </AssociationSet>
-          <AssociationSet Name="FK_PRODUCTO_PRODUCTO__PRODUCTO" Association="Self.FK_PRODUCTO_PRODUCTO__PRODUCTO">
-            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
-            <End Role="PRODUCTO_FACTURA" EntitySet="PRODUCTO_FACTURA" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PRODUCTO_PRODUCTOX_CATEGORI" Association="Self.FK_PRODUCTO_PRODUCTOX_CATEGORI">
+          <AssociationSet Name="FK_PRODUCTO_CATEGORIA_CATEGORI" Association="Self.FK_PRODUCTO_CATEGORIA_CATEGORI">
             <End Role="CATEGORIA_PRODUCTO" EntitySet="CATEGORIA_PRODUCTO" />
             <End Role="PRODUCTOXCATEGORIA" EntitySet="PRODUCTOXCATEGORIA" />
           </AssociationSet>
-          <AssociationSet Name="FK_PRODUCTO_PRODUCTOX_PRODUCTO" Association="Self.FK_PRODUCTO_PRODUCTOX_PRODUCTO">
-            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
-            <End Role="PRODUCTOXCATEGORIA" EntitySet="PRODUCTOXCATEGORIA" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PRODUCTO_RELATIONS_FACTURA_" Association="Self.FK_PRODUCTO_RELATIONS_FACTURA_">
+          <AssociationSet Name="FK_PRODUCTO_FK_PRODUC_FACTURA_" Association="Self.FK_PRODUCTO_FK_PRODUC_FACTURA_">
             <End Role="FACTURA_VENTA" EntitySet="FACTURA_VENTA" />
             <End Role="PRODUCTO_FACTURA" EntitySet="PRODUCTO_FACTURA" />
           </AssociationSet>
-          <AssociationSet Name="FK_RECIBO_B_CHECKOUTX_CHECKOUT" Association="Self.FK_RECIBO_B_CHECKOUTX_CHECKOUT">
+          <AssociationSet Name="FK_PRODUCTO_FK_PRODUC_PRODUCTO" Association="Self.FK_PRODUCTO_FK_PRODUC_PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="PRODUCTO_FACTURA" EntitySet="PRODUCTO_FACTURA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_PRODUCTO__PRODUCTO" Association="Self.FK_PRODUCTO_PRODUCTO__PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="PRODUCTOXCATEGORIA" EntitySet="PRODUCTOXCATEGORIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECIBO_B_FK_RECIBO_CHECKOUT" Association="Self.FK_RECIBO_B_FK_RECIBO_CHECKOUT">
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
             <End Role="RECIBO_BANCARD" EntitySet="RECIBO_BANCARD" />
           </AssociationSet>
-          <AssociationSet Name="FK_RECIBO_B_RELATIONS_PAGOS_BA" Association="Self.FK_RECIBO_B_RELATIONS_PAGOS_BA">
+          <AssociationSet Name="FK_RECIBO_B_FK_RECIBO_PAGOS_BA" Association="Self.FK_RECIBO_B_FK_RECIBO_PAGOS_BA">
             <End Role="PAGOS_BANCARD" EntitySet="PAGOS_BANCARD" />
             <End Role="RECIBO_BANCARD" EntitySet="RECIBO_BANCARD" />
           </AssociationSet>
-          <AssociationSet Name="FK_RECLAMO_RECLAMOXP_PRODUCTO" Association="Self.FK_RECLAMO_RECLAMOXP_PRODUCTO">
+          <AssociationSet Name="FK_RECLAMO_FK_RECLAM_PRODUCTO" Association="Self.FK_RECLAMO_FK_RECLAM_PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="RECLAMO" EntitySet="RECLAMO" />
           </AssociationSet>
-          <AssociationSet Name="FK_RECLAMO_USUARIOXR_USUARIO" Association="Self.FK_RECLAMO_USUARIOXR_USUARIO">
+          <AssociationSet Name="FK_RECLAMO_FK_RECLAM_USUARIO" Association="Self.FK_RECLAMO_FK_RECLAM_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="RECLAMO" EntitySet="RECLAMO" />
           </AssociationSet>
-          <AssociationSet Name="FK_ROL_USUA_ROL_USUAR_ROL" Association="Self.FK_ROL_USUA_ROL_USUAR_ROL">
+          <AssociationSet Name="FK_ROL_USUA_FK_ROL_US_ROL" Association="Self.FK_ROL_USUA_FK_ROL_US_ROL">
             <End Role="ROL" EntitySet="ROL" />
             <End Role="ROL_USUARIO" EntitySet="ROL_USUARIO" />
           </AssociationSet>
-          <AssociationSet Name="FK_ROL_USUA_ROL_USUAR_USUARIO" Association="Self.FK_ROL_USUA_ROL_USUAR_USUARIO">
+          <AssociationSet Name="FK_ROL_USUA_FK_ROL_US_USUARIO" Association="Self.FK_ROL_USUA_FK_ROL_US_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="ROL_USUARIO" EntitySet="ROL_USUARIO" />
           </AssociationSet>
@@ -1062,15 +1252,15 @@
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="TAMANO" EntitySet="TAMANO" />
           </AssociationSet>
-          <AssociationSet Name="FK_USUARIO__USUARIO_V_USUARIO" Association="Self.FK_USUARIO__USUARIO_V_USUARIO">
+          <AssociationSet Name="FK_USUARIO__FK_USUARI_USUARIO" Association="Self.FK_USUARIO__FK_USUARI_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="USUARIO_VISITA" EntitySet="USUARIO_VISITA" />
           </AssociationSet>
-          <AssociationSet Name="FK_USUARIO__USUARIO_V_VISITA_P" Association="Self.FK_USUARIO__USUARIO_V_VISITA_P">
+          <AssociationSet Name="FK_USUARIO__FK_USUARI_VISITA_P" Association="Self.FK_USUARIO__FK_USUARI_VISITA_P">
             <End Role="VISITA_PRODUCTO" EntitySet="VISITA_PRODUCTO" />
             <End Role="USUARIO_VISITA" EntitySet="USUARIO_VISITA" />
           </AssociationSet>
-          <AssociationSet Name="FK_VISITA_P_PRODUCTO__PRODUCTO" Association="Self.FK_VISITA_P_PRODUCTO__PRODUCTO">
+          <AssociationSet Name="FK_VISITA_P_FK_VISITA_PRODUCTO" Association="Self.FK_VISITA_P_FK_VISITA_PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="VISITA_PRODUCTO" EntitySet="VISITA_PRODUCTO" />
           </AssociationSet>
@@ -1080,6 +1270,74 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="zeta_bdModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="BUSQUEDA">
+          <Key>
+            <PropertyRef Name="ID_BUSQUEDA" />
+          </Key>
+          <Property Name="ID_BUSQUEDA" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TEXTO_BUSQUEDA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_BUSQUEDA_USUARIOXB_USUARIO" FromRole="BUSQUEDA" ToRole="USUARIO" />
+        </EntityType>
         <EntityType Name="CALIFICACION">
           <Key>
             <PropertyRef Name="ID_CALIFICACION" />
@@ -1090,8 +1348,8 @@
           <Property Name="PUNTUACION" Type="Int32" />
           <Property Name="TITULO_CALIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TEXTO_CALIFICACION" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_CALIFICA_PRODUCTOX_PRODUCTO" FromRole="CALIFICACION" ToRole="PRODUCTO" />
-          <NavigationProperty Name="USUARIO" Relationship="Self.FK_CALIFICA_USUARIOXC_USUARIO" FromRole="CALIFICACION" ToRole="USUARIO" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_CALIFICA_FK_CALIFI_PRODUCTO" FromRole="CALIFICACION" ToRole="PRODUCTO" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_CALIFICA_FK_CALIFI_USUARIO" FromRole="CALIFICACION" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="CANCELACION">
           <Key>
@@ -1102,9 +1360,9 @@
           <Property Name="FECHA_CANCELACION" Type="DateTime" Precision="3" />
           <Property Name="HORA_CANCELACION" Type="DateTime" Precision="3" />
           <Property Name="RAZON_CANCELACION" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CHECKOUT" Relationship="Self.FK_CANCELAC_CHECKOUTX_CHECKOUT" FromRole="CANCELACION" ToRole="CHECKOUT" />
-          <NavigationProperty Name="CHECKOUT1" Relationship="Self.FK_CHECKOUT_CHECKOUTX_CANCELAC" FromRole="CANCELACION" ToRole="CHECKOUT" />
-          <NavigationProperty Name="ESTADO_CANCELACION" Relationship="Self.FK_ESTADO_C_CANCELACI_CANCELAC" FromRole="CANCELACION" ToRole="ESTADO_CANCELACION" />
+          <NavigationProperty Name="CHECKOUT" Relationship="Self.FK_CANCELAC_FK_CANCEL_CHECKOUT" FromRole="CANCELACION" ToRole="CHECKOUT" />
+          <NavigationProperty Name="CHECKOUT1" Relationship="Self.FK_CHECKOUT_FK_CHECKO_CANCELAC" FromRole="CANCELACION" ToRole="CHECKOUT" />
+          <NavigationProperty Name="ESTADO_CANCELACION" Relationship="Self.FK_ESTADO_C_FK_ESTADO_CANCELAC" FromRole="CANCELACION" ToRole="ESTADO_CANCELACION" />
         </EntityType>
         <EntityType Name="CANTIDAD_PRODUCTO">
           <Key>
@@ -1114,8 +1372,8 @@
           <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="ID_CARRITO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="CANTIDAD_PRODUCTO_CARRITO" Type="Int32" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_CANTIDAD_CANTIDADX_PRODUCTO" FromRole="CANTIDAD_PRODUCTO" ToRole="PRODUCTO" />
-          <NavigationProperty Name="CARRITO" Relationship="Self.FK_CANTIDAD_CARRITO_C_CARRITO" FromRole="CANTIDAD_PRODUCTO" ToRole="CARRITO" />
+          <NavigationProperty Name="CARRITO" Relationship="Self.FK_CANTIDAD_FK_CANTID_CARRITO" FromRole="CANTIDAD_PRODUCTO" ToRole="CARRITO" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_CANTIDAD_FK_CANTID_PRODUCTO" FromRole="CANTIDAD_PRODUCTO" ToRole="PRODUCTO" />
         </EntityType>
         <EntityType Name="CARACTERISTICAS">
           <Key>
@@ -1124,7 +1382,7 @@
           <Property Name="ID_CARACTERISTICA" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_CATEGORIA" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="NOMBRE_CARACTERISTICA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CATEGORIA_PRODUCTO" Relationship="Self.FK_CARACTER_CARACTERI_CATEGORI" FromRole="CARACTERISTICAS" ToRole="CATEGORIA_PRODUCTO" />
+          <NavigationProperty Name="CATEGORIA_PRODUCTO" Relationship="Self.FK_CARACTER_FK_CARACT_CATEGORI" FromRole="CARACTERISTICAS" ToRole="CATEGORIA_PRODUCTO" />
         </EntityType>
         <EntityType Name="CARRITO">
           <Key>
@@ -1135,10 +1393,10 @@
           <Property Name="ID_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FECHA_CREACION_CARRITO" Type="DateTime" Precision="3" />
           <Property Name="TIPO_CARRITO" Type="Int32" />
-          <NavigationProperty Name="CANTIDAD_PRODUCTO" Relationship="Self.FK_CANTIDAD_CARRITO_C_CARRITO" FromRole="CARRITO" ToRole="CANTIDAD_PRODUCTO" />
-          <NavigationProperty Name="CHECKOUT" Relationship="Self.FK_CARRITO_CHECKOUTX_CHECKOUT" FromRole="CARRITO" ToRole="CHECKOUT" />
-          <NavigationProperty Name="USUARIO" Relationship="Self.FK_CARRITO_USUARIOXC_USUARIO" FromRole="CARRITO" ToRole="USUARIO" />
-          <NavigationProperty Name="CHECKOUT1" Relationship="Self.FK_CHECKOUT_CHECKOUTX_CARRITO" FromRole="CARRITO" ToRole="CHECKOUT" />
+          <NavigationProperty Name="CANTIDAD_PRODUCTO" Relationship="Self.FK_CANTIDAD_FK_CANTID_CARRITO" FromRole="CARRITO" ToRole="CANTIDAD_PRODUCTO" />
+          <NavigationProperty Name="CHECKOUT" Relationship="Self.FK_CARRITO_FK_CARRIT_CHECKOUT" FromRole="CARRITO" ToRole="CHECKOUT" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_CARRITO_FK_CARRIT_USUARIO" FromRole="CARRITO" ToRole="USUARIO" />
+          <NavigationProperty Name="CHECKOUT1" Relationship="Self.FK_CHECKOUT_FK_CHECKO_CARRITO" FromRole="CARRITO" ToRole="CHECKOUT" />
         </EntityType>
         <EntityType Name="CATEGORIA_PRODUCTO">
           <Key>
@@ -1147,8 +1405,8 @@
           <Property Name="ID_CATEGORIA" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NOMBRE_CATEGORIA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="DETALLE_CATEGORIA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CARACTERISTICAS" Relationship="Self.FK_CARACTER_CARACTERI_CATEGORI" FromRole="CATEGORIA_PRODUCTO" ToRole="CARACTERISTICAS" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.PRODUCTOXCATEGORIA" FromRole="CATEGORIA_PRODUCTO" ToRole="PRODUCTO" />
+          <NavigationProperty Name="CARACTERISTICAS" Relationship="Self.FK_CARACTER_FK_CARACT_CATEGORI" FromRole="CATEGORIA_PRODUCTO" ToRole="CARACTERISTICAS" />
+          <NavigationProperty Name="PRODUCTOXCATEGORIA" Relationship="Self.FK_PRODUCTO_CATEGORIA_CATEGORI" FromRole="CATEGORIA_PRODUCTO" ToRole="PRODUCTOXCATEGORIA" />
         </EntityType>
         <EntityType Name="CHECKOUT">
           <Key>
@@ -1162,15 +1420,15 @@
           <Property Name="ID_ESTADO_DELIVERY" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="FECHA_CHECKOUT" Type="DateTime" Precision="3" />
           <Property Name="HORA_CHECKOUT" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CANCELACION" Relationship="Self.FK_CANCELAC_CHECKOUTX_CHECKOUT" FromRole="CHECKOUT" ToRole="CANCELACION" />
-          <NavigationProperty Name="CANCELACION1" Relationship="Self.FK_CHECKOUT_CHECKOUTX_CANCELAC" FromRole="CHECKOUT" ToRole="CANCELACION" />
-          <NavigationProperty Name="CARRITO" Relationship="Self.FK_CARRITO_CHECKOUTX_CHECKOUT" FromRole="CHECKOUT" ToRole="CARRITO" />
-          <NavigationProperty Name="CARRITO1" Relationship="Self.FK_CHECKOUT_CHECKOUTX_CARRITO" FromRole="CHECKOUT" ToRole="CARRITO" />
-          <NavigationProperty Name="RECIBO_BANCARD" Relationship="Self.FK_CHECKOUT_CHECKOUTX_RECIBO_B" FromRole="CHECKOUT" ToRole="RECIBO_BANCARD" />
-          <NavigationProperty Name="ESTADO_DELIVERY" Relationship="Self.FK_CHECKOUT_RELATIONS_ESTADO_D" FromRole="CHECKOUT" ToRole="ESTADO_DELIVERY" />
-          <NavigationProperty Name="FACTURA_VENTA" Relationship="Self.FK_CHECKOUT_RELATIONS_FACTURA_" FromRole="CHECKOUT" ToRole="FACTURA_VENTA" />
-          <NavigationProperty Name="FACTURA_VENTA1" Relationship="Self.FK_FACTURA__RELATIONS_CHECKOUT" FromRole="CHECKOUT" ToRole="FACTURA_VENTA" />
-          <NavigationProperty Name="RECIBO_BANCARD1" Relationship="Self.FK_RECIBO_B_CHECKOUTX_CHECKOUT" FromRole="CHECKOUT" ToRole="RECIBO_BANCARD" />
+          <NavigationProperty Name="CANCELACION" Relationship="Self.FK_CANCELAC_FK_CANCEL_CHECKOUT" FromRole="CHECKOUT" ToRole="CANCELACION" />
+          <NavigationProperty Name="CANCELACION1" Relationship="Self.FK_CHECKOUT_FK_CHECKO_CANCELAC" FromRole="CHECKOUT" ToRole="CANCELACION" />
+          <NavigationProperty Name="CARRITO" Relationship="Self.FK_CARRITO_FK_CARRIT_CHECKOUT" FromRole="CHECKOUT" ToRole="CARRITO" />
+          <NavigationProperty Name="CARRITO1" Relationship="Self.FK_CHECKOUT_FK_CHECKO_CARRITO" FromRole="CHECKOUT" ToRole="CARRITO" />
+          <NavigationProperty Name="ESTADO_DELIVERY" Relationship="Self.FK_CHECKOUT_FK_CHECKO_ESTADO_D" FromRole="CHECKOUT" ToRole="ESTADO_DELIVERY" />
+          <NavigationProperty Name="FACTURA_VENTA" Relationship="Self.FK_CHECKOUT_FK_CHECKO_FACTURA_" FromRole="CHECKOUT" ToRole="FACTURA_VENTA" />
+          <NavigationProperty Name="RECIBO_BANCARD" Relationship="Self.FK_CHECKOUT_FK_CHECKO_RECIBO_B" FromRole="CHECKOUT" ToRole="RECIBO_BANCARD" />
+          <NavigationProperty Name="FACTURA_VENTA1" Relationship="Self.FK_FACTURA__FK_FACTUR_CHECKOUT" FromRole="CHECKOUT" ToRole="FACTURA_VENTA" />
+          <NavigationProperty Name="RECIBO_BANCARD1" Relationship="Self.FK_RECIBO_B_FK_RECIBO_CHECKOUT" FromRole="CHECKOUT" ToRole="RECIBO_BANCARD" />
         </EntityType>
         <EntityType Name="CIUDAD">
           <Key>
@@ -1180,8 +1438,8 @@
           <Property Name="ID_DEPARTAMENTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="NOMBRE_CIUDAD" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="COSTO_DELIVERY_CIUDAD" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="DEPARTAMENTO" Relationship="Self.FK_CIUDAD_DEPARTAME_DEPARTAM" FromRole="CIUDAD" ToRole="DEPARTAMENTO" />
-          <NavigationProperty Name="DIRECION" Relationship="Self.FK_DIRECION_CIUDADXDI_CIUDAD" FromRole="CIUDAD" ToRole="DIRECION" />
+          <NavigationProperty Name="DEPARTAMENTO" Relationship="Self.FK_CIUDAD_FK_CIUDAD_DEPARTAM" FromRole="CIUDAD" ToRole="DEPARTAMENTO" />
+          <NavigationProperty Name="DIRECION" Relationship="Self.FK_DIRECION_FK_DIRECI_CIUDAD" FromRole="CIUDAD" ToRole="DIRECION" />
         </EntityType>
         <EntityType Name="COLOR">
           <Key>
@@ -1190,6 +1448,7 @@
           <Property Name="ID_COLOR" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="NOMBRE_COLOR" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="LINK_FOTO_COLOR" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_COLOR_COLOR_PRO_PRODUCTO" FromRole="COLOR" ToRole="PRODUCTO" />
           <NavigationProperty Name="INGRESO_PRODUCTO" Relationship="Self.FK_INGRESO__INGRESO_C_COLOR" FromRole="COLOR" ToRole="INGRESO_PRODUCTO" />
         </EntityType>
@@ -1199,7 +1458,7 @@
           </Key>
           <Property Name="ID_DEPARTAMENTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NOMBRE_DEPARTAMENTO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CIUDAD" Relationship="Self.FK_CIUDAD_DEPARTAME_DEPARTAM" FromRole="DEPARTAMENTO" ToRole="CIUDAD" />
+          <NavigationProperty Name="CIUDAD" Relationship="Self.FK_CIUDAD_FK_CIUDAD_DEPARTAM" FromRole="DEPARTAMENTO" ToRole="CIUDAD" />
         </EntityType>
         <EntityType Name="DIRECION">
           <Key>
@@ -1213,8 +1472,8 @@
           <Property Name="REFERENCIA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="NRO_CASA" Type="Int32" />
           <Property Name="G_MAP" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CIUDAD" Relationship="Self.FK_DIRECION_CIUDADXDI_CIUDAD" FromRole="DIRECION" ToRole="CIUDAD" />
-          <NavigationProperty Name="USUARIO" Relationship="Self.FK_DIRECION_DIRECCION_USUARIO" FromRole="DIRECION" ToRole="USUARIO" />
+          <NavigationProperty Name="CIUDAD" Relationship="Self.FK_DIRECION_FK_DIRECI_CIUDAD" FromRole="DIRECION" ToRole="CIUDAD" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_DIRECION_FK_DIRECI_USUARIO" FromRole="DIRECION" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="ESTADO_CANCELACION">
           <Key>
@@ -1225,7 +1484,7 @@
           <Property Name="ESTADO_CANCELACION1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="FECHA_ACTUALIZACION_CANCELACION" Type="DateTime" Precision="3" />
           <Property Name="RAZON_ESTADO_CANCELACION" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CANCELACION" Relationship="Self.FK_ESTADO_C_CANCELACI_CANCELAC" FromRole="ESTADO_CANCELACION" ToRole="CANCELACION" />
+          <NavigationProperty Name="CANCELACION" Relationship="Self.FK_ESTADO_C_FK_ESTADO_CANCELAC" FromRole="ESTADO_CANCELACION" ToRole="CANCELACION" />
         </EntityType>
         <EntityType Name="ESTADO_DELIVERY">
           <Key>
@@ -1236,9 +1495,9 @@
           <Property Name="FECHA_ACTUALIZACION_DELIVERY" Type="DateTime" Precision="3" />
           <Property Name="ESTADO_DELIVERY1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="HORA_ACTUALIZACION_DELIVERY" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CHECKOUT" Relationship="Self.FK_CHECKOUT_RELATIONS_ESTADO_D" FromRole="ESTADO_DELIVERY" ToRole="CHECKOUT" />
-          <NavigationProperty Name="PAGOS_DELIVERY" Relationship="Self.FK_ESTADO_D_PAGOSXDEL_PAGOS_DE" FromRole="ESTADO_DELIVERY" ToRole="PAGOS_DELIVERY" />
-          <NavigationProperty Name="PAGOS_DELIVERY1" Relationship="Self.FK_PAGOS_DE_PAGOSXDEL_ESTADO_D" FromRole="ESTADO_DELIVERY" ToRole="PAGOS_DELIVERY" />
+          <NavigationProperty Name="CHECKOUT" Relationship="Self.FK_CHECKOUT_FK_CHECKO_ESTADO_D" FromRole="ESTADO_DELIVERY" ToRole="CHECKOUT" />
+          <NavigationProperty Name="PAGOS_DELIVERY" Relationship="Self.FK_ESTADO_D_FK_ESTADO_PAGOS_DE" FromRole="ESTADO_DELIVERY" ToRole="PAGOS_DELIVERY" />
+          <NavigationProperty Name="PAGOS_DELIVERY1" Relationship="Self.FK_PAGOS_DE_FK_PAGOS__ESTADO_D" FromRole="ESTADO_DELIVERY" ToRole="PAGOS_DELIVERY" />
         </EntityType>
         <EntityType Name="ESTADO_RECLAMO">
           <Key>
@@ -1248,7 +1507,7 @@
           <Property Name="ID_RECLAMO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="DESCRIPCION_ESTADO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RAZON_ESTADO" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="RECLAMO" Relationship="Self.FK_ESTADO_R_RECLAMOXE_RECLAMO" FromRole="ESTADO_RECLAMO" ToRole="RECLAMO" />
+          <NavigationProperty Name="RECLAMO" Relationship="Self.FK_ESTADO_R_FK_ESTADO_RECLAMO" FromRole="ESTADO_RECLAMO" ToRole="RECLAMO" />
         </EntityType>
         <EntityType Name="FACTURA_VENTA">
           <Key>
@@ -1258,9 +1517,9 @@
           <Property Name="ID_CHECKOUT" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="NRO_FACTURA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="FECHA_FACTURA" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CHECKOUT" Relationship="Self.FK_CHECKOUT_RELATIONS_FACTURA_" FromRole="FACTURA_VENTA" ToRole="CHECKOUT" />
-          <NavigationProperty Name="CHECKOUT1" Relationship="Self.FK_FACTURA__RELATIONS_CHECKOUT" FromRole="FACTURA_VENTA" ToRole="CHECKOUT" />
-          <NavigationProperty Name="PRODUCTO_FACTURA" Relationship="Self.FK_PRODUCTO_RELATIONS_FACTURA_" FromRole="FACTURA_VENTA" ToRole="PRODUCTO_FACTURA" />
+          <NavigationProperty Name="CHECKOUT" Relationship="Self.FK_CHECKOUT_FK_CHECKO_FACTURA_" FromRole="FACTURA_VENTA" ToRole="CHECKOUT" />
+          <NavigationProperty Name="CHECKOUT1" Relationship="Self.FK_FACTURA__FK_FACTUR_CHECKOUT" FromRole="FACTURA_VENTA" ToRole="CHECKOUT" />
+          <NavigationProperty Name="PRODUCTO_FACTURA" Relationship="Self.FK_PRODUCTO_FK_PRODUC_FACTURA_" FromRole="FACTURA_VENTA" ToRole="PRODUCTO_FACTURA" />
         </EntityType>
         <EntityType Name="FOTO_PRODUCTO">
           <Key>
@@ -1269,7 +1528,7 @@
           <Property Name="ID_FOTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="LINK_FOTO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_FOTO_PRO_FOTOXPROD_PRODUCTO" FromRole="FOTO_PRODUCTO" ToRole="PRODUCTO" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_FOTO_PRO_FK_FOTO_P_PRODUCTO" FromRole="FOTO_PRODUCTO" ToRole="PRODUCTO" />
         </EntityType>
         <EntityType Name="GASTO">
           <Key>
@@ -1280,7 +1539,7 @@
           <Property Name="DETALLE_GASTO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="FECHA_GASTO" Type="DateTime" Precision="3" />
           <Property Name="MONTO_GASTO" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="USUARIO" Relationship="Self.FK_GASTO_GASTOXUSU_USUARIO" FromRole="GASTO" ToRole="USUARIO" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_GASTO_FK_GASTO__USUARIO" FromRole="GASTO" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="INGRESO_PRODUCTO">
           <Key>
@@ -1293,9 +1552,9 @@
           <Property Name="ID_TAMANO" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="CANTIDAD_INGRESO_PRODUCTO" Type="Int32" />
           <NavigationProperty Name="COLOR" Relationship="Self.FK_INGRESO__INGRESO_C_COLOR" FromRole="INGRESO_PRODUCTO" ToRole="COLOR" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_INGRESO__FK_INGRES_PRODUCTO" FromRole="INGRESO_PRODUCTO" ToRole="PRODUCTO" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_INGRESO__FK_INGRES_USUARIO" FromRole="INGRESO_PRODUCTO" ToRole="USUARIO" />
           <NavigationProperty Name="TAMANO" Relationship="Self.FK_INGRESO__INGRESO_T_TAMANO" FromRole="INGRESO_PRODUCTO" ToRole="TAMANO" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_INGRESO__INGRESOXP_PRODUCTO" FromRole="INGRESO_PRODUCTO" ToRole="PRODUCTO" />
-          <NavigationProperty Name="USUARIO" Relationship="Self.FK_INGRESO__USUARIOXI_USUARIO" FromRole="INGRESO_PRODUCTO" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="LISTA_DESEOS">
           <Key>
@@ -1304,8 +1563,17 @@
           <Property Name="ID_LISTA_DESEOS" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="NOMBRE_LISTA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="USUARIO" Relationship="Self.FK_LISTA_DE_USUARIOXL_USUARIO" FromRole="LISTA_DESEOS" ToRole="USUARIO" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_LISTA_DE_FK_LISTA__USUARIO" FromRole="LISTA_DESEOS" ToRole="USUARIO" />
           <NavigationProperty Name="PRODUCTO" Relationship="Self.LISTAXPRODUCTO" FromRole="LISTA_DESEOS" ToRole="PRODUCTO" />
+        </EntityType>
+        <EntityType Name="LOG">
+          <Key>
+            <PropertyRef Name="ID_LOG" />
+          </Key>
+          <Property Name="ID_LOG" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ACCION_LOG" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_LOG_LOGXUSUAR_USUARIO" FromRole="LOG" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="PAGOS_BANCARD">
           <Key>
@@ -1315,7 +1583,7 @@
           <Property Name="FECHA_PAGO_BANCARD" Type="DateTime" Precision="3" />
           <Property Name="HORA_PAGO_BANCARD" Type="DateTime" Precision="3" />
           <Property Name="FACTURA_PAGO_BANCARD" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="RECIBO_BANCARD" Relationship="Self.FK_RECIBO_B_RELATIONS_PAGOS_BA" FromRole="PAGOS_BANCARD" ToRole="RECIBO_BANCARD" />
+          <NavigationProperty Name="RECIBO_BANCARD" Relationship="Self.FK_RECIBO_B_FK_RECIBO_PAGOS_BA" FromRole="PAGOS_BANCARD" ToRole="RECIBO_BANCARD" />
         </EntityType>
         <EntityType Name="PAGOS_DELIVERY">
           <Key>
@@ -1326,8 +1594,8 @@
           <Property Name="FECHA_PAGO_DELIVERY" Type="DateTime" Precision="3" />
           <Property Name="HORA_PAGO_DELIVERY" Type="DateTime" Precision="3" />
           <Property Name="FACTURA_PAGO_DELIVERY" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ESTADO_DELIVERY" Relationship="Self.FK_ESTADO_D_PAGOSXDEL_PAGOS_DE" FromRole="PAGOS_DELIVERY" ToRole="ESTADO_DELIVERY" />
-          <NavigationProperty Name="ESTADO_DELIVERY1" Relationship="Self.FK_PAGOS_DE_PAGOSXDEL_ESTADO_D" FromRole="PAGOS_DELIVERY" ToRole="ESTADO_DELIVERY" />
+          <NavigationProperty Name="ESTADO_DELIVERY" Relationship="Self.FK_ESTADO_D_FK_ESTADO_PAGOS_DE" FromRole="PAGOS_DELIVERY" ToRole="ESTADO_DELIVERY" />
+          <NavigationProperty Name="ESTADO_DELIVERY1" Relationship="Self.FK_PAGOS_DE_FK_PAGOS__ESTADO_D" FromRole="PAGOS_DELIVERY" ToRole="ESTADO_DELIVERY" />
         </EntityType>
         <EntityType Name="PRODUCTO">
           <Key>
@@ -1342,17 +1610,17 @@
           <Property Name="ESTADO_OFERTA" Type="Boolean" />
           <Property Name="FECHA_PUBLICACION" Type="DateTime" Precision="3" />
           <Property Name="ESTADO_PUBLICACION" Type="Int32" />
-          <NavigationProperty Name="CALIFICACION" Relationship="Self.FK_CALIFICA_PRODUCTOX_PRODUCTO" FromRole="PRODUCTO" ToRole="CALIFICACION" />
-          <NavigationProperty Name="CANTIDAD_PRODUCTO" Relationship="Self.FK_CANTIDAD_CANTIDADX_PRODUCTO" FromRole="PRODUCTO" ToRole="CANTIDAD_PRODUCTO" />
+          <NavigationProperty Name="CALIFICACION" Relationship="Self.FK_CALIFICA_FK_CALIFI_PRODUCTO" FromRole="PRODUCTO" ToRole="CALIFICACION" />
+          <NavigationProperty Name="CANTIDAD_PRODUCTO" Relationship="Self.FK_CANTIDAD_FK_CANTID_PRODUCTO" FromRole="PRODUCTO" ToRole="CANTIDAD_PRODUCTO" />
           <NavigationProperty Name="COLOR" Relationship="Self.FK_COLOR_COLOR_PRO_PRODUCTO" FromRole="PRODUCTO" ToRole="COLOR" />
-          <NavigationProperty Name="FOTO_PRODUCTO" Relationship="Self.FK_FOTO_PRO_FOTOXPROD_PRODUCTO" FromRole="PRODUCTO" ToRole="FOTO_PRODUCTO" />
-          <NavigationProperty Name="INGRESO_PRODUCTO" Relationship="Self.FK_INGRESO__INGRESOXP_PRODUCTO" FromRole="PRODUCTO" ToRole="INGRESO_PRODUCTO" />
-          <NavigationProperty Name="PRODUCTO_FACTURA" Relationship="Self.FK_PRODUCTO_PRODUCTO__PRODUCTO" FromRole="PRODUCTO" ToRole="PRODUCTO_FACTURA" />
-          <NavigationProperty Name="RECLAMO" Relationship="Self.FK_RECLAMO_RECLAMOXP_PRODUCTO" FromRole="PRODUCTO" ToRole="RECLAMO" />
+          <NavigationProperty Name="FOTO_PRODUCTO" Relationship="Self.FK_FOTO_PRO_FK_FOTO_P_PRODUCTO" FromRole="PRODUCTO" ToRole="FOTO_PRODUCTO" />
+          <NavigationProperty Name="INGRESO_PRODUCTO" Relationship="Self.FK_INGRESO__FK_INGRES_PRODUCTO" FromRole="PRODUCTO" ToRole="INGRESO_PRODUCTO" />
+          <NavigationProperty Name="PRODUCTO_FACTURA" Relationship="Self.FK_PRODUCTO_FK_PRODUC_PRODUCTO" FromRole="PRODUCTO" ToRole="PRODUCTO_FACTURA" />
+          <NavigationProperty Name="PRODUCTOXCATEGORIA" Relationship="Self.FK_PRODUCTO_PRODUCTO__PRODUCTO" FromRole="PRODUCTO" ToRole="PRODUCTOXCATEGORIA" />
+          <NavigationProperty Name="RECLAMO" Relationship="Self.FK_RECLAMO_FK_RECLAM_PRODUCTO" FromRole="PRODUCTO" ToRole="RECLAMO" />
           <NavigationProperty Name="TAMANO" Relationship="Self.FK_TAMANO_TAMANO_PR_PRODUCTO" FromRole="PRODUCTO" ToRole="TAMANO" />
-          <NavigationProperty Name="VISITA_PRODUCTO" Relationship="Self.FK_VISITA_P_PRODUCTO__PRODUCTO" FromRole="PRODUCTO" ToRole="VISITA_PRODUCTO" />
+          <NavigationProperty Name="VISITA_PRODUCTO" Relationship="Self.FK_VISITA_P_FK_VISITA_PRODUCTO" FromRole="PRODUCTO" ToRole="VISITA_PRODUCTO" />
           <NavigationProperty Name="LISTA_DESEOS" Relationship="Self.LISTAXPRODUCTO" FromRole="PRODUCTO" ToRole="LISTA_DESEOS" />
-          <NavigationProperty Name="CATEGORIA_PRODUCTO" Relationship="Self.PRODUCTOXCATEGORIA" FromRole="PRODUCTO" ToRole="CATEGORIA_PRODUCTO" />
         </EntityType>
         <EntityType Name="PRODUCTO_FACTURA">
           <Key>
@@ -1363,8 +1631,18 @@
           <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="PRECIO_PRODUCTO_FACTURA" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CANTIDAD_PRODUCTO_FACTURADO" Type="Int32" />
-          <NavigationProperty Name="FACTURA_VENTA" Relationship="Self.FK_PRODUCTO_RELATIONS_FACTURA_" FromRole="PRODUCTO_FACTURA" ToRole="FACTURA_VENTA" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_PRODUCTO_PRODUCTO__PRODUCTO" FromRole="PRODUCTO_FACTURA" ToRole="PRODUCTO" />
+          <NavigationProperty Name="FACTURA_VENTA" Relationship="Self.FK_PRODUCTO_FK_PRODUC_FACTURA_" FromRole="PRODUCTO_FACTURA" ToRole="FACTURA_VENTA" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_PRODUCTO_FK_PRODUC_PRODUCTO" FromRole="PRODUCTO_FACTURA" ToRole="PRODUCTO" />
+        </EntityType>
+        <EntityType Name="PRODUCTOXCATEGORIA">
+          <Key>
+            <PropertyRef Name="ID_PRODUCTOXCATEGORIA" />
+          </Key>
+          <Property Name="ID_PRODUCTOXCATEGORIA" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ID_CATEGORIA" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="CATEGORIA_PRODUCTO" Relationship="Self.FK_PRODUCTO_CATEGORIA_CATEGORI" FromRole="PRODUCTOXCATEGORIA" ToRole="CATEGORIA_PRODUCTO" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_PRODUCTO_PRODUCTO__PRODUCTO" FromRole="PRODUCTOXCATEGORIA" ToRole="PRODUCTO" />
         </EntityType>
         <EntityType Name="RECIBO_BANCARD">
           <Key>
@@ -1377,9 +1655,9 @@
           <Property Name="HORA_RECIBO" Type="DateTime" Precision="3" />
           <Property Name="LINK_RECIBO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="MONTO_RECIBO" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="CHECKOUT" Relationship="Self.FK_CHECKOUT_CHECKOUTX_RECIBO_B" FromRole="RECIBO_BANCARD" ToRole="CHECKOUT" />
-          <NavigationProperty Name="CHECKOUT1" Relationship="Self.FK_RECIBO_B_CHECKOUTX_CHECKOUT" FromRole="RECIBO_BANCARD" ToRole="CHECKOUT" />
-          <NavigationProperty Name="PAGOS_BANCARD" Relationship="Self.FK_RECIBO_B_RELATIONS_PAGOS_BA" FromRole="RECIBO_BANCARD" ToRole="PAGOS_BANCARD" />
+          <NavigationProperty Name="CHECKOUT" Relationship="Self.FK_CHECKOUT_FK_CHECKO_RECIBO_B" FromRole="RECIBO_BANCARD" ToRole="CHECKOUT" />
+          <NavigationProperty Name="CHECKOUT1" Relationship="Self.FK_RECIBO_B_FK_RECIBO_CHECKOUT" FromRole="RECIBO_BANCARD" ToRole="CHECKOUT" />
+          <NavigationProperty Name="PAGOS_BANCARD" Relationship="Self.FK_RECIBO_B_FK_RECIBO_PAGOS_BA" FromRole="RECIBO_BANCARD" ToRole="PAGOS_BANCARD" />
         </EntityType>
         <EntityType Name="RECLAMO">
           <Key>
@@ -1390,9 +1668,9 @@
           <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="DESCRIPCION_RECLAMO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="FECHA_RECLAMO" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ESTADO_RECLAMO" Relationship="Self.FK_ESTADO_R_RECLAMOXE_RECLAMO" FromRole="RECLAMO" ToRole="ESTADO_RECLAMO" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_RECLAMO_RECLAMOXP_PRODUCTO" FromRole="RECLAMO" ToRole="PRODUCTO" />
-          <NavigationProperty Name="USUARIO" Relationship="Self.FK_RECLAMO_USUARIOXR_USUARIO" FromRole="RECLAMO" ToRole="USUARIO" />
+          <NavigationProperty Name="ESTADO_RECLAMO" Relationship="Self.FK_ESTADO_R_FK_ESTADO_RECLAMO" FromRole="RECLAMO" ToRole="ESTADO_RECLAMO" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_RECLAMO_FK_RECLAM_PRODUCTO" FromRole="RECLAMO" ToRole="PRODUCTO" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_RECLAMO_FK_RECLAM_USUARIO" FromRole="RECLAMO" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="ROL">
           <Key>
@@ -1425,13 +1703,15 @@
           <Property Name="ESTADO" Type="Int32" />
           <Property Name="EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="FECHA_INGRESO" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CALIFICACION" Relationship="Self.FK_CALIFICA_USUARIOXC_USUARIO" FromRole="USUARIO" ToRole="CALIFICACION" />
-          <NavigationProperty Name="CARRITO" Relationship="Self.FK_CARRITO_USUARIOXC_USUARIO" FromRole="USUARIO" ToRole="CARRITO" />
-          <NavigationProperty Name="DIRECION" Relationship="Self.FK_DIRECION_DIRECCION_USUARIO" FromRole="USUARIO" ToRole="DIRECION" />
-          <NavigationProperty Name="GASTO" Relationship="Self.FK_GASTO_GASTOXUSU_USUARIO" FromRole="USUARIO" ToRole="GASTO" />
-          <NavigationProperty Name="INGRESO_PRODUCTO" Relationship="Self.FK_INGRESO__USUARIOXI_USUARIO" FromRole="USUARIO" ToRole="INGRESO_PRODUCTO" />
-          <NavigationProperty Name="LISTA_DESEOS" Relationship="Self.FK_LISTA_DE_USUARIOXL_USUARIO" FromRole="USUARIO" ToRole="LISTA_DESEOS" />
-          <NavigationProperty Name="RECLAMO" Relationship="Self.FK_RECLAMO_USUARIOXR_USUARIO" FromRole="USUARIO" ToRole="RECLAMO" />
+          <NavigationProperty Name="BUSQUEDA" Relationship="Self.FK_BUSQUEDA_USUARIOXB_USUARIO" FromRole="USUARIO" ToRole="BUSQUEDA" />
+          <NavigationProperty Name="CALIFICACION" Relationship="Self.FK_CALIFICA_FK_CALIFI_USUARIO" FromRole="USUARIO" ToRole="CALIFICACION" />
+          <NavigationProperty Name="CARRITO" Relationship="Self.FK_CARRITO_FK_CARRIT_USUARIO" FromRole="USUARIO" ToRole="CARRITO" />
+          <NavigationProperty Name="DIRECION" Relationship="Self.FK_DIRECION_FK_DIRECI_USUARIO" FromRole="USUARIO" ToRole="DIRECION" />
+          <NavigationProperty Name="GASTO" Relationship="Self.FK_GASTO_FK_GASTO__USUARIO" FromRole="USUARIO" ToRole="GASTO" />
+          <NavigationProperty Name="INGRESO_PRODUCTO" Relationship="Self.FK_INGRESO__FK_INGRES_USUARIO" FromRole="USUARIO" ToRole="INGRESO_PRODUCTO" />
+          <NavigationProperty Name="LISTA_DESEOS" Relationship="Self.FK_LISTA_DE_FK_LISTA__USUARIO" FromRole="USUARIO" ToRole="LISTA_DESEOS" />
+          <NavigationProperty Name="LOG" Relationship="Self.FK_LOG_LOGXUSUAR_USUARIO" FromRole="USUARIO" ToRole="LOG" />
+          <NavigationProperty Name="RECLAMO" Relationship="Self.FK_RECLAMO_FK_RECLAM_USUARIO" FromRole="USUARIO" ToRole="RECLAMO" />
           <NavigationProperty Name="ROL" Relationship="Self.ROL_USUARIO" FromRole="USUARIO" ToRole="ROL" />
           <NavigationProperty Name="VISITA_PRODUCTO" Relationship="Self.USUARIO_VISITA" FromRole="USUARIO" ToRole="VISITA_PRODUCTO" />
         </EntityType>
@@ -1442,10 +1722,50 @@
           <Property Name="ID_VISITA" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="FECHA_VISITA" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_VISITA_P_PRODUCTO__PRODUCTO" FromRole="VISITA_PRODUCTO" ToRole="PRODUCTO" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_VISITA_P_FK_VISITA_PRODUCTO" FromRole="VISITA_PRODUCTO" ToRole="PRODUCTO" />
           <NavigationProperty Name="USUARIO" Relationship="Self.USUARIO_VISITA" FromRole="VISITA_PRODUCTO" ToRole="USUARIO" />
         </EntityType>
-        <Association Name="FK_CALIFICA_PRODUCTOX_PRODUCTO">
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BUSQUEDA_USUARIOXB_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="BUSQUEDA" Type="Self.BUSQUEDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID_USUARIO" />
+            </Principal>
+            <Dependent Role="BUSQUEDA">
+              <PropertyRef Name="ID_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CALIFICA_FK_CALIFI_PRODUCTO">
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="CALIFICACION" Type="Self.CALIFICACION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1457,7 +1777,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CALIFICA_USUARIOXC_USUARIO">
+        <Association Name="FK_CALIFICA_FK_CALIFI_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="CALIFICACION" Type="Self.CALIFICACION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1469,7 +1789,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CANCELAC_CHECKOUTX_CHECKOUT">
+        <Association Name="FK_CANCELAC_FK_CANCEL_CHECKOUT">
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="1" />
           <End Role="CANCELACION" Type="Self.CANCELACION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1481,7 +1801,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CHECKOUT_CHECKOUTX_CANCELAC">
+        <Association Name="FK_CHECKOUT_FK_CHECKO_CANCELAC">
           <End Role="CANCELACION" Type="Self.CANCELACION" Multiplicity="0..1" />
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1493,7 +1813,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ESTADO_C_CANCELACI_CANCELAC">
+        <Association Name="FK_ESTADO_C_FK_ESTADO_CANCELAC">
           <End Role="CANCELACION" Type="Self.CANCELACION" Multiplicity="1" />
           <End Role="ESTADO_CANCELACION" Type="Self.ESTADO_CANCELACION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1505,7 +1825,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CANTIDAD_CANTIDADX_PRODUCTO">
+        <Association Name="FK_CANTIDAD_FK_CANTID_CARRITO">
+          <End Role="CARRITO" Type="Self.CARRITO" Multiplicity="1" />
+          <End Role="CANTIDAD_PRODUCTO" Type="Self.CANTIDAD_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARRITO">
+              <PropertyRef Name="ID_CARRITO" />
+            </Principal>
+            <Dependent Role="CANTIDAD_PRODUCTO">
+              <PropertyRef Name="ID_CARRITO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CANTIDAD_FK_CANTID_PRODUCTO">
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="CANTIDAD_PRODUCTO" Type="Self.CANTIDAD_PRODUCTO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1517,19 +1849,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CANTIDAD_CARRITO_C_CARRITO">
-          <End Role="CARRITO" Type="Self.CARRITO" Multiplicity="1" />
-          <End Role="CANTIDAD_PRODUCTO" Type="Self.CANTIDAD_PRODUCTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CARRITO">
-              <PropertyRef Name="ID_CARRITO" />
-            </Principal>
-            <Dependent Role="CANTIDAD_PRODUCTO">
-              <PropertyRef Name="ID_CARRITO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CARACTER_CARACTERI_CATEGORI">
+        <Association Name="FK_CARACTER_FK_CARACT_CATEGORI">
           <End Role="CATEGORIA_PRODUCTO" Type="Self.CATEGORIA_PRODUCTO" Multiplicity="1" />
           <End Role="CARACTERISTICAS" Type="Self.CARACTERISTICAS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1541,7 +1861,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CARRITO_CHECKOUTX_CHECKOUT">
+        <Association Name="FK_CARRITO_FK_CARRIT_CHECKOUT">
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="0..1" />
           <End Role="CARRITO" Type="Self.CARRITO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1553,7 +1873,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CARRITO_USUARIOXC_USUARIO">
+        <Association Name="FK_CARRITO_FK_CARRIT_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="CARRITO" Type="Self.CARRITO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1565,7 +1885,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CHECKOUT_CHECKOUTX_CARRITO">
+        <Association Name="FK_CHECKOUT_FK_CHECKO_CARRITO">
           <End Role="CARRITO" Type="Self.CARRITO" Multiplicity="1" />
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1577,19 +1897,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CHECKOUT_CHECKOUTX_RECIBO_B">
-          <End Role="RECIBO_BANCARD" Type="Self.RECIBO_BANCARD" Multiplicity="0..1" />
-          <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="*" />
+        <Association Name="FK_PRODUCTO_CATEGORIA_CATEGORI">
+          <End Role="CATEGORIA_PRODUCTO" Type="Self.CATEGORIA_PRODUCTO" Multiplicity="0..1" />
+          <End Role="PRODUCTOXCATEGORIA" Type="Self.PRODUCTOXCATEGORIA" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="RECIBO_BANCARD">
-              <PropertyRef Name="ID_RECIBO_BANCARD" />
+            <Principal Role="CATEGORIA_PRODUCTO">
+              <PropertyRef Name="ID_CATEGORIA" />
             </Principal>
-            <Dependent Role="CHECKOUT">
-              <PropertyRef Name="ID_RECIBO_BANCARD" />
+            <Dependent Role="PRODUCTOXCATEGORIA">
+              <PropertyRef Name="ID_CATEGORIA" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CHECKOUT_RELATIONS_ESTADO_D">
+        <Association Name="FK_CHECKOUT_FK_CHECKO_ESTADO_D">
           <End Role="ESTADO_DELIVERY" Type="Self.ESTADO_DELIVERY" Multiplicity="0..1" />
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1601,7 +1921,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CHECKOUT_RELATIONS_FACTURA_">
+        <Association Name="FK_CHECKOUT_FK_CHECKO_FACTURA_">
           <End Role="FACTURA_VENTA" Type="Self.FACTURA_VENTA" Multiplicity="0..1" />
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1613,7 +1933,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FACTURA__RELATIONS_CHECKOUT">
+        <Association Name="FK_CHECKOUT_FK_CHECKO_RECIBO_B">
+          <End Role="RECIBO_BANCARD" Type="Self.RECIBO_BANCARD" Multiplicity="0..1" />
+          <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RECIBO_BANCARD">
+              <PropertyRef Name="ID_RECIBO_BANCARD" />
+            </Principal>
+            <Dependent Role="CHECKOUT">
+              <PropertyRef Name="ID_RECIBO_BANCARD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACTURA__FK_FACTUR_CHECKOUT">
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="0..1" />
           <End Role="FACTURA_VENTA" Type="Self.FACTURA_VENTA" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1625,7 +1957,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RECIBO_B_CHECKOUTX_CHECKOUT">
+        <Association Name="FK_RECIBO_B_FK_RECIBO_CHECKOUT">
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="1" />
           <End Role="RECIBO_BANCARD" Type="Self.RECIBO_BANCARD" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1637,7 +1969,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CIUDAD_DEPARTAME_DEPARTAM">
+        <Association Name="FK_CIUDAD_FK_CIUDAD_DEPARTAM">
           <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="1" />
           <End Role="CIUDAD" Type="Self.CIUDAD" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1649,7 +1981,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DIRECION_CIUDADXDI_CIUDAD">
+        <Association Name="FK_DIRECION_FK_DIRECI_CIUDAD">
           <End Role="CIUDAD" Type="Self.CIUDAD" Multiplicity="1" />
           <End Role="DIRECION" Type="Self.DIRECION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1685,7 +2017,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DIRECION_DIRECCION_USUARIO">
+        <Association Name="FK_DIRECION_FK_DIRECI_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="DIRECION" Type="Self.DIRECION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1697,7 +2029,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ESTADO_D_PAGOSXDEL_PAGOS_DE">
+        <Association Name="FK_ESTADO_D_FK_ESTADO_PAGOS_DE">
           <End Role="PAGOS_DELIVERY" Type="Self.PAGOS_DELIVERY" Multiplicity="0..1" />
           <End Role="ESTADO_DELIVERY" Type="Self.ESTADO_DELIVERY" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1709,7 +2041,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PAGOS_DE_PAGOSXDEL_ESTADO_D">
+        <Association Name="FK_PAGOS_DE_FK_PAGOS__ESTADO_D">
           <End Role="ESTADO_DELIVERY" Type="Self.ESTADO_DELIVERY" Multiplicity="1" />
           <End Role="PAGOS_DELIVERY" Type="Self.PAGOS_DELIVERY" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1721,7 +2053,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ESTADO_R_RECLAMOXE_RECLAMO">
+        <Association Name="FK_ESTADO_R_FK_ESTADO_RECLAMO">
           <End Role="RECLAMO" Type="Self.RECLAMO" Multiplicity="1" />
           <End Role="ESTADO_RECLAMO" Type="Self.ESTADO_RECLAMO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1733,7 +2065,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PRODUCTO_RELATIONS_FACTURA_">
+        <Association Name="FK_PRODUCTO_FK_PRODUC_FACTURA_">
           <End Role="FACTURA_VENTA" Type="Self.FACTURA_VENTA" Multiplicity="1" />
           <End Role="PRODUCTO_FACTURA" Type="Self.PRODUCTO_FACTURA" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1745,7 +2077,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FOTO_PRO_FOTOXPROD_PRODUCTO">
+        <Association Name="FK_FOTO_PRO_FK_FOTO_P_PRODUCTO">
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="FOTO_PRODUCTO" Type="Self.FOTO_PRODUCTO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1757,7 +2089,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_GASTO_GASTOXUSU_USUARIO">
+        <Association Name="FK_GASTO_FK_GASTO__USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="GASTO" Type="Self.GASTO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1765,6 +2097,30 @@
               <PropertyRef Name="ID_USUARIO" />
             </Principal>
             <Dependent Role="GASTO">
+              <PropertyRef Name="ID_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INGRESO__FK_INGRES_PRODUCTO">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
+          <End Role="INGRESO_PRODUCTO" Type="Self.INGRESO_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Principal>
+            <Dependent Role="INGRESO_PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INGRESO__FK_INGRES_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="INGRESO_PRODUCTO" Type="Self.INGRESO_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID_USUARIO" />
+            </Principal>
+            <Dependent Role="INGRESO_PRODUCTO">
               <PropertyRef Name="ID_USUARIO" />
             </Dependent>
           </ReferentialConstraint>
@@ -1781,31 +2137,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_INGRESO__INGRESOXP_PRODUCTO">
-          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
-          <End Role="INGRESO_PRODUCTO" Type="Self.INGRESO_PRODUCTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PRODUCTO">
-              <PropertyRef Name="ID_PRODUCTO" />
-            </Principal>
-            <Dependent Role="INGRESO_PRODUCTO">
-              <PropertyRef Name="ID_PRODUCTO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_INGRESO__USUARIOXI_USUARIO">
-          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
-          <End Role="INGRESO_PRODUCTO" Type="Self.INGRESO_PRODUCTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USUARIO">
-              <PropertyRef Name="ID_USUARIO" />
-            </Principal>
-            <Dependent Role="INGRESO_PRODUCTO">
-              <PropertyRef Name="ID_USUARIO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LISTA_DE_USUARIOXL_USUARIO">
+        <Association Name="FK_LISTA_DE_FK_LISTA__USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
           <End Role="LISTA_DESEOS" Type="Self.LISTA_DESEOS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1817,7 +2149,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RECIBO_B_RELATIONS_PAGOS_BA">
+        <Association Name="FK_LOG_LOGXUSUAR_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="LOG" Type="Self.LOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID_USUARIO" />
+            </Principal>
+            <Dependent Role="LOG">
+              <PropertyRef Name="ID_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECIBO_B_FK_RECIBO_PAGOS_BA">
           <End Role="PAGOS_BANCARD" Type="Self.PAGOS_BANCARD" Multiplicity="1" />
           <End Role="RECIBO_BANCARD" Type="Self.RECIBO_BANCARD" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1829,7 +2173,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PRODUCTO_PRODUCTO__PRODUCTO">
+        <Association Name="FK_PRODUCTO_FK_PRODUC_PRODUCTO">
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="PRODUCTO_FACTURA" Type="Self.PRODUCTO_FACTURA" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1841,7 +2185,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RECLAMO_RECLAMOXP_PRODUCTO">
+        <Association Name="FK_PRODUCTO_PRODUCTO__PRODUCTO">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="0..1" />
+          <End Role="PRODUCTOXCATEGORIA" Type="Self.PRODUCTOXCATEGORIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Principal>
+            <Dependent Role="PRODUCTOXCATEGORIA">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECLAMO_FK_RECLAM_PRODUCTO">
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="RECLAMO" Type="Self.RECLAMO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1865,7 +2221,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VISITA_P_PRODUCTO__PRODUCTO">
+        <Association Name="FK_VISITA_P_FK_VISITA_PRODUCTO">
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="VISITA_PRODUCTO" Type="Self.VISITA_PRODUCTO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1877,7 +2233,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RECLAMO_USUARIOXR_USUARIO">
+        <Association Name="FK_RECLAMO_FK_RECLAM_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="RECLAMO" Type="Self.RECLAMO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1889,12 +2245,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+        </Association>
         <Association Name="LISTAXPRODUCTO">
           <End Role="LISTA_DESEOS" Type="Self.LISTA_DESEOS" Multiplicity="*" />
-          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
-        </Association>
-        <Association Name="PRODUCTOXCATEGORIA">
-          <End Role="CATEGORIA_PRODUCTO" Type="Self.CATEGORIA_PRODUCTO" Multiplicity="*" />
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
         </Association>
         <Association Name="ROL_USUARIO">
@@ -1905,7 +2261,13 @@
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
           <End Role="VISITA_PRODUCTO" Type="Self.VISITA_PRODUCTO" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="zeta_bdEntities3" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="zeta_bdEntities5" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+          <EntitySet Name="BUSQUEDA" EntityType="Self.BUSQUEDA" />
           <EntitySet Name="CALIFICACION" EntityType="Self.CALIFICACION" />
           <EntitySet Name="CANCELACION" EntityType="Self.CANCELACION" />
           <EntitySet Name="CANTIDAD_PRODUCTO" EntityType="Self.CANTIDAD_PRODUCTO" />
@@ -1925,85 +2287,103 @@
           <EntitySet Name="GASTO" EntityType="Self.GASTO" />
           <EntitySet Name="INGRESO_PRODUCTO" EntityType="Self.INGRESO_PRODUCTO" />
           <EntitySet Name="LISTA_DESEOS" EntityType="Self.LISTA_DESEOS" />
+          <EntitySet Name="LOG" EntityType="Self.LOG" />
           <EntitySet Name="PAGOS_BANCARD" EntityType="Self.PAGOS_BANCARD" />
           <EntitySet Name="PAGOS_DELIVERY" EntityType="Self.PAGOS_DELIVERY" />
           <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" />
           <EntitySet Name="PRODUCTO_FACTURA" EntityType="Self.PRODUCTO_FACTURA" />
+          <EntitySet Name="PRODUCTOXCATEGORIA" EntityType="Self.PRODUCTOXCATEGORIA" />
           <EntitySet Name="RECIBO_BANCARD" EntityType="Self.RECIBO_BANCARD" />
           <EntitySet Name="RECLAMO" EntityType="Self.RECLAMO" />
           <EntitySet Name="ROL" EntityType="Self.ROL" />
           <EntitySet Name="TAMANO" EntityType="Self.TAMANO" />
           <EntitySet Name="USUARIO" EntityType="Self.USUARIO" />
           <EntitySet Name="VISITA_PRODUCTO" EntityType="Self.VISITA_PRODUCTO" />
-          <AssociationSet Name="FK_CALIFICA_PRODUCTOX_PRODUCTO" Association="Self.FK_CALIFICA_PRODUCTOX_PRODUCTO">
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BUSQUEDA_USUARIOXB_USUARIO" Association="Self.FK_BUSQUEDA_USUARIOXB_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="BUSQUEDA" EntitySet="BUSQUEDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CALIFICA_FK_CALIFI_PRODUCTO" Association="Self.FK_CALIFICA_FK_CALIFI_PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="CALIFICACION" EntitySet="CALIFICACION" />
           </AssociationSet>
-          <AssociationSet Name="FK_CALIFICA_USUARIOXC_USUARIO" Association="Self.FK_CALIFICA_USUARIOXC_USUARIO">
+          <AssociationSet Name="FK_CALIFICA_FK_CALIFI_USUARIO" Association="Self.FK_CALIFICA_FK_CALIFI_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="CALIFICACION" EntitySet="CALIFICACION" />
           </AssociationSet>
-          <AssociationSet Name="FK_CANCELAC_CHECKOUTX_CHECKOUT" Association="Self.FK_CANCELAC_CHECKOUTX_CHECKOUT">
+          <AssociationSet Name="FK_CANCELAC_FK_CANCEL_CHECKOUT" Association="Self.FK_CANCELAC_FK_CANCEL_CHECKOUT">
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
             <End Role="CANCELACION" EntitySet="CANCELACION" />
           </AssociationSet>
-          <AssociationSet Name="FK_CHECKOUT_CHECKOUTX_CANCELAC" Association="Self.FK_CHECKOUT_CHECKOUTX_CANCELAC">
+          <AssociationSet Name="FK_CHECKOUT_FK_CHECKO_CANCELAC" Association="Self.FK_CHECKOUT_FK_CHECKO_CANCELAC">
             <End Role="CANCELACION" EntitySet="CANCELACION" />
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
           </AssociationSet>
-          <AssociationSet Name="FK_ESTADO_C_CANCELACI_CANCELAC" Association="Self.FK_ESTADO_C_CANCELACI_CANCELAC">
+          <AssociationSet Name="FK_ESTADO_C_FK_ESTADO_CANCELAC" Association="Self.FK_ESTADO_C_FK_ESTADO_CANCELAC">
             <End Role="CANCELACION" EntitySet="CANCELACION" />
             <End Role="ESTADO_CANCELACION" EntitySet="ESTADO_CANCELACION" />
           </AssociationSet>
-          <AssociationSet Name="FK_CANTIDAD_CANTIDADX_PRODUCTO" Association="Self.FK_CANTIDAD_CANTIDADX_PRODUCTO">
+          <AssociationSet Name="FK_CANTIDAD_FK_CANTID_CARRITO" Association="Self.FK_CANTIDAD_FK_CANTID_CARRITO">
+            <End Role="CARRITO" EntitySet="CARRITO" />
+            <End Role="CANTIDAD_PRODUCTO" EntitySet="CANTIDAD_PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CANTIDAD_FK_CANTID_PRODUCTO" Association="Self.FK_CANTIDAD_FK_CANTID_PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="CANTIDAD_PRODUCTO" EntitySet="CANTIDAD_PRODUCTO" />
           </AssociationSet>
-          <AssociationSet Name="FK_CANTIDAD_CARRITO_C_CARRITO" Association="Self.FK_CANTIDAD_CARRITO_C_CARRITO">
-            <End Role="CARRITO" EntitySet="CARRITO" />
-            <End Role="CANTIDAD_PRODUCTO" EntitySet="CANTIDAD_PRODUCTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CARACTER_CARACTERI_CATEGORI" Association="Self.FK_CARACTER_CARACTERI_CATEGORI">
+          <AssociationSet Name="FK_CARACTER_FK_CARACT_CATEGORI" Association="Self.FK_CARACTER_FK_CARACT_CATEGORI">
             <End Role="CATEGORIA_PRODUCTO" EntitySet="CATEGORIA_PRODUCTO" />
             <End Role="CARACTERISTICAS" EntitySet="CARACTERISTICAS" />
           </AssociationSet>
-          <AssociationSet Name="FK_CARRITO_CHECKOUTX_CHECKOUT" Association="Self.FK_CARRITO_CHECKOUTX_CHECKOUT">
+          <AssociationSet Name="FK_CARRITO_FK_CARRIT_CHECKOUT" Association="Self.FK_CARRITO_FK_CARRIT_CHECKOUT">
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
             <End Role="CARRITO" EntitySet="CARRITO" />
           </AssociationSet>
-          <AssociationSet Name="FK_CARRITO_USUARIOXC_USUARIO" Association="Self.FK_CARRITO_USUARIOXC_USUARIO">
+          <AssociationSet Name="FK_CARRITO_FK_CARRIT_USUARIO" Association="Self.FK_CARRITO_FK_CARRIT_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="CARRITO" EntitySet="CARRITO" />
           </AssociationSet>
-          <AssociationSet Name="FK_CHECKOUT_CHECKOUTX_CARRITO" Association="Self.FK_CHECKOUT_CHECKOUTX_CARRITO">
+          <AssociationSet Name="FK_CHECKOUT_FK_CHECKO_CARRITO" Association="Self.FK_CHECKOUT_FK_CHECKO_CARRITO">
             <End Role="CARRITO" EntitySet="CARRITO" />
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
           </AssociationSet>
-          <AssociationSet Name="FK_CHECKOUT_CHECKOUTX_RECIBO_B" Association="Self.FK_CHECKOUT_CHECKOUTX_RECIBO_B">
-            <End Role="RECIBO_BANCARD" EntitySet="RECIBO_BANCARD" />
-            <End Role="CHECKOUT" EntitySet="CHECKOUT" />
+          <AssociationSet Name="FK_PRODUCTO_CATEGORIA_CATEGORI" Association="Self.FK_PRODUCTO_CATEGORIA_CATEGORI">
+            <End Role="CATEGORIA_PRODUCTO" EntitySet="CATEGORIA_PRODUCTO" />
+            <End Role="PRODUCTOXCATEGORIA" EntitySet="PRODUCTOXCATEGORIA" />
           </AssociationSet>
-          <AssociationSet Name="FK_CHECKOUT_RELATIONS_ESTADO_D" Association="Self.FK_CHECKOUT_RELATIONS_ESTADO_D">
+          <AssociationSet Name="FK_CHECKOUT_FK_CHECKO_ESTADO_D" Association="Self.FK_CHECKOUT_FK_CHECKO_ESTADO_D">
             <End Role="ESTADO_DELIVERY" EntitySet="ESTADO_DELIVERY" />
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
           </AssociationSet>
-          <AssociationSet Name="FK_CHECKOUT_RELATIONS_FACTURA_" Association="Self.FK_CHECKOUT_RELATIONS_FACTURA_">
+          <AssociationSet Name="FK_CHECKOUT_FK_CHECKO_FACTURA_" Association="Self.FK_CHECKOUT_FK_CHECKO_FACTURA_">
             <End Role="FACTURA_VENTA" EntitySet="FACTURA_VENTA" />
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
           </AssociationSet>
-          <AssociationSet Name="FK_FACTURA__RELATIONS_CHECKOUT" Association="Self.FK_FACTURA__RELATIONS_CHECKOUT">
+          <AssociationSet Name="FK_CHECKOUT_FK_CHECKO_RECIBO_B" Association="Self.FK_CHECKOUT_FK_CHECKO_RECIBO_B">
+            <End Role="RECIBO_BANCARD" EntitySet="RECIBO_BANCARD" />
+            <End Role="CHECKOUT" EntitySet="CHECKOUT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACTURA__FK_FACTUR_CHECKOUT" Association="Self.FK_FACTURA__FK_FACTUR_CHECKOUT">
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
             <End Role="FACTURA_VENTA" EntitySet="FACTURA_VENTA" />
           </AssociationSet>
-          <AssociationSet Name="FK_RECIBO_B_CHECKOUTX_CHECKOUT" Association="Self.FK_RECIBO_B_CHECKOUTX_CHECKOUT">
+          <AssociationSet Name="FK_RECIBO_B_FK_RECIBO_CHECKOUT" Association="Self.FK_RECIBO_B_FK_RECIBO_CHECKOUT">
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
             <End Role="RECIBO_BANCARD" EntitySet="RECIBO_BANCARD" />
           </AssociationSet>
-          <AssociationSet Name="FK_CIUDAD_DEPARTAME_DEPARTAM" Association="Self.FK_CIUDAD_DEPARTAME_DEPARTAM">
+          <AssociationSet Name="FK_CIUDAD_FK_CIUDAD_DEPARTAM" Association="Self.FK_CIUDAD_FK_CIUDAD_DEPARTAM">
             <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
             <End Role="CIUDAD" EntitySet="CIUDAD" />
           </AssociationSet>
-          <AssociationSet Name="FK_DIRECION_CIUDADXDI_CIUDAD" Association="Self.FK_DIRECION_CIUDADXDI_CIUDAD">
+          <AssociationSet Name="FK_DIRECION_FK_DIRECI_CIUDAD" Association="Self.FK_DIRECION_FK_DIRECI_CIUDAD">
             <End Role="CIUDAD" EntitySet="CIUDAD" />
             <End Role="DIRECION" EntitySet="DIRECION" />
           </AssociationSet>
@@ -2015,59 +2395,67 @@
             <End Role="COLOR" EntitySet="COLOR" />
             <End Role="INGRESO_PRODUCTO" EntitySet="INGRESO_PRODUCTO" />
           </AssociationSet>
-          <AssociationSet Name="FK_DIRECION_DIRECCION_USUARIO" Association="Self.FK_DIRECION_DIRECCION_USUARIO">
+          <AssociationSet Name="FK_DIRECION_FK_DIRECI_USUARIO" Association="Self.FK_DIRECION_FK_DIRECI_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="DIRECION" EntitySet="DIRECION" />
           </AssociationSet>
-          <AssociationSet Name="FK_ESTADO_D_PAGOSXDEL_PAGOS_DE" Association="Self.FK_ESTADO_D_PAGOSXDEL_PAGOS_DE">
+          <AssociationSet Name="FK_ESTADO_D_FK_ESTADO_PAGOS_DE" Association="Self.FK_ESTADO_D_FK_ESTADO_PAGOS_DE">
             <End Role="PAGOS_DELIVERY" EntitySet="PAGOS_DELIVERY" />
             <End Role="ESTADO_DELIVERY" EntitySet="ESTADO_DELIVERY" />
           </AssociationSet>
-          <AssociationSet Name="FK_PAGOS_DE_PAGOSXDEL_ESTADO_D" Association="Self.FK_PAGOS_DE_PAGOSXDEL_ESTADO_D">
+          <AssociationSet Name="FK_PAGOS_DE_FK_PAGOS__ESTADO_D" Association="Self.FK_PAGOS_DE_FK_PAGOS__ESTADO_D">
             <End Role="ESTADO_DELIVERY" EntitySet="ESTADO_DELIVERY" />
             <End Role="PAGOS_DELIVERY" EntitySet="PAGOS_DELIVERY" />
           </AssociationSet>
-          <AssociationSet Name="FK_ESTADO_R_RECLAMOXE_RECLAMO" Association="Self.FK_ESTADO_R_RECLAMOXE_RECLAMO">
+          <AssociationSet Name="FK_ESTADO_R_FK_ESTADO_RECLAMO" Association="Self.FK_ESTADO_R_FK_ESTADO_RECLAMO">
             <End Role="RECLAMO" EntitySet="RECLAMO" />
             <End Role="ESTADO_RECLAMO" EntitySet="ESTADO_RECLAMO" />
           </AssociationSet>
-          <AssociationSet Name="FK_PRODUCTO_RELATIONS_FACTURA_" Association="Self.FK_PRODUCTO_RELATIONS_FACTURA_">
+          <AssociationSet Name="FK_PRODUCTO_FK_PRODUC_FACTURA_" Association="Self.FK_PRODUCTO_FK_PRODUC_FACTURA_">
             <End Role="FACTURA_VENTA" EntitySet="FACTURA_VENTA" />
             <End Role="PRODUCTO_FACTURA" EntitySet="PRODUCTO_FACTURA" />
           </AssociationSet>
-          <AssociationSet Name="FK_FOTO_PRO_FOTOXPROD_PRODUCTO" Association="Self.FK_FOTO_PRO_FOTOXPROD_PRODUCTO">
+          <AssociationSet Name="FK_FOTO_PRO_FK_FOTO_P_PRODUCTO" Association="Self.FK_FOTO_PRO_FK_FOTO_P_PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="FOTO_PRODUCTO" EntitySet="FOTO_PRODUCTO" />
           </AssociationSet>
-          <AssociationSet Name="FK_GASTO_GASTOXUSU_USUARIO" Association="Self.FK_GASTO_GASTOXUSU_USUARIO">
+          <AssociationSet Name="FK_GASTO_FK_GASTO__USUARIO" Association="Self.FK_GASTO_FK_GASTO__USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="GASTO" EntitySet="GASTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INGRESO__FK_INGRES_PRODUCTO" Association="Self.FK_INGRESO__FK_INGRES_PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="INGRESO_PRODUCTO" EntitySet="INGRESO_PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INGRESO__FK_INGRES_USUARIO" Association="Self.FK_INGRESO__FK_INGRES_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="INGRESO_PRODUCTO" EntitySet="INGRESO_PRODUCTO" />
           </AssociationSet>
           <AssociationSet Name="FK_INGRESO__INGRESO_T_TAMANO" Association="Self.FK_INGRESO__INGRESO_T_TAMANO">
             <End Role="TAMANO" EntitySet="TAMANO" />
             <End Role="INGRESO_PRODUCTO" EntitySet="INGRESO_PRODUCTO" />
           </AssociationSet>
-          <AssociationSet Name="FK_INGRESO__INGRESOXP_PRODUCTO" Association="Self.FK_INGRESO__INGRESOXP_PRODUCTO">
-            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
-            <End Role="INGRESO_PRODUCTO" EntitySet="INGRESO_PRODUCTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_INGRESO__USUARIOXI_USUARIO" Association="Self.FK_INGRESO__USUARIOXI_USUARIO">
-            <End Role="USUARIO" EntitySet="USUARIO" />
-            <End Role="INGRESO_PRODUCTO" EntitySet="INGRESO_PRODUCTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LISTA_DE_USUARIOXL_USUARIO" Association="Self.FK_LISTA_DE_USUARIOXL_USUARIO">
+          <AssociationSet Name="FK_LISTA_DE_FK_LISTA__USUARIO" Association="Self.FK_LISTA_DE_FK_LISTA__USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="LISTA_DESEOS" EntitySet="LISTA_DESEOS" />
           </AssociationSet>
-          <AssociationSet Name="FK_RECIBO_B_RELATIONS_PAGOS_BA" Association="Self.FK_RECIBO_B_RELATIONS_PAGOS_BA">
+          <AssociationSet Name="FK_LOG_LOGXUSUAR_USUARIO" Association="Self.FK_LOG_LOGXUSUAR_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="LOG" EntitySet="LOG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECIBO_B_FK_RECIBO_PAGOS_BA" Association="Self.FK_RECIBO_B_FK_RECIBO_PAGOS_BA">
             <End Role="PAGOS_BANCARD" EntitySet="PAGOS_BANCARD" />
             <End Role="RECIBO_BANCARD" EntitySet="RECIBO_BANCARD" />
           </AssociationSet>
-          <AssociationSet Name="FK_PRODUCTO_PRODUCTO__PRODUCTO" Association="Self.FK_PRODUCTO_PRODUCTO__PRODUCTO">
+          <AssociationSet Name="FK_PRODUCTO_FK_PRODUC_PRODUCTO" Association="Self.FK_PRODUCTO_FK_PRODUC_PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="PRODUCTO_FACTURA" EntitySet="PRODUCTO_FACTURA" />
           </AssociationSet>
-          <AssociationSet Name="FK_RECLAMO_RECLAMOXP_PRODUCTO" Association="Self.FK_RECLAMO_RECLAMOXP_PRODUCTO">
+          <AssociationSet Name="FK_PRODUCTO_PRODUCTO__PRODUCTO" Association="Self.FK_PRODUCTO_PRODUCTO__PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="PRODUCTOXCATEGORIA" EntitySet="PRODUCTOXCATEGORIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECLAMO_FK_RECLAM_PRODUCTO" Association="Self.FK_RECLAMO_FK_RECLAM_PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="RECLAMO" EntitySet="RECLAMO" />
           </AssociationSet>
@@ -2075,20 +2463,20 @@
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="TAMANO" EntitySet="TAMANO" />
           </AssociationSet>
-          <AssociationSet Name="FK_VISITA_P_PRODUCTO__PRODUCTO" Association="Self.FK_VISITA_P_PRODUCTO__PRODUCTO">
+          <AssociationSet Name="FK_VISITA_P_FK_VISITA_PRODUCTO" Association="Self.FK_VISITA_P_FK_VISITA_PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="VISITA_PRODUCTO" EntitySet="VISITA_PRODUCTO" />
           </AssociationSet>
-          <AssociationSet Name="FK_RECLAMO_USUARIOXR_USUARIO" Association="Self.FK_RECLAMO_USUARIOXR_USUARIO">
+          <AssociationSet Name="FK_RECLAMO_FK_RECLAM_USUARIO" Association="Self.FK_RECLAMO_FK_RECLAM_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="RECLAMO" EntitySet="RECLAMO" />
           </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
           <AssociationSet Name="LISTAXPRODUCTO" Association="Self.LISTAXPRODUCTO">
             <End Role="LISTA_DESEOS" EntitySet="LISTA_DESEOS" />
-            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
-          </AssociationSet>
-          <AssociationSet Name="PRODUCTOXCATEGORIA" Association="Self.PRODUCTOXCATEGORIA">
-            <End Role="CATEGORIA_PRODUCTO" EntitySet="CATEGORIA_PRODUCTO" />
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
           </AssociationSet>
           <AssociationSet Name="ROL_USUARIO" Association="Self.ROL_USUARIO">
@@ -2105,7 +2493,71 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="zeta_bdModelStoreContainer" CdmEntityContainer="zeta_bdEntities3">
+        <EntityContainerMapping StorageEntityContainer="zeta_bdModelStoreContainer" CdmEntityContainer="zeta_bdEntities5">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="zeta_bdModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="zeta_bdModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="zeta_bdModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="zeta_bdModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="zeta_bdModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BUSQUEDA">
+            <EntityTypeMapping TypeName="zeta_bdModel.BUSQUEDA">
+              <MappingFragment StoreEntitySet="BUSQUEDA">
+                <ScalarProperty Name="ID_BUSQUEDA" ColumnName="ID_BUSQUEDA" />
+                <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />
+                <ScalarProperty Name="TEXTO_BUSQUEDA" ColumnName="TEXTO_BUSQUEDA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CALIFICACION">
             <EntityTypeMapping TypeName="zeta_bdModel.CALIFICACION">
               <MappingFragment StoreEntitySet="CALIFICACION">
@@ -2198,6 +2650,7 @@
                 <ScalarProperty Name="ID_COLOR" ColumnName="ID_COLOR" />
                 <ScalarProperty Name="ID_PRODUCTO" ColumnName="ID_PRODUCTO" />
                 <ScalarProperty Name="NOMBRE_COLOR" ColumnName="NOMBRE_COLOR" />
+                <ScalarProperty Name="LINK_FOTO_COLOR" ColumnName="LINK_FOTO_COLOR" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2306,6 +2759,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="LOG">
+            <EntityTypeMapping TypeName="zeta_bdModel.LOG">
+              <MappingFragment StoreEntitySet="LOG">
+                <ScalarProperty Name="ID_LOG" ColumnName="ID_LOG" />
+                <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />
+                <ScalarProperty Name="ACCION_LOG" ColumnName="ACCION_LOG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PAGOS_BANCARD">
             <EntityTypeMapping TypeName="zeta_bdModel.PAGOS_BANCARD">
               <MappingFragment StoreEntitySet="PAGOS_BANCARD">
@@ -2350,6 +2812,15 @@
                 <ScalarProperty Name="ID_PRODUCTO" ColumnName="ID_PRODUCTO" />
                 <ScalarProperty Name="PRECIO_PRODUCTO_FACTURA" ColumnName="PRECIO_PRODUCTO_FACTURA" />
                 <ScalarProperty Name="CANTIDAD_PRODUCTO_FACTURADO" ColumnName="CANTIDAD_PRODUCTO_FACTURADO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTOXCATEGORIA">
+            <EntityTypeMapping TypeName="zeta_bdModel.PRODUCTOXCATEGORIA">
+              <MappingFragment StoreEntitySet="PRODUCTOXCATEGORIA">
+                <ScalarProperty Name="ID_PRODUCTOXCATEGORIA" ColumnName="ID_PRODUCTOXCATEGORIA" />
+                <ScalarProperty Name="ID_PRODUCTO" ColumnName="ID_PRODUCTO" />
+                <ScalarProperty Name="ID_CATEGORIA" ColumnName="ID_CATEGORIA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2418,17 +2889,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="zeta_bdModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
           <AssociationSetMapping Name="LISTAXPRODUCTO" TypeName="zeta_bdModel.LISTAXPRODUCTO" StoreEntitySet="LISTAXPRODUCTO">
             <EndProperty Name="LISTA_DESEOS">
               <ScalarProperty Name="ID_LISTA_DESEOS" ColumnName="ID_LISTA_DESEOS" />
-            </EndProperty>
-            <EndProperty Name="PRODUCTO">
-              <ScalarProperty Name="ID_PRODUCTO" ColumnName="ID_PRODUCTO" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="PRODUCTOXCATEGORIA" TypeName="zeta_bdModel.PRODUCTOXCATEGORIA" StoreEntitySet="PRODUCTOXCATEGORIA">
-            <EndProperty Name="CATEGORIA_PRODUCTO">
-              <ScalarProperty Name="ID_CATEGORIA" ColumnName="ID_CATEGORIA" />
             </EndProperty>
             <EndProperty Name="PRODUCTO">
               <ScalarProperty Name="ID_PRODUCTO" ColumnName="ID_PRODUCTO" />

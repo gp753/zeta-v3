@@ -13,10 +13,10 @@ namespace zeta_v3.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class zeta_bdEntities3 : DbContext
+    public partial class zeta_bdEntities5 : DbContext
     {
-        public zeta_bdEntities3()
-            : base("name=zeta_bdEntities3")
+        public zeta_bdEntities5()
+            : base("name=zeta_bdEntities5")
         {
         }
     
@@ -25,6 +25,12 @@ namespace zeta_v3.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<BUSQUEDA> BUSQUEDA { get; set; }
         public virtual DbSet<CALIFICACION> CALIFICACION { get; set; }
         public virtual DbSet<CANCELACION> CANCELACION { get; set; }
         public virtual DbSet<CANTIDAD_PRODUCTO> CANTIDAD_PRODUCTO { get; set; }
@@ -44,10 +50,12 @@ namespace zeta_v3.Models
         public virtual DbSet<GASTO> GASTO { get; set; }
         public virtual DbSet<INGRESO_PRODUCTO> INGRESO_PRODUCTO { get; set; }
         public virtual DbSet<LISTA_DESEOS> LISTA_DESEOS { get; set; }
+        public virtual DbSet<LOG> LOG { get; set; }
         public virtual DbSet<PAGOS_BANCARD> PAGOS_BANCARD { get; set; }
         public virtual DbSet<PAGOS_DELIVERY> PAGOS_DELIVERY { get; set; }
         public virtual DbSet<PRODUCTO> PRODUCTO { get; set; }
         public virtual DbSet<PRODUCTO_FACTURA> PRODUCTO_FACTURA { get; set; }
+        public virtual DbSet<PRODUCTOXCATEGORIA> PRODUCTOXCATEGORIA { get; set; }
         public virtual DbSet<RECIBO_BANCARD> RECIBO_BANCARD { get; set; }
         public virtual DbSet<RECLAMO> RECLAMO { get; set; }
         public virtual DbSet<ROL> ROL { get; set; }

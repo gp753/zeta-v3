@@ -17,12 +17,14 @@ namespace zeta_v3.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public USUARIO()
         {
+            this.BUSQUEDA = new HashSet<BUSQUEDA>();
             this.CALIFICACION = new HashSet<CALIFICACION>();
             this.CARRITO = new HashSet<CARRITO>();
             this.DIRECION = new HashSet<DIRECION>();
             this.GASTO = new HashSet<GASTO>();
             this.INGRESO_PRODUCTO = new HashSet<INGRESO_PRODUCTO>();
             this.LISTA_DESEOS = new HashSet<LISTA_DESEOS>();
+            this.LOG = new HashSet<LOG>();
             this.RECLAMO = new HashSet<RECLAMO>();
             this.ROL = new HashSet<ROL>();
             this.VISITA_PRODUCTO = new HashSet<VISITA_PRODUCTO>();
@@ -38,6 +40,8 @@ namespace zeta_v3.Models
         public Nullable<System.DateTime> FECHA_INGRESO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BUSQUEDA> BUSQUEDA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CALIFICACION> CALIFICACION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARRITO> CARRITO { get; set; }
@@ -49,6 +53,8 @@ namespace zeta_v3.Models
         public virtual ICollection<INGRESO_PRODUCTO> INGRESO_PRODUCTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LISTA_DESEOS> LISTA_DESEOS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LOG> LOG { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RECLAMO> RECLAMO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
