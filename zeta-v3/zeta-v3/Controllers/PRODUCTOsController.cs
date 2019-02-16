@@ -36,7 +36,17 @@ namespace zeta_v3.Controllers
                 return NotFound();
             }
 
-            return Ok(pRODUCTO);
+            var fotos = from FOTO_PRODUCTO in db.FOTO_PRODUCTO
+                        where FOTO_PRODUCTO.ID_PRODUCTO == pRODUCTO.ID_PRODUCTO
+                        select FOTO_PRODUCTO.LINK_FOTO;
+            var colores = from COLOR in db.COLOR
+                          where COLOR.ID_PRODUCTO == pRODUCTO.ID_PRODUCTO
+                          select new { COLOR.ID_COLOR, COLOR.NOMBRE_COLOR };
+            var tamanos = from TAMANO in db.TAMANO
+                          where TAMANO.ID_PRODUCTO == pRODUCTO.ID_PRODUCTO
+                          select new { TAMANO.ID_TAMANO, TAMANO.NOMBRE_TAMANO };
+            return Ok(new { pRODUCTO.ID_PRODUCTO, pRODUCTO.NOMBRE_PRODUCTO,pRODUCTO.DESCRIPCION_CORTA, pRODUCTO.DESCRIPCION_LARGA, pRODUCTO.PRECIO_VENTA, pRODUCTO.PRECIO_OFERTA
+                            , fotos, colores, tamanos});
         }
 
         [Route("api/publicacion/baner")]
@@ -47,14 +57,7 @@ namespace zeta_v3.Controllers
             var link = "https://about.canva.com/wp-content/uploads/sites/3/2017/02/congratulations_-banner.png";
             return Ok(new { link });
         }
-        [Route("api/carritos/page")]
-        [HttpGet]
-        public async Task<IHttpActionResult> carrito_page()
-        {
-            
-            var banr = 350000;
-            return Ok(banr);
-        }
+        
         [Route ("api/productos/nuevos") ]
         [HttpGet]
         public async Task<IHttpActionResult> productos_nuevos()
