@@ -83,7 +83,7 @@ namespace zeta_v3.Controllers
             db.INGRESO_PRODUCTO.Add(iNGRESO_PRODUCTO);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = iNGRESO_PRODUCTO.ID_INGRESO_PRODUCTO }, new { iNGRESO_PRODUCTO.ID_PRODUCTO,iNGRESO_PRODUCTO.COLOR, iNGRESO_PRODUCTO.TAMANO});
+            return CreatedAtRoute("DefaultApi", new { id = iNGRESO_PRODUCTO.ID_INGRESO_PRODUCTO }, new { iNGRESO_PRODUCTO.ID_PRODUCTO,iNGRESO_PRODUCTO.ID_COLOR, iNGRESO_PRODUCTO.ID_TAMANO});
         }
 
 
