@@ -244,8 +244,11 @@
     <Compile Include="Controllers\CARACTERISTICASController.cs" />
     <Compile Include="Controllers\CARRITOsController.cs" />
     <Compile Include="Controllers\CATEGORIA_PRODUCTOController.cs" />
+    <Compile Include="Controllers\COLORsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\INGRESO_PRODUCTOController.cs" />
     <Compile Include="Controllers\PRODUCTOsController.cs" />
+    <Compile Include="Controllers\TAMANOesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -264,6 +267,7 @@
     <Compile Include="Models\AspNetUsers.cs">
       <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AuxModel.cs" />
     <Compile Include="Models\BUSQUEDA.cs">
       <DependentUpon>zetaModel.tt</DependentUpon>
     </Compile>

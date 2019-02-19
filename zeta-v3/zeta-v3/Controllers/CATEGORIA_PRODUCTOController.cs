@@ -16,10 +16,18 @@ namespace zeta_v3.Controllers
     {
         private zeta_bdEntities5 db = new zeta_bdEntities5();
 
-        // GET: api/CATEGORIA_PRODUCTO
-        public IQueryable<CATEGORIA_PRODUCTO> GetCATEGORIA_PRODUCTO()
+
+        [Route("api/categoria_producto")]
+        [HttpGet]
+        public  IHttpActionResult GetCategorias()
         {
-            return db.CATEGORIA_PRODUCTO;
+            /*  var products = from PRODUCTO in db.PRODUCTO
+                             join FOTO_PRODUCTO in db.FOTO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals FOTO_PRODUCTO.ID_PRODUCTO
+                             select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, FOTO_PRODUCTO.LINK_FOTO };*/
+            var categorias = from CATEGORIA_PRODUCTO in db.CATEGORIA_PRODUCTO
+                             select new { CATEGORIA_PRODUCTO.ID_CATEGORIA, CATEGORIA_PRODUCTO.NOMBRE_CATEGORIA };
+
+            return Ok(categorias);
         }
 
         // GET: api/CATEGORIA_PRODUCTO/5

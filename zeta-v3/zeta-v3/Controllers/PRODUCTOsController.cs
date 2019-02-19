@@ -91,6 +91,20 @@ namespace zeta_v3.Controllers
             return Ok(products);
         }
 
+        [Route("api/productos/{id}/colores_tamanos")]
+        [HttpGet]
+        public async Task<IHttpActionResult> get_productos_colores_tamanos(decimal id)
+        {
+            var color = from COLOR in db.COLOR
+                          where COLOR.ID_PRODUCTO == id
+                          select new { COLOR.ID_COLOR, COLOR.NOMBRE_COLOR };
+            var tamano = from TAMANO in db.TAMANO
+                          where TAMANO.ID_PRODUCTO == id
+                          select new { TAMANO.ID_TAMANO, TAMANO.NOMBRE_TAMANO };
+
+            return Ok(new { colores = color, tamanos = tamano });
+        }
+
         // PUT: api/PRODUCTOs/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutPRODUCTO(decimal id, PRODUCTO pRODUCTO)
@@ -135,11 +149,61 @@ namespace zeta_v3.Controllers
                 return BadRequest(ModelState);
             }
 
+            pRODUCTO.ESTADO_PUBLICACION = 0;
+            pRODUCTO.FECHA_PUBLICACION = DateTime.Today;
             db.PRODUCTO.Add(pRODUCTO);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = pRODUCTO.ID_PRODUCTO }, pRODUCTO);
+            return CreatedAtRoute("DefaultApi", new { id = pRODUCTO.ID_PRODUCTO }, new { pRODUCTO.ID_PRODUCTO });
         }
+
+        // POST: api/PRODUCTOs categorias
+        [Route("api/productos/categoria")]
+        public async Task<IHttpActionResult> cargar_categoria(PRODUCTO pRODUCTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            pRODUCTO.ESTADO_PUBLICACION = 0;
+            pRODUCTO.FECHA_PUBLICACION = DateTime.Today;
+            db.PRODUCTO.Add(pRODUCTO);
+            await db.SaveChangesAsync();
+
+            return CreatedAtRoute("DefaultApi", new { id = pRODUCTO.ID_PRODUCTO }, new { pRODUCTO.ID_PRODUCTO });
+        }
+
+        // POST: api/productos/tamano_color
+        [Route("api/productos/tamano_color")]
+        public async Task<IHttpActionResult> cargar_tam_color(AuxModel.tamanosycolores aux)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            TAMANO tMANO= new TAMANO();
+            COLOR cOLOR = new COLOR();
+
+            tMANO.ID_PRODUCTO = aux.ID_PRODUCTO;
+            tMANO.NOMBRE_TAMANO = aux.NOMBRE_TAMANO;
+
+            cOLOR.ID_PRODUCTO = aux.ID_PRODUCTO;
+            cOLOR.NOMBRE_COLOR = aux.NOMBRE_COLOR;
+
+
+            db.COLOR.Add(cOLOR);
+            db.TAMANO.Add(tMANO);
+           
+            await db.SaveChangesAsync();
+
+            return Created("DefaultApi",  new { aux.ID_PRODUCTO, cOLOR.ID_COLOR, cOLOR.NOMBRE_COLOR, tMANO.ID_TAMANO, tMANO.NOMBRE_TAMANO });
+        }
+
+       
+
+
 
         // DELETE: api/PRODUCTOs/5
         [ResponseType(typeof(PRODUCTO))]

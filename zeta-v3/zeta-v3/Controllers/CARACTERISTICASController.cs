@@ -26,16 +26,13 @@ namespace zeta_v3.Controllers
         }
 
         // GET: api/CARACTERISTICAS/5
-        [ResponseType(typeof(CARACTERISTICAS))]
         public async Task<IHttpActionResult> GetCARACTERISTICAS(decimal id)
         {
-            CARACTERISTICAS cARACTERISTICAS = await db.CARACTERISTICAS.FindAsync(id);
-            if (cARACTERISTICAS == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(cARACTERISTICAS);
+       
+            var caracteristicas = from CARACTERISTICAS in db.CARACTERISTICAS
+                                  where CARACTERISTICAS.ID_CATEGORIA == id
+                                  select new { CARACTERISTICAS.ID_CARACTERISTICA, CARACTERISTICAS.NOMBRE_CARACTERISTICA };
+            return Ok(caracteristicas);
         }
 
         // PUT: api/CARACTERISTICAS/5
@@ -72,7 +69,7 @@ namespace zeta_v3.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-
+       
         // POST: api/CARACTERISTICAS
         [ResponseType(typeof(CARACTERISTICAS))]
         public async Task<IHttpActionResult> PostCARACTERISTICAS(CARACTERISTICAS cARACTERISTICAS)
