@@ -12,14 +12,14 @@ namespace zeta_v3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CARACTERISTICAS
+    public partial class PUBLICACION
     {
-        public decimal ID_CARACTERISTICA { get; set; }
-        public decimal ID_CATEGORIA { get; set; }
-        public Nullable<decimal> ID_CAR_PRO { get; set; }
-        public string NOMBRE_CARACTERISTICA { get; set; }
+        public decimal ID_PUBLICACION { get; set; }
+        public string ID_USUARIO { get; set; }
+        public Nullable<System.DateTime> FECHA_PUBLICACION_2 { get; set; }
+        public string LINK_PUBLICACION { get; set; }
+        public string DESCRIPCION_PUBLICACION { get; set; }
     
-        public virtual CARACTERISTICA_PRODUCTO CARACTERISTICA_PRODUCTO { get; set; }
-        public virtual CATEGORIA_PRODUCTO CATEGORIA_PRODUCTO { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
     }
 }

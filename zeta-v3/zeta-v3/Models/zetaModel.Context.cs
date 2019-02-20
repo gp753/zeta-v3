@@ -13,10 +13,10 @@ namespace zeta_v3.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class zeta_bdEntities5 : DbContext
+    public partial class zeta_bdEntities6 : DbContext
     {
-        public zeta_bdEntities5()
-            : base("name=zeta_bdEntities5")
+        public zeta_bdEntities6()
+            : base("name=zeta_bdEntities6")
         {
         }
     
@@ -34,6 +34,7 @@ namespace zeta_v3.Models
         public virtual DbSet<CALIFICACION> CALIFICACION { get; set; }
         public virtual DbSet<CANCELACION> CANCELACION { get; set; }
         public virtual DbSet<CANTIDAD_PRODUCTO> CANTIDAD_PRODUCTO { get; set; }
+        public virtual DbSet<CARACTERISTICA_PRODUCTO> CARACTERISTICA_PRODUCTO { get; set; }
         public virtual DbSet<CARACTERISTICAS> CARACTERISTICAS { get; set; }
         public virtual DbSet<CARRITO> CARRITO { get; set; }
         public virtual DbSet<CATEGORIA_PRODUCTO> CATEGORIA_PRODUCTO { get; set; }
@@ -56,6 +57,7 @@ namespace zeta_v3.Models
         public virtual DbSet<PRODUCTO> PRODUCTO { get; set; }
         public virtual DbSet<PRODUCTO_FACTURA> PRODUCTO_FACTURA { get; set; }
         public virtual DbSet<PRODUCTOXCATEGORIA> PRODUCTOXCATEGORIA { get; set; }
+        public virtual DbSet<PUBLICACION> PUBLICACION { get; set; }
         public virtual DbSet<RECIBO_BANCARD> RECIBO_BANCARD { get; set; }
         public virtual DbSet<RECLAMO> RECLAMO { get; set; }
         public virtual DbSet<ROL> ROL { get; set; }

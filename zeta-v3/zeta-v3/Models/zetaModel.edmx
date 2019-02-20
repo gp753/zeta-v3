@@ -104,12 +104,21 @@
           <Property Name="ID_CARRITO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="CANTIDAD_PRODUCTO_CARRITO" Type="int" />
         </EntityType>
+        <EntityType Name="CARACTERISTICA_PRODUCTO">
+          <Key>
+            <PropertyRef Name="ID_CAR_PRO" />
+          </Key>
+          <Property Name="ID_CAR_PRO" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="INFO_CAR" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="CARACTERISTICAS">
           <Key>
             <PropertyRef Name="ID_CARACTERISTICA" />
           </Key>
           <Property Name="ID_CARACTERISTICA" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_CATEGORIA" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_CAR_PRO" Type="numeric" Precision="18" Scale="0" />
           <Property Name="NOMBRE_CARACTERISTICA" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="CARRITO">
@@ -323,6 +332,16 @@
           <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" />
           <Property Name="ID_CATEGORIA" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
+        <EntityType Name="PUBLICACION">
+          <Key>
+            <PropertyRef Name="ID_PUBLICACION" />
+          </Key>
+          <Property Name="ID_PUBLICACION" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="varchar" MaxLength="100" />
+          <Property Name="FECHA_PUBLICACION_2" Type="datetime" />
+          <Property Name="LINK_PUBLICACION" Type="varchar" MaxLength="100" />
+          <Property Name="DESCRIPCION_PUBLICACION" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="RECIBO_BANCARD">
           <Key>
             <PropertyRef Name="ID_RECIBO_BANCARD" />
@@ -470,6 +489,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CARACTER_CARACTERI_CARACTER">
+          <End Role="CARACTERISTICA_PRODUCTO" Type="Self.CARACTERISTICA_PRODUCTO" Multiplicity="0..1" />
+          <End Role="CARACTERISTICAS" Type="Self.CARACTERISTICAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARACTERISTICA_PRODUCTO">
+              <PropertyRef Name="ID_CAR_PRO" />
+            </Principal>
+            <Dependent Role="CARACTERISTICAS">
+              <PropertyRef Name="ID_CAR_PRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CARACTER_FK_CARACT_CATEGORI">
           <End Role="CATEGORIA_PRODUCTO" Type="Self.CATEGORIA_PRODUCTO" Multiplicity="1" />
           <End Role="CARACTERISTICAS" Type="Self.CARACTERISTICAS" Multiplicity="*" />
@@ -479,6 +510,18 @@
             </Principal>
             <Dependent Role="CARACTERISTICAS">
               <PropertyRef Name="ID_CATEGORIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARACTER_PRODUCTOV_PRODUCTO">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="0..1" />
+          <End Role="CARACTERISTICA_PRODUCTO" Type="Self.CARACTERISTICA_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Principal>
+            <Dependent Role="CARACTERISTICA_PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -898,6 +941,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PUBLICAC_PUBLICACI_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="PUBLICACION" Type="Self.PUBLICACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID_USUARIO" />
+            </Principal>
+            <Dependent Role="PUBLICACION">
+              <PropertyRef Name="ID_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RECIBO_B_FK_RECIBO_CHECKOUT">
           <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="1" />
           <End Role="RECIBO_BANCARD" Type="Self.RECIBO_BANCARD" Multiplicity="*" />
@@ -1029,6 +1084,7 @@
           <EntitySet Name="CALIFICACION" EntityType="Self.CALIFICACION" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="CANCELACION" EntityType="Self.CANCELACION" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="CANTIDAD_PRODUCTO" EntityType="Self.CANTIDAD_PRODUCTO" Schema="zeta_bd" store:Type="Tables" />
+          <EntitySet Name="CARACTERISTICA_PRODUCTO" EntityType="Self.CARACTERISTICA_PRODUCTO" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="CARACTERISTICAS" EntityType="Self.CARACTERISTICAS" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="CARRITO" EntityType="Self.CARRITO" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="CATEGORIA_PRODUCTO" EntityType="Self.CATEGORIA_PRODUCTO" Schema="zeta_bd" store:Type="Tables" />
@@ -1052,6 +1108,7 @@
           <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="PRODUCTO_FACTURA" EntityType="Self.PRODUCTO_FACTURA" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="PRODUCTOXCATEGORIA" EntityType="Self.PRODUCTOXCATEGORIA" Schema="zeta_bd" store:Type="Tables" />
+          <EntitySet Name="PUBLICACION" EntityType="Self.PUBLICACION" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="RECIBO_BANCARD" EntityType="Self.RECIBO_BANCARD" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="RECLAMO" EntityType="Self.RECLAMO" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="ROL" EntityType="Self.ROL" Schema="zeta_bd" store:Type="Tables" />
@@ -1084,9 +1141,17 @@
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="CANTIDAD_PRODUCTO" EntitySet="CANTIDAD_PRODUCTO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CARACTER_CARACTERI_CARACTER" Association="Self.FK_CARACTER_CARACTERI_CARACTER">
+            <End Role="CARACTERISTICA_PRODUCTO" EntitySet="CARACTERISTICA_PRODUCTO" />
+            <End Role="CARACTERISTICAS" EntitySet="CARACTERISTICAS" />
+          </AssociationSet>
           <AssociationSet Name="FK_CARACTER_FK_CARACT_CATEGORI" Association="Self.FK_CARACTER_FK_CARACT_CATEGORI">
             <End Role="CATEGORIA_PRODUCTO" EntitySet="CATEGORIA_PRODUCTO" />
             <End Role="CARACTERISTICAS" EntitySet="CARACTERISTICAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARACTER_PRODUCTOV_PRODUCTO" Association="Self.FK_CARACTER_PRODUCTOV_PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="CARACTERISTICA_PRODUCTO" EntitySet="CARACTERISTICA_PRODUCTO" />
           </AssociationSet>
           <AssociationSet Name="FK_CARRITO_FK_CARRIT_CHECKOUT" Association="Self.FK_CARRITO_FK_CARRIT_CHECKOUT">
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
@@ -1223,6 +1288,10 @@
           <AssociationSet Name="FK_PRODUCTO_PRODUCTO__PRODUCTO" Association="Self.FK_PRODUCTO_PRODUCTO__PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="PRODUCTOXCATEGORIA" EntitySet="PRODUCTOXCATEGORIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PUBLICAC_PUBLICACI_USUARIO" Association="Self.FK_PUBLICAC_PUBLICACI_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="PUBLICACION" EntitySet="PUBLICACION" />
           </AssociationSet>
           <AssociationSet Name="FK_RECIBO_B_FK_RECIBO_CHECKOUT" Association="Self.FK_RECIBO_B_FK_RECIBO_CHECKOUT">
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
@@ -1375,13 +1444,25 @@
           <NavigationProperty Name="CARRITO" Relationship="Self.FK_CANTIDAD_FK_CANTID_CARRITO" FromRole="CANTIDAD_PRODUCTO" ToRole="CARRITO" />
           <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_CANTIDAD_FK_CANTID_PRODUCTO" FromRole="CANTIDAD_PRODUCTO" ToRole="PRODUCTO" />
         </EntityType>
+        <EntityType Name="CARACTERISTICA_PRODUCTO">
+          <Key>
+            <PropertyRef Name="ID_CAR_PRO" />
+          </Key>
+          <Property Name="ID_CAR_PRO" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="INFO_CAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CARACTERISTICAS" Relationship="Self.FK_CARACTER_CARACTERI_CARACTER" FromRole="CARACTERISTICA_PRODUCTO" ToRole="CARACTERISTICAS" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_CARACTER_PRODUCTOV_PRODUCTO" FromRole="CARACTERISTICA_PRODUCTO" ToRole="PRODUCTO" />
+        </EntityType>
         <EntityType Name="CARACTERISTICAS">
           <Key>
             <PropertyRef Name="ID_CARACTERISTICA" />
           </Key>
           <Property Name="ID_CARACTERISTICA" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_CATEGORIA" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_CAR_PRO" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="NOMBRE_CARACTERISTICA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CARACTERISTICA_PRODUCTO" Relationship="Self.FK_CARACTER_CARACTERI_CARACTER" FromRole="CARACTERISTICAS" ToRole="CARACTERISTICA_PRODUCTO" />
           <NavigationProperty Name="CATEGORIA_PRODUCTO" Relationship="Self.FK_CARACTER_FK_CARACT_CATEGORI" FromRole="CARACTERISTICAS" ToRole="CATEGORIA_PRODUCTO" />
         </EntityType>
         <EntityType Name="CARRITO">
@@ -1612,6 +1693,7 @@
           <Property Name="ESTADO_PUBLICACION" Type="Int32" />
           <NavigationProperty Name="CALIFICACION" Relationship="Self.FK_CALIFICA_FK_CALIFI_PRODUCTO" FromRole="PRODUCTO" ToRole="CALIFICACION" />
           <NavigationProperty Name="CANTIDAD_PRODUCTO" Relationship="Self.FK_CANTIDAD_FK_CANTID_PRODUCTO" FromRole="PRODUCTO" ToRole="CANTIDAD_PRODUCTO" />
+          <NavigationProperty Name="CARACTERISTICA_PRODUCTO" Relationship="Self.FK_CARACTER_PRODUCTOV_PRODUCTO" FromRole="PRODUCTO" ToRole="CARACTERISTICA_PRODUCTO" />
           <NavigationProperty Name="COLOR" Relationship="Self.FK_COLOR_COLOR_PRO_PRODUCTO" FromRole="PRODUCTO" ToRole="COLOR" />
           <NavigationProperty Name="FOTO_PRODUCTO" Relationship="Self.FK_FOTO_PRO_FK_FOTO_P_PRODUCTO" FromRole="PRODUCTO" ToRole="FOTO_PRODUCTO" />
           <NavigationProperty Name="INGRESO_PRODUCTO" Relationship="Self.FK_INGRESO__FK_INGRES_PRODUCTO" FromRole="PRODUCTO" ToRole="INGRESO_PRODUCTO" />
@@ -1643,6 +1725,17 @@
           <Property Name="ID_CATEGORIA" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="CATEGORIA_PRODUCTO" Relationship="Self.FK_PRODUCTO_CATEGORIA_CATEGORI" FromRole="PRODUCTOXCATEGORIA" ToRole="CATEGORIA_PRODUCTO" />
           <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_PRODUCTO_PRODUCTO__PRODUCTO" FromRole="PRODUCTOXCATEGORIA" ToRole="PRODUCTO" />
+        </EntityType>
+        <EntityType Name="PUBLICACION">
+          <Key>
+            <PropertyRef Name="ID_PUBLICACION" />
+          </Key>
+          <Property Name="ID_PUBLICACION" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA_PUBLICACION_2" Type="DateTime" Precision="3" />
+          <Property Name="LINK_PUBLICACION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DESCRIPCION_PUBLICACION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_PUBLICAC_PUBLICACI_USUARIO" FromRole="PUBLICACION" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="RECIBO_BANCARD">
           <Key>
@@ -1711,6 +1804,7 @@
           <NavigationProperty Name="INGRESO_PRODUCTO" Relationship="Self.FK_INGRESO__FK_INGRES_USUARIO" FromRole="USUARIO" ToRole="INGRESO_PRODUCTO" />
           <NavigationProperty Name="LISTA_DESEOS" Relationship="Self.FK_LISTA_DE_FK_LISTA__USUARIO" FromRole="USUARIO" ToRole="LISTA_DESEOS" />
           <NavigationProperty Name="LOG" Relationship="Self.FK_LOG_LOGXUSUAR_USUARIO" FromRole="USUARIO" ToRole="LOG" />
+          <NavigationProperty Name="PUBLICACION" Relationship="Self.FK_PUBLICAC_PUBLICACI_USUARIO" FromRole="USUARIO" ToRole="PUBLICACION" />
           <NavigationProperty Name="RECLAMO" Relationship="Self.FK_RECLAMO_FK_RECLAM_USUARIO" FromRole="USUARIO" ToRole="RECLAMO" />
           <NavigationProperty Name="ROL" Relationship="Self.ROL_USUARIO" FromRole="USUARIO" ToRole="ROL" />
           <NavigationProperty Name="VISITA_PRODUCTO" Relationship="Self.USUARIO_VISITA" FromRole="USUARIO" ToRole="VISITA_PRODUCTO" />
@@ -1845,6 +1939,30 @@
               <PropertyRef Name="ID_PRODUCTO" />
             </Principal>
             <Dependent Role="CANTIDAD_PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARACTER_CARACTERI_CARACTER">
+          <End Role="CARACTERISTICA_PRODUCTO" Type="Self.CARACTERISTICA_PRODUCTO" Multiplicity="0..1" />
+          <End Role="CARACTERISTICAS" Type="Self.CARACTERISTICAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARACTERISTICA_PRODUCTO">
+              <PropertyRef Name="ID_CAR_PRO" />
+            </Principal>
+            <Dependent Role="CARACTERISTICAS">
+              <PropertyRef Name="ID_CAR_PRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARACTER_PRODUCTOV_PRODUCTO">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="0..1" />
+          <End Role="CARACTERISTICA_PRODUCTO" Type="Self.CARACTERISTICA_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Principal>
+            <Dependent Role="CARACTERISTICA_PRODUCTO">
               <PropertyRef Name="ID_PRODUCTO" />
             </Dependent>
           </ReferentialConstraint>
@@ -2233,6 +2351,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PUBLICAC_PUBLICACI_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="PUBLICACION" Type="Self.PUBLICACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID_USUARIO" />
+            </Principal>
+            <Dependent Role="PUBLICACION">
+              <PropertyRef Name="ID_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RECLAMO_FK_RECLAM_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="RECLAMO" Type="Self.RECLAMO" Multiplicity="*" />
@@ -2261,7 +2391,7 @@
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
           <End Role="VISITA_PRODUCTO" Type="Self.VISITA_PRODUCTO" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="zeta_bdEntities5" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="zeta_bdEntities6" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
@@ -2271,6 +2401,7 @@
           <EntitySet Name="CALIFICACION" EntityType="Self.CALIFICACION" />
           <EntitySet Name="CANCELACION" EntityType="Self.CANCELACION" />
           <EntitySet Name="CANTIDAD_PRODUCTO" EntityType="Self.CANTIDAD_PRODUCTO" />
+          <EntitySet Name="CARACTERISTICA_PRODUCTO" EntityType="Self.CARACTERISTICA_PRODUCTO" />
           <EntitySet Name="CARACTERISTICAS" EntityType="Self.CARACTERISTICAS" />
           <EntitySet Name="CARRITO" EntityType="Self.CARRITO" />
           <EntitySet Name="CATEGORIA_PRODUCTO" EntityType="Self.CATEGORIA_PRODUCTO" />
@@ -2293,6 +2424,7 @@
           <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" />
           <EntitySet Name="PRODUCTO_FACTURA" EntityType="Self.PRODUCTO_FACTURA" />
           <EntitySet Name="PRODUCTOXCATEGORIA" EntityType="Self.PRODUCTOXCATEGORIA" />
+          <EntitySet Name="PUBLICACION" EntityType="Self.PUBLICACION" />
           <EntitySet Name="RECIBO_BANCARD" EntityType="Self.RECIBO_BANCARD" />
           <EntitySet Name="RECLAMO" EntityType="Self.RECLAMO" />
           <EntitySet Name="ROL" EntityType="Self.ROL" />
@@ -2338,6 +2470,14 @@
           <AssociationSet Name="FK_CANTIDAD_FK_CANTID_PRODUCTO" Association="Self.FK_CANTIDAD_FK_CANTID_PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="CANTIDAD_PRODUCTO" EntitySet="CANTIDAD_PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARACTER_CARACTERI_CARACTER" Association="Self.FK_CARACTER_CARACTERI_CARACTER">
+            <End Role="CARACTERISTICA_PRODUCTO" EntitySet="CARACTERISTICA_PRODUCTO" />
+            <End Role="CARACTERISTICAS" EntitySet="CARACTERISTICAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARACTER_PRODUCTOV_PRODUCTO" Association="Self.FK_CARACTER_PRODUCTOV_PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="CARACTERISTICA_PRODUCTO" EntitySet="CARACTERISTICA_PRODUCTO" />
           </AssociationSet>
           <AssociationSet Name="FK_CARACTER_FK_CARACT_CATEGORI" Association="Self.FK_CARACTER_FK_CARACT_CATEGORI">
             <End Role="CATEGORIA_PRODUCTO" EntitySet="CATEGORIA_PRODUCTO" />
@@ -2467,6 +2607,10 @@
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="VISITA_PRODUCTO" EntitySet="VISITA_PRODUCTO" />
           </AssociationSet>
+          <AssociationSet Name="FK_PUBLICAC_PUBLICACI_USUARIO" Association="Self.FK_PUBLICAC_PUBLICACI_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="PUBLICACION" EntitySet="PUBLICACION" />
+          </AssociationSet>
           <AssociationSet Name="FK_RECLAMO_FK_RECLAM_USUARIO" Association="Self.FK_RECLAMO_FK_RECLAM_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="RECLAMO" EntitySet="RECLAMO" />
@@ -2493,7 +2637,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="zeta_bdModelStoreContainer" CdmEntityContainer="zeta_bdEntities5">
+        <EntityContainerMapping StorageEntityContainer="zeta_bdModelStoreContainer" CdmEntityContainer="zeta_bdEntities6">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="zeta_bdModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -2591,11 +2735,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CARACTERISTICA_PRODUCTO">
+            <EntityTypeMapping TypeName="zeta_bdModel.CARACTERISTICA_PRODUCTO">
+              <MappingFragment StoreEntitySet="CARACTERISTICA_PRODUCTO">
+                <ScalarProperty Name="ID_CAR_PRO" ColumnName="ID_CAR_PRO" />
+                <ScalarProperty Name="ID_PRODUCTO" ColumnName="ID_PRODUCTO" />
+                <ScalarProperty Name="INFO_CAR" ColumnName="INFO_CAR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CARACTERISTICAS">
             <EntityTypeMapping TypeName="zeta_bdModel.CARACTERISTICAS">
               <MappingFragment StoreEntitySet="CARACTERISTICAS">
                 <ScalarProperty Name="ID_CARACTERISTICA" ColumnName="ID_CARACTERISTICA" />
                 <ScalarProperty Name="ID_CATEGORIA" ColumnName="ID_CATEGORIA" />
+                <ScalarProperty Name="ID_CAR_PRO" ColumnName="ID_CAR_PRO" />
                 <ScalarProperty Name="NOMBRE_CARACTERISTICA" ColumnName="NOMBRE_CARACTERISTICA" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2821,6 +2975,17 @@
                 <ScalarProperty Name="ID_PRODUCTOXCATEGORIA" ColumnName="ID_PRODUCTOXCATEGORIA" />
                 <ScalarProperty Name="ID_PRODUCTO" ColumnName="ID_PRODUCTO" />
                 <ScalarProperty Name="ID_CATEGORIA" ColumnName="ID_CATEGORIA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PUBLICACION">
+            <EntityTypeMapping TypeName="zeta_bdModel.PUBLICACION">
+              <MappingFragment StoreEntitySet="PUBLICACION">
+                <ScalarProperty Name="ID_PUBLICACION" ColumnName="ID_PUBLICACION" />
+                <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />
+                <ScalarProperty Name="FECHA_PUBLICACION_2" ColumnName="FECHA_PUBLICACION_2" />
+                <ScalarProperty Name="LINK_PUBLICACION" ColumnName="LINK_PUBLICACION" />
+                <ScalarProperty Name="DESCRIPCION_PUBLICACION" ColumnName="DESCRIPCION_PUBLICACION" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

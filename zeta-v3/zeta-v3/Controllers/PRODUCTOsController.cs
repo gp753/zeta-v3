@@ -18,7 +18,7 @@ namespace zeta_v3.Controllers
     public class PRODUCTOsController : ApiController
     {
         
-        private zeta_bdEntities5 db = new zeta_bdEntities5();
+        private zeta_bdEntities6 db = new zeta_bdEntities6();
 
         // GET: api/PRODUCTOs
         public IQueryable<PRODUCTO> GetPRODUCTO()
@@ -159,19 +159,22 @@ namespace zeta_v3.Controllers
 
         // POST: api/PRODUCTOs categorias
         [Route("api/productos/categoria")]
-        public async Task<IHttpActionResult> cargar_categoria(PRODUCTO pRODUCTO)
+        public async Task<IHttpActionResult> cargar_categoria(AuxModel.catdeproductos aux)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            pRODUCTO.ESTADO_PUBLICACION = 0;
-            pRODUCTO.FECHA_PUBLICACION = DateTime.Today;
-            db.PRODUCTO.Add(pRODUCTO);
+            PRODUCTOXCATEGORIA pcat = new PRODUCTOXCATEGORIA();
+            pcat.ID_CATEGORIA = aux.ID_CATEGORIA;
+            pcat.ID_PRODUCTO = aux.ID_PRODUCTO;
+            
+            
+            db.PRODUCTOXCATEGORIA.Add(pcat);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = pRODUCTO.ID_PRODUCTO }, new { pRODUCTO.ID_PRODUCTO });
+            return Created("DefaultApi",  new { pcat.ID_CATEGORIA, pcat.ID_PRODUCTO });
         }
 
         // POST: api/productos/tamano_color

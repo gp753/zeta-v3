@@ -14,7 +14,7 @@ namespace zeta_v3.Controllers
 {
     public class TAMANOesController : ApiController
     {
-        private zeta_bdEntities5 db = new zeta_bdEntities5();
+        private zeta_bdEntities6 db = new zeta_bdEntities6();
 
         // GET: api/TAMANOes
         public IQueryable<TAMANO> GetTAMANO()

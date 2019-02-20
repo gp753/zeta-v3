@@ -18,7 +18,7 @@ namespace zeta_v3.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CARRITOsController : ApiController
     {
-        private zeta_bdEntities5 db = new zeta_bdEntities5();
+        private zeta_bdEntities6 db = new zeta_bdEntities6();
 
         // GET: api/CARRITOs
 

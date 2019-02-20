@@ -14,6 +14,12 @@ namespace zeta_v3.Models
             public string NOMBRE_TAMANO { get; set; }
         }
 
+        public class catdeproductos
+        {
+            public decimal ID_PRODUCTO { get; set; }
+            public decimal ID_CATEGORIA { get; set; }
+        }
+
        
     }
 }

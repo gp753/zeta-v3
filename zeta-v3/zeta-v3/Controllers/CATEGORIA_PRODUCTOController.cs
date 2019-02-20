@@ -14,12 +14,11 @@ namespace zeta_v3.Controllers
 {
     public class CATEGORIA_PRODUCTOController : ApiController
     {
-        private zeta_bdEntities5 db = new zeta_bdEntities5();
-
+        private zeta_bdEntities6 db = new zeta_bdEntities6();
 
         [Route("api/categoria_producto")]
         [HttpGet]
-        public  IHttpActionResult GetCategorias()
+        public IHttpActionResult GetCategorias()
         {
             /*  var products = from PRODUCTO in db.PRODUCTO
                              join FOTO_PRODUCTO in db.FOTO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals FOTO_PRODUCTO.ID_PRODUCTO
@@ -30,55 +29,8 @@ namespace zeta_v3.Controllers
             return Ok(categorias);
         }
 
-        // GET: api/CATEGORIA_PRODUCTO/5
-        [ResponseType(typeof(CATEGORIA_PRODUCTO))]
-        public IHttpActionResult GetCATEGORIA_PRODUCTO(decimal id)
-        {
-            CATEGORIA_PRODUCTO cATEGORIA_PRODUCTO = db.CATEGORIA_PRODUCTO.Find(id);
-            if (cATEGORIA_PRODUCTO == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(cATEGORIA_PRODUCTO);
-        }
-
-        // PUT: api/CATEGORIA_PRODUCTO/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutCATEGORIA_PRODUCTO(decimal id, CATEGORIA_PRODUCTO cATEGORIA_PRODUCTO)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != cATEGORIA_PRODUCTO.ID_CATEGORIA)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(cATEGORIA_PRODUCTO).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CATEGORIA_PRODUCTOExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
         // POST: api/CATEGORIA_PRODUCTO
+        [Route("api/categoria_producto")]
         [ResponseType(typeof(CATEGORIA_PRODUCTO))]
         public IHttpActionResult PostCATEGORIA_PRODUCTO(CATEGORIA_PRODUCTO cATEGORIA_PRODUCTO)
         {
@@ -86,13 +38,49 @@ namespace zeta_v3.Controllers
             {
                 return BadRequest(ModelState);
             }
-           
+
             db.CATEGORIA_PRODUCTO.Add(cATEGORIA_PRODUCTO);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = cATEGORIA_PRODUCTO.ID_CATEGORIA },new { cATEGORIA_PRODUCTO.ID_CATEGORIA, cATEGORIA_PRODUCTO.NOMBRE_CATEGORIA });
-          
+            return Created("DefaultApi", new { cATEGORIA_PRODUCTO.ID_CATEGORIA, cATEGORIA_PRODUCTO.NOMBRE_CATEGORIA });
+
         }
+
+        /* // PUT: api/CATEGORIA_PRODUCTO/5
+         [ResponseType(typeof(void))]
+         public IHttpActionResult PutCATEGORIA_PRODUCTO(decimal id, CATEGORIA_PRODUCTO cATEGORIA_PRODUCTO)
+         {
+             if (!ModelState.IsValid)
+             {
+                 return BadRequest(ModelState);
+             }
+
+             if (id != cATEGORIA_PRODUCTO.ID_CATEGORIA)
+             {
+                 return BadRequest();
+             }
+
+             db.Entry(cATEGORIA_PRODUCTO).State = EntityState.Modified;
+
+             try
+             {
+                 db.SaveChanges();
+             }
+             catch (DbUpdateConcurrencyException)
+             {
+                 if (!CATEGORIA_PRODUCTOExists(id))
+                 {
+                     return NotFound();
+                 }
+                 else
+                 {
+                     throw;
+                 }
+             }
+
+             return StatusCode(HttpStatusCode.NoContent);
+         }*/
+
 
         // DELETE: api/CATEGORIA_PRODUCTO/5
         [ResponseType(typeof(CATEGORIA_PRODUCTO))]

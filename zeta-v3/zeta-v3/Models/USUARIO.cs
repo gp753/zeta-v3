@@ -25,6 +25,7 @@ namespace zeta_v3.Models
             this.INGRESO_PRODUCTO = new HashSet<INGRESO_PRODUCTO>();
             this.LISTA_DESEOS = new HashSet<LISTA_DESEOS>();
             this.LOG = new HashSet<LOG>();
+            this.PUBLICACION = new HashSet<PUBLICACION>();
             this.RECLAMO = new HashSet<RECLAMO>();
             this.ROL = new HashSet<ROL>();
             this.VISITA_PRODUCTO = new HashSet<VISITA_PRODUCTO>();
@@ -55,6 +56,8 @@ namespace zeta_v3.Models
         public virtual ICollection<LISTA_DESEOS> LISTA_DESEOS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LOG> LOG { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PUBLICACION> PUBLICACION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RECLAMO> RECLAMO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
