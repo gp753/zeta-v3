@@ -48,6 +48,13 @@ namespace zeta_v3.Models
         [Display(Name = "Confirmar contraseña")]
         [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
+
+
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Nick { get; set; }
+
+
     }
 
     public class RegisterExternalBindingModel

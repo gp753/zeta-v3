@@ -18,7 +18,7 @@ namespace zeta_v3.Controllers
     public class PRODUCTOsController : ApiController
     {
 
-        private zeta_bdEntities7 db = new zeta_bdEntities7();
+        private zeta_bdEntities8 db = new zeta_bdEntities8();
 
         // GET: api/PRODUCTOs
         public IQueryable<PRODUCTO> GetPRODUCTO()
@@ -49,15 +49,20 @@ namespace zeta_v3.Controllers
                             , fotos, colores, tamanos});
         }
 
-        [Route("api/publicacion/baner")]
+
+        [Route("api/productos/stock")]
         [HttpGet]
-        public async Task<IHttpActionResult> baner()
+        public async Task<IHttpActionResult> productos_stock()
         {
-            
-            var link = "https://about.canva.com/wp-content/uploads/sites/3/2017/02/congratulations_-banner.png";
-            return Ok(new { link });
+            //falta devolver la cantidad en stock que hay de cada producto
+
+            var productos = from PRODUCTO in db.PRODUCTO
+                            join FOTO_PRODUCTO in db.FOTO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals FOTO_PRODUCTO.ID_PRODUCTO
+                            join INGRESO_PRODUCTO in db.INGRESO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals INGRESO_PRODUCTO.ID_PRODUCTO
+                            select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA };
+            return Ok(productos);
         }
-        
+
         [Route ("api/productos/nuevos") ]
         [HttpGet]
         public async Task<IHttpActionResult> productos_nuevos()
@@ -66,7 +71,7 @@ namespace zeta_v3.Controllers
                            join FOTO_PRODUCTO in db.FOTO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals FOTO_PRODUCTO.ID_PRODUCTO
                            select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA,  FOTO_PRODUCTO.LINK_FOTO };
 
-            return Ok(products);
+            return Ok(products.Take(3));
         }
 
         [Route("api/productos/publicitados")]

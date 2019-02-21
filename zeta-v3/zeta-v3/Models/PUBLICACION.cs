@@ -19,6 +19,7 @@ namespace zeta_v3.Models
         public Nullable<System.DateTime> FECHA_PUBLICACION_2 { get; set; }
         public string LINK_PUBLICACION { get; set; }
         public string DESCRIPCION_PUBLICACION { get; set; }
+        public string LINK_IMAGEN_PUBLICACION { get; set; }
     
         public virtual USUARIO USUARIO { get; set; }
     }

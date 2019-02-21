@@ -16,7 +16,7 @@ namespace zeta_v3.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class INGRESO_PRODUCTOController : ApiController
     {
-        private zeta_bdEntities7 db = new zeta_bdEntities7();
+        private zeta_bdEntities8 db = new zeta_bdEntities8();
 
         // GET: api/INGRESO_PRODUCTO
         public IQueryable<INGRESO_PRODUCTO> GetINGRESO_PRODUCTO()

@@ -341,6 +341,7 @@
           <Property Name="FECHA_PUBLICACION_2" Type="datetime" />
           <Property Name="LINK_PUBLICACION" Type="varchar" MaxLength="100" />
           <Property Name="DESCRIPCION_PUBLICACION" Type="varchar" MaxLength="100" />
+          <Property Name="LINK_IMAGEN_PUBLICACION" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="RECIBO_BANCARD">
           <Key>
@@ -1735,6 +1736,7 @@
           <Property Name="FECHA_PUBLICACION_2" Type="DateTime" Precision="3" />
           <Property Name="LINK_PUBLICACION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="DESCRIPCION_PUBLICACION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LINK_IMAGEN_PUBLICACION" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_PUBLICAC_PUBLICACI_USUARIO" FromRole="PUBLICACION" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="RECIBO_BANCARD">
@@ -2391,7 +2393,7 @@
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
           <End Role="VISITA_PRODUCTO" Type="Self.VISITA_PRODUCTO" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="zeta_bdEntities7" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="zeta_bdEntities8" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
@@ -2637,7 +2639,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="zeta_bdModelStoreContainer" CdmEntityContainer="zeta_bdEntities7">
+        <EntityContainerMapping StorageEntityContainer="zeta_bdModelStoreContainer" CdmEntityContainer="zeta_bdEntities8">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="zeta_bdModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -2986,6 +2988,7 @@
                 <ScalarProperty Name="FECHA_PUBLICACION_2" ColumnName="FECHA_PUBLICACION_2" />
                 <ScalarProperty Name="LINK_PUBLICACION" ColumnName="LINK_PUBLICACION" />
                 <ScalarProperty Name="DESCRIPCION_PUBLICACION" ColumnName="DESCRIPCION_PUBLICACION" />
+                <ScalarProperty Name="LINK_IMAGEN_PUBLICACION" ColumnName="LINK_IMAGEN_PUBLICACION" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

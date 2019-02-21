@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.ModelBinding;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -21,8 +22,10 @@ namespace zeta_v3.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
+        private zeta_bdEntities8 db = new zeta_bdEntities8();
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
    
@@ -340,7 +343,13 @@ namespace zeta_v3.Controllers
                 return GetErrorResult(result);
             }
 
-
+            USUARIO uSUARIO = new USUARIO();
+            uSUARIO.NOMBRE = model.Nombre;
+            uSUARIO.APELLIDO = model.Apellido;
+            uSUARIO.NICK = model.Nick;
+            uSUARIO.FECHA_INGRESO = DateTime.Today;
+            uSUARIO.ID_USUARIO = user.Id;
+            uSUARIO.EMAIL = model.Email;
 
             return Ok();
         }
