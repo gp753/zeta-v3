@@ -20,6 +20,13 @@ namespace zeta_v3.Models
             public decimal ID_CATEGORIA { get; set; }
         }
 
+        public class caracteristicaproduct
+        {
+            public decimal ID_PRODUCTO { get; set; }
+            public decimal ID_CARACTERISTICA { get; set; }
+            public string informacion { get; set; }
+        }
+
        
     }
 }

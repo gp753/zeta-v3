@@ -14,18 +14,12 @@ namespace zeta_v3.Models
     
     public partial class CARACTERISTICA_PRODUCTO
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CARACTERISTICA_PRODUCTO()
-        {
-            this.CARACTERISTICAS = new HashSet<CARACTERISTICAS>();
-        }
-    
         public decimal ID_CAR_PRO { get; set; }
         public Nullable<decimal> ID_PRODUCTO { get; set; }
+        public Nullable<decimal> ID_CARACTERISTICA { get; set; }
         public string INFO_CAR { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CARACTERISTICAS> CARACTERISTICAS { get; set; }
+        public virtual CARACTERISTICAS CARACTERISTICAS { get; set; }
         public virtual PRODUCTO PRODUCTO { get; set; }
     }
 }

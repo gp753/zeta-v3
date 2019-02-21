@@ -110,6 +110,7 @@
           </Key>
           <Property Name="ID_CAR_PRO" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ID_CARACTERISTICA" Type="numeric" Precision="18" Scale="0" />
           <Property Name="INFO_CAR" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="CARACTERISTICAS">
@@ -118,7 +119,6 @@
           </Key>
           <Property Name="ID_CARACTERISTICA" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_CATEGORIA" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="ID_CAR_PRO" Type="numeric" Precision="18" Scale="0" />
           <Property Name="NOMBRE_CARACTERISTICA" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="CARRITO">
@@ -490,14 +490,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CARACTER_CARACTERI_CARACTER">
-          <End Role="CARACTERISTICA_PRODUCTO" Type="Self.CARACTERISTICA_PRODUCTO" Multiplicity="0..1" />
-          <End Role="CARACTERISTICAS" Type="Self.CARACTERISTICAS" Multiplicity="*" />
+          <End Role="CARACTERISTICAS" Type="Self.CARACTERISTICAS" Multiplicity="0..1" />
+          <End Role="CARACTERISTICA_PRODUCTO" Type="Self.CARACTERISTICA_PRODUCTO" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CARACTERISTICA_PRODUCTO">
-              <PropertyRef Name="ID_CAR_PRO" />
+            <Principal Role="CARACTERISTICAS">
+              <PropertyRef Name="ID_CARACTERISTICA" />
             </Principal>
-            <Dependent Role="CARACTERISTICAS">
-              <PropertyRef Name="ID_CAR_PRO" />
+            <Dependent Role="CARACTERISTICA_PRODUCTO">
+              <PropertyRef Name="ID_CARACTERISTICA" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1142,8 +1142,8 @@
             <End Role="CANTIDAD_PRODUCTO" EntitySet="CANTIDAD_PRODUCTO" />
           </AssociationSet>
           <AssociationSet Name="FK_CARACTER_CARACTERI_CARACTER" Association="Self.FK_CARACTER_CARACTERI_CARACTER">
-            <End Role="CARACTERISTICA_PRODUCTO" EntitySet="CARACTERISTICA_PRODUCTO" />
             <End Role="CARACTERISTICAS" EntitySet="CARACTERISTICAS" />
+            <End Role="CARACTERISTICA_PRODUCTO" EntitySet="CARACTERISTICA_PRODUCTO" />
           </AssociationSet>
           <AssociationSet Name="FK_CARACTER_FK_CARACT_CATEGORI" Association="Self.FK_CARACTER_FK_CARACT_CATEGORI">
             <End Role="CATEGORIA_PRODUCTO" EntitySet="CATEGORIA_PRODUCTO" />
@@ -1450,6 +1450,7 @@
           </Key>
           <Property Name="ID_CAR_PRO" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ID_CARACTERISTICA" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="INFO_CAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CARACTERISTICAS" Relationship="Self.FK_CARACTER_CARACTERI_CARACTER" FromRole="CARACTERISTICA_PRODUCTO" ToRole="CARACTERISTICAS" />
           <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_CARACTER_PRODUCTOV_PRODUCTO" FromRole="CARACTERISTICA_PRODUCTO" ToRole="PRODUCTO" />
@@ -1460,7 +1461,6 @@
           </Key>
           <Property Name="ID_CARACTERISTICA" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_CATEGORIA" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="ID_CAR_PRO" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="NOMBRE_CARACTERISTICA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CARACTERISTICA_PRODUCTO" Relationship="Self.FK_CARACTER_CARACTERI_CARACTER" FromRole="CARACTERISTICAS" ToRole="CARACTERISTICA_PRODUCTO" />
           <NavigationProperty Name="CATEGORIA_PRODUCTO" Relationship="Self.FK_CARACTER_FK_CARACT_CATEGORI" FromRole="CARACTERISTICAS" ToRole="CATEGORIA_PRODUCTO" />
@@ -1944,14 +1944,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CARACTER_CARACTERI_CARACTER">
-          <End Role="CARACTERISTICA_PRODUCTO" Type="Self.CARACTERISTICA_PRODUCTO" Multiplicity="0..1" />
-          <End Role="CARACTERISTICAS" Type="Self.CARACTERISTICAS" Multiplicity="*" />
+          <End Role="CARACTERISTICAS" Type="Self.CARACTERISTICAS" Multiplicity="0..1" />
+          <End Role="CARACTERISTICA_PRODUCTO" Type="Self.CARACTERISTICA_PRODUCTO" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CARACTERISTICA_PRODUCTO">
-              <PropertyRef Name="ID_CAR_PRO" />
+            <Principal Role="CARACTERISTICAS">
+              <PropertyRef Name="ID_CARACTERISTICA" />
             </Principal>
-            <Dependent Role="CARACTERISTICAS">
-              <PropertyRef Name="ID_CAR_PRO" />
+            <Dependent Role="CARACTERISTICA_PRODUCTO">
+              <PropertyRef Name="ID_CARACTERISTICA" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2391,7 +2391,7 @@
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
           <End Role="VISITA_PRODUCTO" Type="Self.VISITA_PRODUCTO" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="zeta_bdEntities6" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="zeta_bdEntities7" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
@@ -2472,8 +2472,8 @@
             <End Role="CANTIDAD_PRODUCTO" EntitySet="CANTIDAD_PRODUCTO" />
           </AssociationSet>
           <AssociationSet Name="FK_CARACTER_CARACTERI_CARACTER" Association="Self.FK_CARACTER_CARACTERI_CARACTER">
-            <End Role="CARACTERISTICA_PRODUCTO" EntitySet="CARACTERISTICA_PRODUCTO" />
             <End Role="CARACTERISTICAS" EntitySet="CARACTERISTICAS" />
+            <End Role="CARACTERISTICA_PRODUCTO" EntitySet="CARACTERISTICA_PRODUCTO" />
           </AssociationSet>
           <AssociationSet Name="FK_CARACTER_PRODUCTOV_PRODUCTO" Association="Self.FK_CARACTER_PRODUCTOV_PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
@@ -2637,7 +2637,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="zeta_bdModelStoreContainer" CdmEntityContainer="zeta_bdEntities6">
+        <EntityContainerMapping StorageEntityContainer="zeta_bdModelStoreContainer" CdmEntityContainer="zeta_bdEntities7">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="zeta_bdModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -2740,6 +2740,7 @@
               <MappingFragment StoreEntitySet="CARACTERISTICA_PRODUCTO">
                 <ScalarProperty Name="ID_CAR_PRO" ColumnName="ID_CAR_PRO" />
                 <ScalarProperty Name="ID_PRODUCTO" ColumnName="ID_PRODUCTO" />
+                <ScalarProperty Name="ID_CARACTERISTICA" ColumnName="ID_CARACTERISTICA" />
                 <ScalarProperty Name="INFO_CAR" ColumnName="INFO_CAR" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2749,7 +2750,6 @@
               <MappingFragment StoreEntitySet="CARACTERISTICAS">
                 <ScalarProperty Name="ID_CARACTERISTICA" ColumnName="ID_CARACTERISTICA" />
                 <ScalarProperty Name="ID_CATEGORIA" ColumnName="ID_CATEGORIA" />
-                <ScalarProperty Name="ID_CAR_PRO" ColumnName="ID_CAR_PRO" />
                 <ScalarProperty Name="NOMBRE_CARACTERISTICA" ColumnName="NOMBRE_CARACTERISTICA" />
               </MappingFragment>
             </EntityTypeMapping>

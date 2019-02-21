@@ -7,14 +7,16 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using zeta_v3.Models;
 
 namespace zeta_v3.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class COLORsController : ApiController
     {
-        private zeta_bdEntities6 db = new zeta_bdEntities6();
+        private zeta_bdEntities7 db = new zeta_bdEntities7();
 
         // GET: api/COLORs
         public IQueryable<COLOR> GetCOLOR()

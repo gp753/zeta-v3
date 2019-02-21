@@ -17,8 +17,8 @@ namespace zeta_v3.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class PRODUCTOsController : ApiController
     {
-        
-        private zeta_bdEntities6 db = new zeta_bdEntities6();
+
+        private zeta_bdEntities7 db = new zeta_bdEntities7();
 
         // GET: api/PRODUCTOs
         public IQueryable<PRODUCTO> GetPRODUCTO()
@@ -175,6 +175,26 @@ namespace zeta_v3.Controllers
             await db.SaveChangesAsync();
 
             return Created("DefaultApi",  new { pcat.ID_CATEGORIA, pcat.ID_PRODUCTO });
+        }
+
+        // POST: api/PRODUCTOs/caracteristica
+        [Route("api/productos/caracteristica")]
+        public async Task<IHttpActionResult> cargar_caracteristica(AuxModel.caracteristicaproduct aux)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
+            CARACTERISTICA_PRODUCTO pcar = new CARACTERISTICA_PRODUCTO();
+            pcar.ID_PRODUCTO = aux.ID_PRODUCTO;
+            pcar.ID_CARACTERISTICA = aux.ID_CARACTERISTICA;
+            pcar.INFO_CAR = aux.informacion;
+            
+            db.CARACTERISTICA_PRODUCTO.Add(pcar);
+            await db.SaveChangesAsync();
+
+            return Created("DefaultApi", new { pcar.ID_CARACTERISTICA, pcar.ID_PRODUCTO });
         }
 
         // POST: api/productos/tamano_color
