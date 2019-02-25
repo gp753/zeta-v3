@@ -63,6 +63,21 @@ namespace zeta_v3.Controllers
             return Ok(productos);
         }
 
+        [Route("api/productos/busqueda/{contenido}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> productos_busqueda(string contenido)
+        {
+            //falta devolver la cantidad en stock que hay de cada producto
+
+            var productos = from PRODUCTO in db.PRODUCTO
+                            join FOTO_PRODUCTO in db.FOTO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals FOTO_PRODUCTO.ID_PRODUCTO
+                            join INGRESO_PRODUCTO in db.INGRESO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals INGRESO_PRODUCTO.ID_PRODUCTO
+                            where PRODUCTO.NOMBRE_PRODUCTO.Contains(contenido) || PRODUCTO.DESCRIPCION_CORTA.Contains(contenido) || PRODUCTO.DESCRIPCION_LARGA.Contains(contenido)
+                            select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA };
+
+            return Ok(productos);
+        }
+
         [Route ("api/productos/nuevos") ]
         [HttpGet]
         public async Task<IHttpActionResult> productos_nuevos()
