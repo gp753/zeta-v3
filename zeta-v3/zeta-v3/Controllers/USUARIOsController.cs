@@ -17,10 +17,20 @@ namespace zeta_v3.Controllers
     {
         private zeta_bdEntities8 db = new zeta_bdEntities8();
 
-        // GET: api/USUARIOs
+        /*// GET: api/USUARIOs
         public IQueryable<USUARIO> GetUSUARIO()
         {
             return db.USUARIO;
+        }*/
+
+        [Route("api/usuarios/all")]
+        [HttpGet]
+        public async Task<IHttpActionResult> usuarios_todos()
+        {      
+
+            var users = from USUARIO in db.USUARIO
+                        select new { USUARIO.NOMBRE, USUARIO.APELLIDO, USUARIO.EMAIL, USUARIO.FECHA_INGRESO, USUARIO.ID_USUARIO };
+            return Ok(users);
         }
 
         // GET: api/USUARIOs/5

@@ -351,6 +351,11 @@ namespace zeta_v3.Controllers
             uSUARIO.ID_USUARIO = user.Id;
             uSUARIO.EMAIL = model.Email;
 
+            db.USUARIO.Add(uSUARIO);
+            db.SaveChanges();
+            
+          
+
             return Ok();
         }
 
