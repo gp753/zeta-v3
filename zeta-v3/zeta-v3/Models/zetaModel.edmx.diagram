@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="18c149c477d049ef94dd1a4f96bfd9f3" Name="Diagram1">
         <EntityTypeShape EntityType="zeta_bdModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.AspNetRoles" Width="1.5" PointX="0.875" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="zeta_bdModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="zeta_bdModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="zeta_bdModel.AspNetUsers" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
