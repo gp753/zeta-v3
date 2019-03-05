@@ -102,6 +102,8 @@
           <Property Name="ID_CANTIDAD_PRODUCTO" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="ID_CARRITO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_TAMANO" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ID_COLOR" Type="numeric" Precision="18" Scale="0" />
           <Property Name="CANTIDAD_PRODUCTO_CARRITO" Type="int" />
         </EntityType>
         <EntityType Name="CARACTERISTICA_PRODUCTO">
@@ -228,13 +230,15 @@
           <Property Name="NRO_FACTURA" Type="varchar" MaxLength="20" />
           <Property Name="FECHA_FACTURA" Type="datetime" />
         </EntityType>
-        <EntityType Name="FOTO_PRODUCTO">
+        <EntityType Name="FOTOS_PRODUCTOS">
           <Key>
-            <PropertyRef Name="ID_FOTO" />
+            <PropertyRef Name="ID_FOTOS_PRODUCTOS" />
           </Key>
-          <Property Name="ID_FOTO" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="LINK_FOTO" Type="varchar" MaxLength="150" />
+          <Property Name="ID_FOTOS_PRODUCTOS" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_MULTIMEDIA" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ID_COLOR" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ID_TAMANO" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="GASTO">
           <Key>
@@ -245,6 +249,7 @@
           <Property Name="DETALLE_GASTO" Type="varchar" MaxLength="200" />
           <Property Name="FECHA_GASTO" Type="datetime" />
           <Property Name="MONTO_GASTO" Type="money" />
+          <Property Name="NRO_FACTURA" Type="varchar" MaxLength="120" />
         </EntityType>
         <EntityType Name="INGRESO_PRODUCTO">
           <Key>
@@ -280,6 +285,14 @@
           <Property Name="ID_LOG" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_USUARIO" Type="varchar" MaxLength="100" />
           <Property Name="ACCION_LOG" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="MULTIMEDIA">
+          <Key>
+            <PropertyRef Name="ID_MULTIMEDIA" />
+          </Key>
+          <Property Name="ID_MULTIMEDIA" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LINK_MULTIMEDIA" Type="varchar" MaxLength="200" />
+          <Property Name="FECHA_CARGA" Type="datetime" />
         </EntityType>
         <EntityType Name="PAGOS_BANCARD">
           <Key>
@@ -463,6 +476,30 @@
             </Principal>
             <Dependent Role="CANCELACION">
               <PropertyRef Name="ID_CHECKOUT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CANTIDAD_CARRITOXC_COLOR">
+          <End Role="COLOR" Type="Self.COLOR" Multiplicity="0..1" />
+          <End Role="CANTIDAD_PRODUCTO" Type="Self.CANTIDAD_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COLOR">
+              <PropertyRef Name="ID_COLOR" />
+            </Principal>
+            <Dependent Role="CANTIDAD_PRODUCTO">
+              <PropertyRef Name="ID_COLOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CANTIDAD_CARRITOXT_TAMANO">
+          <End Role="TAMANO" Type="Self.TAMANO" Multiplicity="0..1" />
+          <End Role="CANTIDAD_PRODUCTO" Type="Self.CANTIDAD_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAMANO">
+              <PropertyRef Name="ID_TAMANO" />
+            </Principal>
+            <Dependent Role="CANTIDAD_PRODUCTO">
+              <PropertyRef Name="ID_TAMANO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -762,15 +799,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FOTO_PRO_FK_FOTO_P_PRODUCTO">
-          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
-          <End Role="FOTO_PRODUCTO" Type="Self.FOTO_PRODUCTO" Multiplicity="*" />
+        <Association Name="FK_FOTOS_PR_COLORXFOT_COLOR">
+          <End Role="COLOR" Type="Self.COLOR" Multiplicity="0..1" />
+          <End Role="FOTOS_PRODUCTOS" Type="Self.FOTOS_PRODUCTOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COLOR">
+              <PropertyRef Name="ID_COLOR" />
+            </Principal>
+            <Dependent Role="FOTOS_PRODUCTOS">
+              <PropertyRef Name="ID_COLOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FOTOS_PR_FOTOSXPRO_MULTIMED">
+          <End Role="MULTIMEDIA" Type="Self.MULTIMEDIA" Multiplicity="0..1" />
+          <End Role="FOTOS_PRODUCTOS" Type="Self.FOTOS_PRODUCTOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MULTIMEDIA">
+              <PropertyRef Name="ID_MULTIMEDIA" />
+            </Principal>
+            <Dependent Role="FOTOS_PRODUCTOS">
+              <PropertyRef Name="ID_MULTIMEDIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FOTOS_PR_PRODUCTOS_PRODUCTO">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="0..1" />
+          <End Role="FOTOS_PRODUCTOS" Type="Self.FOTOS_PRODUCTOS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PRODUCTO">
               <PropertyRef Name="ID_PRODUCTO" />
             </Principal>
-            <Dependent Role="FOTO_PRODUCTO">
+            <Dependent Role="FOTOS_PRODUCTOS">
               <PropertyRef Name="ID_PRODUCTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FOTOS_PR_RELATIONS_TAMANO">
+          <End Role="TAMANO" Type="Self.TAMANO" Multiplicity="0..1" />
+          <End Role="FOTOS_PRODUCTOS" Type="Self.FOTOS_PRODUCTOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAMANO">
+              <PropertyRef Name="ID_TAMANO" />
+            </Principal>
+            <Dependent Role="FOTOS_PRODUCTOS">
+              <PropertyRef Name="ID_TAMANO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1098,12 +1171,13 @@
           <EntitySet Name="ESTADO_DELIVERY" EntityType="Self.ESTADO_DELIVERY" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="ESTADO_RECLAMO" EntityType="Self.ESTADO_RECLAMO" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="FACTURA_VENTA" EntityType="Self.FACTURA_VENTA" Schema="zeta_bd" store:Type="Tables" />
-          <EntitySet Name="FOTO_PRODUCTO" EntityType="Self.FOTO_PRODUCTO" Schema="zeta_bd" store:Type="Tables" />
+          <EntitySet Name="FOTOS_PRODUCTOS" EntityType="Self.FOTOS_PRODUCTOS" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="GASTO" EntityType="Self.GASTO" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="INGRESO_PRODUCTO" EntityType="Self.INGRESO_PRODUCTO" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="LISTA_DESEOS" EntityType="Self.LISTA_DESEOS" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="LISTAXPRODUCTO" EntityType="Self.LISTAXPRODUCTO" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="LOG" EntityType="Self.LOG" Schema="zeta_bd" store:Type="Tables" />
+          <EntitySet Name="MULTIMEDIA" EntityType="Self.MULTIMEDIA" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="PAGOS_BANCARD" EntityType="Self.PAGOS_BANCARD" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="PAGOS_DELIVERY" EntityType="Self.PAGOS_DELIVERY" Schema="zeta_bd" store:Type="Tables" />
           <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="zeta_bd" store:Type="Tables" />
@@ -1133,6 +1207,14 @@
           <AssociationSet Name="FK_CANCELAC_FK_CANCEL_CHECKOUT" Association="Self.FK_CANCELAC_FK_CANCEL_CHECKOUT">
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
             <End Role="CANCELACION" EntitySet="CANCELACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CANTIDAD_CARRITOXC_COLOR" Association="Self.FK_CANTIDAD_CARRITOXC_COLOR">
+            <End Role="COLOR" EntitySet="COLOR" />
+            <End Role="CANTIDAD_PRODUCTO" EntitySet="CANTIDAD_PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CANTIDAD_CARRITOXT_TAMANO" Association="Self.FK_CANTIDAD_CARRITOXT_TAMANO">
+            <End Role="TAMANO" EntitySet="TAMANO" />
+            <End Role="CANTIDAD_PRODUCTO" EntitySet="CANTIDAD_PRODUCTO" />
           </AssociationSet>
           <AssociationSet Name="FK_CANTIDAD_FK_CANTID_CARRITO" Association="Self.FK_CANTIDAD_FK_CANTID_CARRITO">
             <End Role="CARRITO" EntitySet="CARRITO" />
@@ -1230,9 +1312,21 @@
             <End Role="CHECKOUT" EntitySet="CHECKOUT" />
             <End Role="FACTURA_VENTA" EntitySet="FACTURA_VENTA" />
           </AssociationSet>
-          <AssociationSet Name="FK_FOTO_PRO_FK_FOTO_P_PRODUCTO" Association="Self.FK_FOTO_PRO_FK_FOTO_P_PRODUCTO">
+          <AssociationSet Name="FK_FOTOS_PR_COLORXFOT_COLOR" Association="Self.FK_FOTOS_PR_COLORXFOT_COLOR">
+            <End Role="COLOR" EntitySet="COLOR" />
+            <End Role="FOTOS_PRODUCTOS" EntitySet="FOTOS_PRODUCTOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FOTOS_PR_FOTOSXPRO_MULTIMED" Association="Self.FK_FOTOS_PR_FOTOSXPRO_MULTIMED">
+            <End Role="MULTIMEDIA" EntitySet="MULTIMEDIA" />
+            <End Role="FOTOS_PRODUCTOS" EntitySet="FOTOS_PRODUCTOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FOTOS_PR_PRODUCTOS_PRODUCTO" Association="Self.FK_FOTOS_PR_PRODUCTOS_PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
-            <End Role="FOTO_PRODUCTO" EntitySet="FOTO_PRODUCTO" />
+            <End Role="FOTOS_PRODUCTOS" EntitySet="FOTOS_PRODUCTOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FOTOS_PR_RELATIONS_TAMANO" Association="Self.FK_FOTOS_PR_RELATIONS_TAMANO">
+            <End Role="TAMANO" EntitySet="TAMANO" />
+            <End Role="FOTOS_PRODUCTOS" EntitySet="FOTOS_PRODUCTOS" />
           </AssociationSet>
           <AssociationSet Name="FK_GASTO_FK_GASTO__USUARIO" Association="Self.FK_GASTO_FK_GASTO__USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
@@ -1441,7 +1535,11 @@
           <Property Name="ID_CANTIDAD_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="ID_CARRITO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_TAMANO" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ID_COLOR" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="CANTIDAD_PRODUCTO_CARRITO" Type="Int32" />
+          <NavigationProperty Name="COLOR" Relationship="Self.FK_CANTIDAD_CARRITOXC_COLOR" FromRole="CANTIDAD_PRODUCTO" ToRole="COLOR" />
+          <NavigationProperty Name="TAMANO" Relationship="Self.FK_CANTIDAD_CARRITOXT_TAMANO" FromRole="CANTIDAD_PRODUCTO" ToRole="TAMANO" />
           <NavigationProperty Name="CARRITO" Relationship="Self.FK_CANTIDAD_FK_CANTID_CARRITO" FromRole="CANTIDAD_PRODUCTO" ToRole="CARRITO" />
           <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_CANTIDAD_FK_CANTID_PRODUCTO" FromRole="CANTIDAD_PRODUCTO" ToRole="PRODUCTO" />
         </EntityType>
@@ -1531,7 +1629,9 @@
           <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="NOMBRE_COLOR" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="LINK_FOTO_COLOR" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CANTIDAD_PRODUCTO" Relationship="Self.FK_CANTIDAD_CARRITOXC_COLOR" FromRole="COLOR" ToRole="CANTIDAD_PRODUCTO" />
           <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_COLOR_COLOR_PRO_PRODUCTO" FromRole="COLOR" ToRole="PRODUCTO" />
+          <NavigationProperty Name="FOTOS_PRODUCTOS" Relationship="Self.FK_FOTOS_PR_COLORXFOT_COLOR" FromRole="COLOR" ToRole="FOTOS_PRODUCTOS" />
           <NavigationProperty Name="INGRESO_PRODUCTO" Relationship="Self.FK_INGRESO__INGRESO_C_COLOR" FromRole="COLOR" ToRole="INGRESO_PRODUCTO" />
         </EntityType>
         <EntityType Name="DEPARTAMENTO">
@@ -1603,14 +1703,19 @@
           <NavigationProperty Name="CHECKOUT1" Relationship="Self.FK_FACTURA__FK_FACTUR_CHECKOUT" FromRole="FACTURA_VENTA" ToRole="CHECKOUT" />
           <NavigationProperty Name="PRODUCTO_FACTURA" Relationship="Self.FK_PRODUCTO_FK_PRODUC_FACTURA_" FromRole="FACTURA_VENTA" ToRole="PRODUCTO_FACTURA" />
         </EntityType>
-        <EntityType Name="FOTO_PRODUCTO">
+        <EntityType Name="FOTOS_PRODUCTOS">
           <Key>
-            <PropertyRef Name="ID_FOTO" />
+            <PropertyRef Name="ID_FOTOS_PRODUCTOS" />
           </Key>
-          <Property Name="ID_FOTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="LINK_FOTO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_FOTO_PRO_FK_FOTO_P_PRODUCTO" FromRole="FOTO_PRODUCTO" ToRole="PRODUCTO" />
+          <Property Name="ID_FOTOS_PRODUCTOS" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_MULTIMEDIA" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ID_COLOR" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ID_TAMANO" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="COLOR" Relationship="Self.FK_FOTOS_PR_COLORXFOT_COLOR" FromRole="FOTOS_PRODUCTOS" ToRole="COLOR" />
+          <NavigationProperty Name="MULTIMEDIA" Relationship="Self.FK_FOTOS_PR_FOTOSXPRO_MULTIMED" FromRole="FOTOS_PRODUCTOS" ToRole="MULTIMEDIA" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_FOTOS_PR_PRODUCTOS_PRODUCTO" FromRole="FOTOS_PRODUCTOS" ToRole="PRODUCTO" />
+          <NavigationProperty Name="TAMANO" Relationship="Self.FK_FOTOS_PR_RELATIONS_TAMANO" FromRole="FOTOS_PRODUCTOS" ToRole="TAMANO" />
         </EntityType>
         <EntityType Name="GASTO">
           <Key>
@@ -1621,6 +1726,7 @@
           <Property Name="DETALLE_GASTO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="FECHA_GASTO" Type="DateTime" Precision="3" />
           <Property Name="MONTO_GASTO" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="NRO_FACTURA" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_GASTO_FK_GASTO__USUARIO" FromRole="GASTO" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="INGRESO_PRODUCTO">
@@ -1656,6 +1762,15 @@
           <Property Name="ID_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ACCION_LOG" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_LOG_LOGXUSUAR_USUARIO" FromRole="LOG" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="MULTIMEDIA">
+          <Key>
+            <PropertyRef Name="ID_MULTIMEDIA" />
+          </Key>
+          <Property Name="ID_MULTIMEDIA" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LINK_MULTIMEDIA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA_CARGA" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="FOTOS_PRODUCTOS" Relationship="Self.FK_FOTOS_PR_FOTOSXPRO_MULTIMED" FromRole="MULTIMEDIA" ToRole="FOTOS_PRODUCTOS" />
         </EntityType>
         <EntityType Name="PAGOS_BANCARD">
           <Key>
@@ -1696,7 +1811,7 @@
           <NavigationProperty Name="CANTIDAD_PRODUCTO" Relationship="Self.FK_CANTIDAD_FK_CANTID_PRODUCTO" FromRole="PRODUCTO" ToRole="CANTIDAD_PRODUCTO" />
           <NavigationProperty Name="CARACTERISTICA_PRODUCTO" Relationship="Self.FK_CARACTER_PRODUCTOV_PRODUCTO" FromRole="PRODUCTO" ToRole="CARACTERISTICA_PRODUCTO" />
           <NavigationProperty Name="COLOR" Relationship="Self.FK_COLOR_COLOR_PRO_PRODUCTO" FromRole="PRODUCTO" ToRole="COLOR" />
-          <NavigationProperty Name="FOTO_PRODUCTO" Relationship="Self.FK_FOTO_PRO_FK_FOTO_P_PRODUCTO" FromRole="PRODUCTO" ToRole="FOTO_PRODUCTO" />
+          <NavigationProperty Name="FOTOS_PRODUCTOS" Relationship="Self.FK_FOTOS_PR_PRODUCTOS_PRODUCTO" FromRole="PRODUCTO" ToRole="FOTOS_PRODUCTOS" />
           <NavigationProperty Name="INGRESO_PRODUCTO" Relationship="Self.FK_INGRESO__FK_INGRES_PRODUCTO" FromRole="PRODUCTO" ToRole="INGRESO_PRODUCTO" />
           <NavigationProperty Name="PRODUCTO_FACTURA" Relationship="Self.FK_PRODUCTO_FK_PRODUC_PRODUCTO" FromRole="PRODUCTO" ToRole="PRODUCTO_FACTURA" />
           <NavigationProperty Name="PRODUCTOXCATEGORIA" Relationship="Self.FK_PRODUCTO_PRODUCTO__PRODUCTO" FromRole="PRODUCTO" ToRole="PRODUCTOXCATEGORIA" />
@@ -1783,6 +1898,8 @@
           <Property Name="ID_TAMANO" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="NOMBRE_TAMANO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CANTIDAD_PRODUCTO" Relationship="Self.FK_CANTIDAD_CARRITOXT_TAMANO" FromRole="TAMANO" ToRole="CANTIDAD_PRODUCTO" />
+          <NavigationProperty Name="FOTOS_PRODUCTOS" Relationship="Self.FK_FOTOS_PR_RELATIONS_TAMANO" FromRole="TAMANO" ToRole="FOTOS_PRODUCTOS" />
           <NavigationProperty Name="INGRESO_PRODUCTO" Relationship="Self.FK_INGRESO__INGRESO_T_TAMANO" FromRole="TAMANO" ToRole="INGRESO_PRODUCTO" />
           <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_TAMANO_TAMANO_PR_PRODUCTO" FromRole="TAMANO" ToRole="PRODUCTO" />
         </EntityType>
@@ -1918,6 +2035,30 @@
             </Principal>
             <Dependent Role="ESTADO_CANCELACION">
               <PropertyRef Name="ID_CANCELACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CANTIDAD_CARRITOXC_COLOR">
+          <End Role="COLOR" Type="Self.COLOR" Multiplicity="0..1" />
+          <End Role="CANTIDAD_PRODUCTO" Type="Self.CANTIDAD_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COLOR">
+              <PropertyRef Name="ID_COLOR" />
+            </Principal>
+            <Dependent Role="CANTIDAD_PRODUCTO">
+              <PropertyRef Name="ID_COLOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CANTIDAD_CARRITOXT_TAMANO">
+          <End Role="TAMANO" Type="Self.TAMANO" Multiplicity="0..1" />
+          <End Role="CANTIDAD_PRODUCTO" Type="Self.CANTIDAD_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAMANO">
+              <PropertyRef Name="ID_TAMANO" />
+            </Principal>
+            <Dependent Role="CANTIDAD_PRODUCTO">
+              <PropertyRef Name="ID_TAMANO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2125,6 +2266,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FOTOS_PR_COLORXFOT_COLOR">
+          <End Role="COLOR" Type="Self.COLOR" Multiplicity="0..1" />
+          <End Role="FOTOS_PRODUCTOS" Type="Self.FOTOS_PRODUCTOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COLOR">
+              <PropertyRef Name="ID_COLOR" />
+            </Principal>
+            <Dependent Role="FOTOS_PRODUCTOS">
+              <PropertyRef Name="ID_COLOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_INGRESO__INGRESO_C_COLOR">
           <End Role="COLOR" Type="Self.COLOR" Multiplicity="0..1" />
           <End Role="INGRESO_PRODUCTO" Type="Self.INGRESO_PRODUCTO" Multiplicity="*" />
@@ -2197,15 +2350,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FOTO_PRO_FK_FOTO_P_PRODUCTO">
-          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
-          <End Role="FOTO_PRODUCTO" Type="Self.FOTO_PRODUCTO" Multiplicity="*" />
+        <Association Name="FK_FOTOS_PR_FOTOSXPRO_MULTIMED">
+          <End Role="MULTIMEDIA" Type="Self.MULTIMEDIA" Multiplicity="0..1" />
+          <End Role="FOTOS_PRODUCTOS" Type="Self.FOTOS_PRODUCTOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MULTIMEDIA">
+              <PropertyRef Name="ID_MULTIMEDIA" />
+            </Principal>
+            <Dependent Role="FOTOS_PRODUCTOS">
+              <PropertyRef Name="ID_MULTIMEDIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FOTOS_PR_PRODUCTOS_PRODUCTO">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="0..1" />
+          <End Role="FOTOS_PRODUCTOS" Type="Self.FOTOS_PRODUCTOS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PRODUCTO">
               <PropertyRef Name="ID_PRODUCTO" />
             </Principal>
-            <Dependent Role="FOTO_PRODUCTO">
+            <Dependent Role="FOTOS_PRODUCTOS">
               <PropertyRef Name="ID_PRODUCTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FOTOS_PR_RELATIONS_TAMANO">
+          <End Role="TAMANO" Type="Self.TAMANO" Multiplicity="0..1" />
+          <End Role="FOTOS_PRODUCTOS" Type="Self.FOTOS_PRODUCTOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAMANO">
+              <PropertyRef Name="ID_TAMANO" />
+            </Principal>
+            <Dependent Role="FOTOS_PRODUCTOS">
+              <PropertyRef Name="ID_TAMANO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2393,7 +2570,7 @@
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
           <End Role="VISITA_PRODUCTO" Type="Self.VISITA_PRODUCTO" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="zeta_bdEntities8" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="zeta_bdEntities9" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
@@ -2416,11 +2593,12 @@
           <EntitySet Name="ESTADO_DELIVERY" EntityType="Self.ESTADO_DELIVERY" />
           <EntitySet Name="ESTADO_RECLAMO" EntityType="Self.ESTADO_RECLAMO" />
           <EntitySet Name="FACTURA_VENTA" EntityType="Self.FACTURA_VENTA" />
-          <EntitySet Name="FOTO_PRODUCTO" EntityType="Self.FOTO_PRODUCTO" />
+          <EntitySet Name="FOTOS_PRODUCTOS" EntityType="Self.FOTOS_PRODUCTOS" />
           <EntitySet Name="GASTO" EntityType="Self.GASTO" />
           <EntitySet Name="INGRESO_PRODUCTO" EntityType="Self.INGRESO_PRODUCTO" />
           <EntitySet Name="LISTA_DESEOS" EntityType="Self.LISTA_DESEOS" />
           <EntitySet Name="LOG" EntityType="Self.LOG" />
+          <EntitySet Name="MULTIMEDIA" EntityType="Self.MULTIMEDIA" />
           <EntitySet Name="PAGOS_BANCARD" EntityType="Self.PAGOS_BANCARD" />
           <EntitySet Name="PAGOS_DELIVERY" EntityType="Self.PAGOS_DELIVERY" />
           <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" />
@@ -2464,6 +2642,14 @@
           <AssociationSet Name="FK_ESTADO_C_FK_ESTADO_CANCELAC" Association="Self.FK_ESTADO_C_FK_ESTADO_CANCELAC">
             <End Role="CANCELACION" EntitySet="CANCELACION" />
             <End Role="ESTADO_CANCELACION" EntitySet="ESTADO_CANCELACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CANTIDAD_CARRITOXC_COLOR" Association="Self.FK_CANTIDAD_CARRITOXC_COLOR">
+            <End Role="COLOR" EntitySet="COLOR" />
+            <End Role="CANTIDAD_PRODUCTO" EntitySet="CANTIDAD_PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CANTIDAD_CARRITOXT_TAMANO" Association="Self.FK_CANTIDAD_CARRITOXT_TAMANO">
+            <End Role="TAMANO" EntitySet="TAMANO" />
+            <End Role="CANTIDAD_PRODUCTO" EntitySet="CANTIDAD_PRODUCTO" />
           </AssociationSet>
           <AssociationSet Name="FK_CANTIDAD_FK_CANTID_CARRITO" Association="Self.FK_CANTIDAD_FK_CANTID_CARRITO">
             <End Role="CARRITO" EntitySet="CARRITO" />
@@ -2533,6 +2719,10 @@
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="COLOR" EntitySet="COLOR" />
           </AssociationSet>
+          <AssociationSet Name="FK_FOTOS_PR_COLORXFOT_COLOR" Association="Self.FK_FOTOS_PR_COLORXFOT_COLOR">
+            <End Role="COLOR" EntitySet="COLOR" />
+            <End Role="FOTOS_PRODUCTOS" EntitySet="FOTOS_PRODUCTOS" />
+          </AssociationSet>
           <AssociationSet Name="FK_INGRESO__INGRESO_C_COLOR" Association="Self.FK_INGRESO__INGRESO_C_COLOR">
             <End Role="COLOR" EntitySet="COLOR" />
             <End Role="INGRESO_PRODUCTO" EntitySet="INGRESO_PRODUCTO" />
@@ -2557,9 +2747,17 @@
             <End Role="FACTURA_VENTA" EntitySet="FACTURA_VENTA" />
             <End Role="PRODUCTO_FACTURA" EntitySet="PRODUCTO_FACTURA" />
           </AssociationSet>
-          <AssociationSet Name="FK_FOTO_PRO_FK_FOTO_P_PRODUCTO" Association="Self.FK_FOTO_PRO_FK_FOTO_P_PRODUCTO">
+          <AssociationSet Name="FK_FOTOS_PR_FOTOSXPRO_MULTIMED" Association="Self.FK_FOTOS_PR_FOTOSXPRO_MULTIMED">
+            <End Role="MULTIMEDIA" EntitySet="MULTIMEDIA" />
+            <End Role="FOTOS_PRODUCTOS" EntitySet="FOTOS_PRODUCTOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FOTOS_PR_PRODUCTOS_PRODUCTO" Association="Self.FK_FOTOS_PR_PRODUCTOS_PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
-            <End Role="FOTO_PRODUCTO" EntitySet="FOTO_PRODUCTO" />
+            <End Role="FOTOS_PRODUCTOS" EntitySet="FOTOS_PRODUCTOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FOTOS_PR_RELATIONS_TAMANO" Association="Self.FK_FOTOS_PR_RELATIONS_TAMANO">
+            <End Role="TAMANO" EntitySet="TAMANO" />
+            <End Role="FOTOS_PRODUCTOS" EntitySet="FOTOS_PRODUCTOS" />
           </AssociationSet>
           <AssociationSet Name="FK_GASTO_FK_GASTO__USUARIO" Association="Self.FK_GASTO_FK_GASTO__USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
@@ -2639,7 +2837,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="zeta_bdModelStoreContainer" CdmEntityContainer="zeta_bdEntities8">
+        <EntityContainerMapping StorageEntityContainer="zeta_bdModelStoreContainer" CdmEntityContainer="zeta_bdEntities9">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="zeta_bdModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -2733,6 +2931,8 @@
                 <ScalarProperty Name="ID_CANTIDAD_PRODUCTO" ColumnName="ID_CANTIDAD_PRODUCTO" />
                 <ScalarProperty Name="ID_PRODUCTO" ColumnName="ID_PRODUCTO" />
                 <ScalarProperty Name="ID_CARRITO" ColumnName="ID_CARRITO" />
+                <ScalarProperty Name="ID_TAMANO" ColumnName="ID_TAMANO" />
+                <ScalarProperty Name="ID_COLOR" ColumnName="ID_COLOR" />
                 <ScalarProperty Name="CANTIDAD_PRODUCTO_CARRITO" ColumnName="CANTIDAD_PRODUCTO_CARRITO" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2874,12 +3074,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FOTO_PRODUCTO">
-            <EntityTypeMapping TypeName="zeta_bdModel.FOTO_PRODUCTO">
-              <MappingFragment StoreEntitySet="FOTO_PRODUCTO">
-                <ScalarProperty Name="ID_FOTO" ColumnName="ID_FOTO" />
+          <EntitySetMapping Name="FOTOS_PRODUCTOS">
+            <EntityTypeMapping TypeName="zeta_bdModel.FOTOS_PRODUCTOS">
+              <MappingFragment StoreEntitySet="FOTOS_PRODUCTOS">
+                <ScalarProperty Name="ID_FOTOS_PRODUCTOS" ColumnName="ID_FOTOS_PRODUCTOS" />
+                <ScalarProperty Name="ID_MULTIMEDIA" ColumnName="ID_MULTIMEDIA" />
                 <ScalarProperty Name="ID_PRODUCTO" ColumnName="ID_PRODUCTO" />
-                <ScalarProperty Name="LINK_FOTO" ColumnName="LINK_FOTO" />
+                <ScalarProperty Name="ID_COLOR" ColumnName="ID_COLOR" />
+                <ScalarProperty Name="ID_TAMANO" ColumnName="ID_TAMANO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2891,6 +3093,7 @@
                 <ScalarProperty Name="DETALLE_GASTO" ColumnName="DETALLE_GASTO" />
                 <ScalarProperty Name="FECHA_GASTO" ColumnName="FECHA_GASTO" />
                 <ScalarProperty Name="MONTO_GASTO" ColumnName="MONTO_GASTO" />
+                <ScalarProperty Name="NRO_FACTURA" ColumnName="NRO_FACTURA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2921,6 +3124,15 @@
                 <ScalarProperty Name="ID_LOG" ColumnName="ID_LOG" />
                 <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />
                 <ScalarProperty Name="ACCION_LOG" ColumnName="ACCION_LOG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MULTIMEDIA">
+            <EntityTypeMapping TypeName="zeta_bdModel.MULTIMEDIA">
+              <MappingFragment StoreEntitySet="MULTIMEDIA">
+                <ScalarProperty Name="ID_MULTIMEDIA" ColumnName="ID_MULTIMEDIA" />
+                <ScalarProperty Name="LINK_MULTIMEDIA" ColumnName="LINK_MULTIMEDIA" />
+                <ScalarProperty Name="FECHA_CARGA" ColumnName="FECHA_CARGA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

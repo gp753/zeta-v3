@@ -19,6 +19,7 @@ namespace zeta_v3.Models
         public string DETALLE_GASTO { get; set; }
         public Nullable<System.DateTime> FECHA_GASTO { get; set; }
         public Nullable<decimal> MONTO_GASTO { get; set; }
+        public string NRO_FACTURA { get; set; }
     
         public virtual USUARIO USUARIO { get; set; }
     }

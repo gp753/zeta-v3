@@ -16,7 +16,7 @@ namespace zeta_v3.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CATEGORIA_PRODUCTOController : ApiController
     {
-        private zeta_bdEntities8 db = new zeta_bdEntities8();
+        private zeta_bdEntities9 db = new zeta_bdEntities9();
 
         [Route("api/categoria_producto")]
         [HttpGet]

@@ -27,6 +27,14 @@ namespace zeta_v3.Models
             public string informacion { get; set; }
         }
 
+        public class productoacarrito
+        {
+            public decimal ID_PRODUCTO { get; set; }
+            public decimal ID_COLOR { get; set; }
+            public decimal ID_TAMANO { get; set; }
+            public int CANTIDAD { get; set; }
+        }
+
        
     }
 }

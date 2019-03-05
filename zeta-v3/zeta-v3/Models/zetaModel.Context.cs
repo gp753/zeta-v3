@@ -13,10 +13,10 @@ namespace zeta_v3.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class zeta_bdEntities8 : DbContext
+    public partial class zeta_bdEntities9 : DbContext
     {
-        public zeta_bdEntities8()
-            : base("name=zeta_bdEntities8")
+        public zeta_bdEntities9()
+            : base("name=zeta_bdEntities9")
         {
         }
     
@@ -47,11 +47,12 @@ namespace zeta_v3.Models
         public virtual DbSet<ESTADO_DELIVERY> ESTADO_DELIVERY { get; set; }
         public virtual DbSet<ESTADO_RECLAMO> ESTADO_RECLAMO { get; set; }
         public virtual DbSet<FACTURA_VENTA> FACTURA_VENTA { get; set; }
-        public virtual DbSet<FOTO_PRODUCTO> FOTO_PRODUCTO { get; set; }
+        public virtual DbSet<FOTOS_PRODUCTOS> FOTOS_PRODUCTOS { get; set; }
         public virtual DbSet<GASTO> GASTO { get; set; }
         public virtual DbSet<INGRESO_PRODUCTO> INGRESO_PRODUCTO { get; set; }
         public virtual DbSet<LISTA_DESEOS> LISTA_DESEOS { get; set; }
         public virtual DbSet<LOG> LOG { get; set; }
+        public virtual DbSet<MULTIMEDIA> MULTIMEDIA { get; set; }
         public virtual DbSet<PAGOS_BANCARD> PAGOS_BANCARD { get; set; }
         public virtual DbSet<PAGOS_DELIVERY> PAGOS_DELIVERY { get; set; }
         public virtual DbSet<PRODUCTO> PRODUCTO { get; set; }

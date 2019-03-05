@@ -17,6 +17,8 @@ namespace zeta_v3.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public COLOR()
         {
+            this.CANTIDAD_PRODUCTO = new HashSet<CANTIDAD_PRODUCTO>();
+            this.FOTOS_PRODUCTOS = new HashSet<FOTOS_PRODUCTOS>();
             this.INGRESO_PRODUCTO = new HashSet<INGRESO_PRODUCTO>();
         }
     
@@ -25,7 +27,11 @@ namespace zeta_v3.Models
         public string NOMBRE_COLOR { get; set; }
         public string LINK_FOTO_COLOR { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CANTIDAD_PRODUCTO> CANTIDAD_PRODUCTO { get; set; }
         public virtual PRODUCTO PRODUCTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FOTOS_PRODUCTOS> FOTOS_PRODUCTOS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<INGRESO_PRODUCTO> INGRESO_PRODUCTO { get; set; }
     }

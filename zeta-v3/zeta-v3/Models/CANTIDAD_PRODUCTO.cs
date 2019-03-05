@@ -17,8 +17,12 @@ namespace zeta_v3.Models
         public decimal ID_CANTIDAD_PRODUCTO { get; set; }
         public decimal ID_PRODUCTO { get; set; }
         public decimal ID_CARRITO { get; set; }
+        public Nullable<decimal> ID_TAMANO { get; set; }
+        public Nullable<decimal> ID_COLOR { get; set; }
         public Nullable<int> CANTIDAD_PRODUCTO_CARRITO { get; set; }
     
+        public virtual COLOR COLOR { get; set; }
+        public virtual TAMANO TAMANO { get; set; }
         public virtual CARRITO CARRITO { get; set; }
         public virtual PRODUCTO PRODUCTO { get; set; }
     }

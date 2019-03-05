@@ -326,7 +326,7 @@
     <Compile Include="Models\FACTURA_VENTA.cs">
       <DependentUpon>ZetaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FOTO_PRODUCTO.cs">
+    <Compile Include="Models\FOTOS_PRODUCTOS.cs">
       <DependentUpon>ZetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GASTO.cs">
@@ -340,6 +340,9 @@
       <DependentUpon>ZetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LOG.cs">
+      <DependentUpon>ZetaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MULTIMEDIA.cs">
       <DependentUpon>ZetaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PAGOS_BANCARD.cs">

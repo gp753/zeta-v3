@@ -18,7 +18,7 @@ namespace zeta_v3.Controllers
     public class PRODUCTOsController : ApiController
     {
 
-        private zeta_bdEntities8 db = new zeta_bdEntities8();
+        private zeta_bdEntities9 db = new zeta_bdEntities9();
 
         // GET: api/PRODUCTOs
         public IQueryable<PRODUCTO> GetPRODUCTO()
@@ -36,9 +36,13 @@ namespace zeta_v3.Controllers
                 return NotFound();
             }
 
-            var fotos = from FOTO_PRODUCTO in db.FOTO_PRODUCTO
-                        where FOTO_PRODUCTO.ID_PRODUCTO == pRODUCTO.ID_PRODUCTO
-                        select FOTO_PRODUCTO.LINK_FOTO;
+            // join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
+               //           join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
+
+            var fotos = from FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS
+                        join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
+                        where FOTOS_PRODUCTOS.ID_PRODUCTO == pRODUCTO.ID_PRODUCTO
+                        select MULTIMEDIA.LINK_MULTIMEDIA;
             var colores = from COLOR in db.COLOR
                           where COLOR.ID_PRODUCTO == pRODUCTO.ID_PRODUCTO
                           select new { COLOR.ID_COLOR, COLOR.NOMBRE_COLOR };
@@ -57,7 +61,8 @@ namespace zeta_v3.Controllers
             //falta devolver la cantidad en stock que hay de cada producto
 
             var productos = from PRODUCTO in db.PRODUCTO
-                            join FOTO_PRODUCTO in db.FOTO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals FOTO_PRODUCTO.ID_PRODUCTO
+                            join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
+                            join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
                             join INGRESO_PRODUCTO in db.INGRESO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals INGRESO_PRODUCTO.ID_PRODUCTO
                             select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA };
             return Ok(productos);
@@ -70,7 +75,8 @@ namespace zeta_v3.Controllers
             //falta devolver la cantidad en stock que hay de cada producto
 
             var productos = from PRODUCTO in db.PRODUCTO
-                            join FOTO_PRODUCTO in db.FOTO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals FOTO_PRODUCTO.ID_PRODUCTO
+                            join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
+                            join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
                             join INGRESO_PRODUCTO in db.INGRESO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals INGRESO_PRODUCTO.ID_PRODUCTO
                             where PRODUCTO.NOMBRE_PRODUCTO.Contains(contenido) || PRODUCTO.DESCRIPCION_CORTA.Contains(contenido) || PRODUCTO.DESCRIPCION_LARGA.Contains(contenido)
                             select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA };
@@ -83,8 +89,9 @@ namespace zeta_v3.Controllers
         public async Task<IHttpActionResult> productos_nuevos()
         {
             var products = from PRODUCTO in db.PRODUCTO
-                           join FOTO_PRODUCTO in db.FOTO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals FOTO_PRODUCTO.ID_PRODUCTO
-                           select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA,  FOTO_PRODUCTO.LINK_FOTO };
+                           join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
+                           join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
+                           select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA,  MULTIMEDIA.LINK_MULTIMEDIA };
 
             return Ok(products.Take(3));
         }
@@ -94,8 +101,9 @@ namespace zeta_v3.Controllers
         public async Task<IHttpActionResult> productos_publicitados()
         {
             var products = from PRODUCTO in db.PRODUCTO
-                           join FOTO_PRODUCTO in db.FOTO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals FOTO_PRODUCTO.ID_PRODUCTO
-                           select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, FOTO_PRODUCTO.LINK_FOTO };
+                           join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
+                           join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
+                           select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA };
 
             return Ok(products);
         }
@@ -105,8 +113,9 @@ namespace zeta_v3.Controllers
         public async Task<IHttpActionResult> productos_populares()
         {
             var products = from PRODUCTO in db.PRODUCTO
-                           join FOTO_PRODUCTO in db.FOTO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals FOTO_PRODUCTO.ID_PRODUCTO
-                           select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, FOTO_PRODUCTO.LINK_FOTO };
+                           join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
+                           join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
+                           select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA };
 
             return Ok(products);
         }
@@ -169,6 +178,7 @@ namespace zeta_v3.Controllers
                 return BadRequest(ModelState);
             }
 
+            
             pRODUCTO.ESTADO_PUBLICACION = 0;
             pRODUCTO.FECHA_PUBLICACION = DateTime.Today;
             db.PRODUCTO.Add(pRODUCTO);

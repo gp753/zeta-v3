@@ -12,26 +12,19 @@ namespace zeta_v3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TAMANO
+    public partial class MULTIMEDIA
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TAMANO()
+        public MULTIMEDIA()
         {
-            this.CANTIDAD_PRODUCTO = new HashSet<CANTIDAD_PRODUCTO>();
             this.FOTOS_PRODUCTOS = new HashSet<FOTOS_PRODUCTOS>();
-            this.INGRESO_PRODUCTO = new HashSet<INGRESO_PRODUCTO>();
         }
     
-        public decimal ID_TAMANO { get; set; }
-        public Nullable<decimal> ID_PRODUCTO { get; set; }
-        public string NOMBRE_TAMANO { get; set; }
+        public decimal ID_MULTIMEDIA { get; set; }
+        public string LINK_MULTIMEDIA { get; set; }
+        public Nullable<System.DateTime> FECHA_CARGA { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CANTIDAD_PRODUCTO> CANTIDAD_PRODUCTO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FOTOS_PRODUCTOS> FOTOS_PRODUCTOS { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<INGRESO_PRODUCTO> INGRESO_PRODUCTO { get; set; }
-        public virtual PRODUCTO PRODUCTO { get; set; }
     }
 }

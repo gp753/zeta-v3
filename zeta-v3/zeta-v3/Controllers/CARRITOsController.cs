@@ -18,7 +18,39 @@ namespace zeta_v3.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CARRITOsController : ApiController
     {
-        private zeta_bdEntities8 db = new zeta_bdEntities8();
+        private zeta_bdEntities9 db = new zeta_bdEntities9();
+
+        //CARGAR CARRITO
+        [Route("api/carrito/")]
+        public async Task<IHttpActionResult> Cargar_carrito(AuxModel.productoacarrito aux)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+           
+            CANTIDAD_PRODUCTO add_carrito = new CANTIDAD_PRODUCTO();
+            add_carrito.ID_CARRITO = 1;
+            add_carrito.ID_COLOR = aux.ID_COLOR;
+            add_carrito.ID_PRODUCTO = aux.ID_PRODUCTO;
+            add_carrito.ID_TAMANO = aux.ID_TAMANO;
+            add_carrito.CANTIDAD_PRODUCTO_CARRITO = aux.CANTIDAD;
+
+            db.CANTIDAD_PRODUCTO.Add(add_carrito);
+            await db.SaveChangesAsync();
+
+            var carrito = from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
+                          join PRODUCTO in db.PRODUCTO on CANTIDAD_PRODUCTO.ID_PRODUCTO equals PRODUCTO.ID_PRODUCTO
+                          join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
+                          join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
+                          where CANTIDAD_PRODUCTO.ID_CARRITO == 1 //cambiar por el id de carrito del usuario
+                          select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA };
+            var cantidad = carrito.ToList().Count();
+            return Created("DefaultApi", new { carrito, cantidad });
+
+        }
+
+
 
         // GET: api/CARRITOs
 
@@ -46,9 +78,10 @@ namespace zeta_v3.Controllers
 
             var carrito = from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
                           join PRODUCTO in db.PRODUCTO on CANTIDAD_PRODUCTO.ID_PRODUCTO equals PRODUCTO.ID_PRODUCTO
-                          join FOTO_PRODUCTO in db.FOTO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals FOTO_PRODUCTO.ID_PRODUCTO
+                          join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
+                          join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
                           where CANTIDAD_PRODUCTO.ID_CARRITO == id_carrito.FirstOrDefault()
-                          select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, FOTO_PRODUCTO.LINK_FOTO };
+                          select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA };
 
             //traigo los productos que pertencen a ese carrito
 

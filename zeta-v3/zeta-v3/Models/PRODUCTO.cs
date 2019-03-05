@@ -21,7 +21,7 @@ namespace zeta_v3.Models
             this.CANTIDAD_PRODUCTO = new HashSet<CANTIDAD_PRODUCTO>();
             this.CARACTERISTICA_PRODUCTO = new HashSet<CARACTERISTICA_PRODUCTO>();
             this.COLOR = new HashSet<COLOR>();
-            this.FOTO_PRODUCTO = new HashSet<FOTO_PRODUCTO>();
+            this.FOTOS_PRODUCTOS = new HashSet<FOTOS_PRODUCTOS>();
             this.INGRESO_PRODUCTO = new HashSet<INGRESO_PRODUCTO>();
             this.PRODUCTO_FACTURA = new HashSet<PRODUCTO_FACTURA>();
             this.PRODUCTOXCATEGORIA = new HashSet<PRODUCTOXCATEGORIA>();
@@ -50,7 +50,7 @@ namespace zeta_v3.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<COLOR> COLOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FOTO_PRODUCTO> FOTO_PRODUCTO { get; set; }
+        public virtual ICollection<FOTOS_PRODUCTOS> FOTOS_PRODUCTOS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<INGRESO_PRODUCTO> INGRESO_PRODUCTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
