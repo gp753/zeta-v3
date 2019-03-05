@@ -50,6 +50,35 @@ namespace zeta_v3.Controllers
 
         }
 
+        // DELETE: api/CARRITOs/5
+        [Route("api/carrito/delete")]
+        public async Task<IHttpActionResult> DeleteCarritoProducto(AuxModel.productoacarrito aux)
+        {
+           var seleccion = from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
+                            where CANTIDAD_PRODUCTO.ID_CARRITO == 1 && CANTIDAD_PRODUCTO.ID_COLOR == aux.ID_COLOR && CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO && CANTIDAD_PRODUCTO.ID_TAMANO == aux.ID_TAMANO
+                            select CANTIDAD_PRODUCTO.ID_CANTIDAD_PRODUCTO;
+
+            CANTIDAD_PRODUCTO cANTIDAD_PRODUCTO = await db.CANTIDAD_PRODUCTO.FindAsync(seleccion.ToList().FirstOrDefault());
+            if (cANTIDAD_PRODUCTO == null)
+            {
+                return NotFound();
+            }
+
+            db.CANTIDAD_PRODUCTO.Remove(cANTIDAD_PRODUCTO);
+            await db.SaveChangesAsync();
+
+            var carrito = from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
+                          join PRODUCTO in db.PRODUCTO on CANTIDAD_PRODUCTO.ID_PRODUCTO equals PRODUCTO.ID_PRODUCTO
+                          join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
+                          join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
+                          where CANTIDAD_PRODUCTO.ID_CARRITO == 1 //cambiar por el id de carrito del usuario
+                          select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA };
+            var cantidad = carrito.ToList().Count();
+            return Ok( new { carrito, cantidad });
+
+            
+
+        }
 
 
         // GET: api/CARRITOs
