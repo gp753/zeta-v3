@@ -166,7 +166,7 @@ namespace zeta_v3.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/CARRITOs
+      /*  // POST: api/CARRITOs
         [ResponseType(typeof(CARRITO))]
         public async Task<IHttpActionResult> PostCARRITO(CARRITO cARRITO)
         {
@@ -179,7 +179,7 @@ namespace zeta_v3.Controllers
             await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = cARRITO.ID_CARRITO }, cARRITO);
-        }
+        }*/
 
         // DELETE: api/CARRITOs/5
         [ResponseType(typeof(CARRITO))]
