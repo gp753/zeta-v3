@@ -66,13 +66,13 @@ namespace zeta_v3.Controllers
 
             db.CANTIDAD_PRODUCTO.Remove(cANTIDAD_PRODUCTO);
             await db.SaveChangesAsync();
-
+            
             var carrito = from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
                           join PRODUCTO in db.PRODUCTO on CANTIDAD_PRODUCTO.ID_PRODUCTO equals PRODUCTO.ID_PRODUCTO
                           join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
                           join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
                           where CANTIDAD_PRODUCTO.ID_CARRITO == 1 //cambiar por el id de carrito del usuario
-                          select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA };
+                          select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA};
             var cantidad = carrito.ToList().Count();
             return Ok( new { carrito, cantidad });
 
@@ -110,7 +110,7 @@ namespace zeta_v3.Controllers
                           join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
                           join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
                           where CANTIDAD_PRODUCTO.ID_CARRITO == id_carrito.FirstOrDefault()
-                          select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA };
+                          select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA, CANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO };
 
             //traigo los productos que pertencen a ese carrito
 

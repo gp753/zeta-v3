@@ -35,6 +35,12 @@ namespace zeta_v3.Models
             public int CANTIDAD { get; set; }
         }
 
+        public class usuariosxeliminar
+        {
+            public decimal ID_USUARIO { get; set; }
+
+        }
+
        
     }
 }

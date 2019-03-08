@@ -29,6 +29,7 @@ namespace zeta_v3.Controllers
         {      
 
             var users = from USUARIO in db.USUARIO
+                        where USUARIO.ESTADO > 0
                         select new { USUARIO.NOMBRE, USUARIO.APELLIDO, USUARIO.EMAIL, USUARIO.FECHA_INGRESO, USUARIO.ID_USUARIO };
             return Ok(users);
         }
@@ -111,6 +112,43 @@ namespace zeta_v3.Controllers
             return CreatedAtRoute("DefaultApi", new { id = uSUARIO.ID_USUARIO }, uSUARIO);
         }
 
+        //post para eliminar usuarios
+        [Route("api/usuarios/delete/{id_usuario}")]
+        public async Task<IHttpActionResult> eliminar_usuario(string id_usuario)
+        {
+           
+
+            USUARIO uSUARIO = await db.USUARIO.FindAsync(id_usuario);
+
+            if (uSUARIO == null)
+            {
+                return NotFound();
+            }
+
+            uSUARIO.ESTADO = 0;
+
+            db.Entry(uSUARIO).State = EntityState.Modified;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!USUARIOExists(id_usuario))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+
+
+            return Ok();
+        }
         // DELETE: api/USUARIOs/5
         [ResponseType(typeof(USUARIO))]
         public async Task<IHttpActionResult> DeleteUSUARIO(string id)
