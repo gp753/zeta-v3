@@ -82,7 +82,25 @@ namespace zeta_v3.Controllers
                             select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA };
 
             return Ok(productos);
+
         }
+
+        [Route("api/productos/sub_categoria/{id_sub}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> productos_sub_categoria(decimal id_sub)
+        {
+            var productos = from PRODUCTO in db.PRODUCTO
+                            join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
+                            join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
+                            join INGRESO_PRODUCTO in db.INGRESO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals INGRESO_PRODUCTO.ID_PRODUCTO
+                           join PRODUCTOXCATEGORIA in db.PRODUCTOXCATEGORIA on PRODUCTO.ID_PRODUCTO equals PRODUCTOXCATEGORIA.ID_PRODUCTO
+                           join CATEGORIA_PRODUCTO in db.CATEGORIA_PRODUCTO on PRODUCTOXCATEGORIA.ID_CATEGORIA equals CATEGORIA_PRODUCTO.ID_CATEGORIA
+                            select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA };
+
+            return Ok(productos);
+        }
+
+
 
         [Route ("api/productos/nuevos") ]
         [HttpGet]
