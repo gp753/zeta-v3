@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9ec9a04f41964d76952b25f1810c066b" Name="Diagram1">
+      <Diagram DiagramId="67ae81096d2c4abd9a17257b9a30fb93" Name="Diagram1">
         <EntityTypeShape EntityType="zeta_bdModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="zeta_bdModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="zeta_bdModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
@@ -17,7 +17,8 @@
         <EntityTypeShape EntityType="zeta_bdModel.CARACTERISTICA_PRODUCTO" Width="1.5" PointX="9.75" PointY="41.25" IsExpanded="true" />
         <EntityTypeShape EntityType="zeta_bdModel.CARACTERISTICAS" Width="1.5" PointX="7.5" PointY="54.375" IsExpanded="true" />
         <EntityTypeShape EntityType="zeta_bdModel.CARRITO" Width="1.5" PointX="5.25" PointY="28.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.CATEGORIA_PRODUCTO" Width="1.5" PointX="5.25" PointY="54.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.CATEGORIA_PRODUCTO" Width="1.5" PointX="5.25" PointY="54.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.CATEGORIA_SUPERIOR" Width="1.5" PointX="3" PointY="54.5" IsExpanded="true" />
         <EntityTypeShape EntityType="zeta_bdModel.CHECKOUT" Width="1.5" PointX="10.5" PointY="28" IsExpanded="true" />
         <EntityTypeShape EntityType="zeta_bdModel.CIUDAD" Width="1.5" PointX="6" PointY="38.125" IsExpanded="true" />
         <EntityTypeShape EntityType="zeta_bdModel.COLOR" Width="1.5" PointX="9.75" PointY="44.5" IsExpanded="true" />
@@ -63,6 +64,7 @@
         <AssociationConnector Association="zeta_bdModel.FK_CARRITO_FK_CARRIT_CHECKOUT" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_CARRITO_FK_CARRIT_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_CHECKOUT_FK_CHECKO_CARRITO" ManuallyRouted="false" />
+        <AssociationConnector Association="zeta_bdModel.FK_CATEGORI_CATEGORIA_CATEGORI" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_PRODUCTO_CATEGORIA_CATEGORI" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_CHECKOUT_FK_CHECKO_ESTADO_D" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_CHECKOUT_FK_CHECKO_FACTURA_" ManuallyRouted="false" />

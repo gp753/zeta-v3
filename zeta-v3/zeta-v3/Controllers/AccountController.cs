@@ -25,7 +25,7 @@ namespace zeta_v3.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
-        private zeta_bdEntities9 db = new zeta_bdEntities9();
+        private zeta_bdEntities10 db = new zeta_bdEntities10();
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
    

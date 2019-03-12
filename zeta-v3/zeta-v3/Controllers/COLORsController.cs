@@ -16,7 +16,7 @@ namespace zeta_v3.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class COLORsController : ApiController
     {
-        private zeta_bdEntities9 db = new zeta_bdEntities9();
+        private zeta_bdEntities10 db = new zeta_bdEntities10();
 
         // GET: api/COLORs
         public IQueryable<COLOR> GetCOLOR()

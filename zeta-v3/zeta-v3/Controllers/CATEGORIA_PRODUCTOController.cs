@@ -16,23 +16,59 @@ namespace zeta_v3.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CATEGORIA_PRODUCTOController : ApiController
     {
-        private zeta_bdEntities9 db = new zeta_bdEntities9();
+        private zeta_bdEntities10 db = new zeta_bdEntities10();
 
-        [Route("api/categoria_producto")]
+        [Route("api/categorias")]
         [HttpGet]
         public IHttpActionResult GetCategorias()
         {
-            /*  var products = from PRODUCTO in db.PRODUCTO
-                             join FOTO_PRODUCTO in db.FOTO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals FOTO_PRODUCTO.ID_PRODUCTO
-                             select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, FOTO_PRODUCTO.LINK_FOTO };*/
-            var categorias = from CATEGORIA_PRODUCTO in db.CATEGORIA_PRODUCTO
-                             select new { CATEGORIA_PRODUCTO.ID_CATEGORIA, CATEGORIA_PRODUCTO.NOMBRE_CATEGORIA };
+           
+            var categorias = from CATEGORIA_SUPERIOR in db.CATEGORIA_SUPERIOR
+                             select new { CATEGORIA_SUPERIOR.ID_CATEGORIA_SUPERIOR, CATEGORIA_SUPERIOR.NOMBRE_CATEGORIA_SUPERIOR, CATEGORIA_SUPERIOR.DESCRIPCION_CATEGORIA_SUPERIOR };
 
             return Ok(categorias);
         }
 
+        [Route("api/{id_categoria}/subcategorias")]
+        [HttpGet]
+        public IHttpActionResult Getsubcategorias(decimal id_categoria)
+        {
+
+            var subcategorias = from CATEGORIA_PRODUCTO in db.CATEGORIA_PRODUCTO
+                                where CATEGORIA_PRODUCTO.ID_CATEGORIA == id_categoria
+                                select new { CATEGORIA_PRODUCTO.ID_CATEGORIA, CATEGORIA_PRODUCTO.NOMBRE_CATEGORIA, CATEGORIA_PRODUCTO.DETALLE_CATEGORIA };
+
+            return Ok(subcategorias);
+        }
+
+        [Route("api/categoria/{id_subcategoria}/caracteristicas")]
+        [HttpGet]
+        public IHttpActionResult Getcaracteristicas( decimal id_subcategoria)
+        {
+
+            var caracteristicas = from CARACTERISTICAS in db.CARACTERISTICAS
+                                  where CARACTERISTICAS.ID_CATEGORIA == id_subcategoria
+                                  select new { CARACTERISTICAS.ID_CARACTERISTICA, CARACTERISTICAS.NOMBRE_CARACTERISTICA };
+            return Ok(caracteristicas);
+        }
+
+        [Route("api/categoria")]
+        public IHttpActionResult PostCATEGORIA(CATEGORIA_SUPERIOR cATEGORIA_PRODUCTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
+            db.CATEGORIA_SUPERIOR.Add(cATEGORIA_PRODUCTO);
+            db.SaveChanges();
+
+            return Created("DefaultApi", new { cATEGORIA_PRODUCTO.ID_CATEGORIA_SUPERIOR , cATEGORIA_PRODUCTO.NOMBRE_CATEGORIA_SUPERIOR });
+
+        }
+
         // POST: api/CATEGORIA_PRODUCTO
-        [Route("api/categoria_producto")]
+        [Route("api/categoria/subcategoria")]
         [ResponseType(typeof(CATEGORIA_PRODUCTO))]
         public IHttpActionResult PostCATEGORIA_PRODUCTO(CATEGORIA_PRODUCTO cATEGORIA_PRODUCTO)
         {
@@ -40,48 +76,30 @@ namespace zeta_v3.Controllers
             {
                 return BadRequest(ModelState);
             }
+            
 
             db.CATEGORIA_PRODUCTO.Add(cATEGORIA_PRODUCTO);
             db.SaveChanges();
 
-            return Created("DefaultApi", new { cATEGORIA_PRODUCTO.ID_CATEGORIA, cATEGORIA_PRODUCTO.NOMBRE_CATEGORIA });
+            return Created("DefaultApi", new { cATEGORIA_PRODUCTO.ID_CATEGORIA, cATEGORIA_PRODUCTO.NOMBRE_CATEGORIA, cATEGORIA_PRODUCTO.ID_CATEGORIA_SUPERIOR });
 
         }
 
-        /* // PUT: api/CATEGORIA_PRODUCTO/5
-         [ResponseType(typeof(void))]
-         public IHttpActionResult PutCATEGORIA_PRODUCTO(decimal id, CATEGORIA_PRODUCTO cATEGORIA_PRODUCTO)
-         {
-             if (!ModelState.IsValid)
-             {
-                 return BadRequest(ModelState);
-             }
+        // POST: CARACTERISTICAS
+        [Route("api/categoria/subcategoria/caracteristicas")]
+        public IHttpActionResult PostCARACTERISTICAS(CARACTERISTICAS cARACTERISTICAS)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-             if (id != cATEGORIA_PRODUCTO.ID_CATEGORIA)
-             {
-                 return BadRequest();
-             }
+            
+            db.CARACTERISTICAS.Add(cARACTERISTICAS);
+            db.SaveChanges();
 
-             db.Entry(cATEGORIA_PRODUCTO).State = EntityState.Modified;
-
-             try
-             {
-                 db.SaveChanges();
-             }
-             catch (DbUpdateConcurrencyException)
-             {
-                 if (!CATEGORIA_PRODUCTOExists(id))
-                 {
-                     return NotFound();
-                 }
-                 else
-                 {
-                     throw;
-                 }
-             }
-
-             return StatusCode(HttpStatusCode.NoContent);
-         }*/
+            return CreatedAtRoute("DefaultApi", new { id = cARACTERISTICAS.ID_CARACTERISTICA }, new { cARACTERISTICAS.ID_CARACTERISTICA, cARACTERISTICAS.NOMBRE_CARACTERISTICA });
+        }
 
 
         // DELETE: api/CATEGORIA_PRODUCTO/5
@@ -99,6 +117,8 @@ namespace zeta_v3.Controllers
 
             return Ok(cATEGORIA_PRODUCTO);
         }
+
+
 
         protected override void Dispose(bool disposing)
         {

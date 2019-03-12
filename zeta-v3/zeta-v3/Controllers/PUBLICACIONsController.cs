@@ -17,7 +17,7 @@ namespace zeta_v3.Controllers
     public class PUBLICACIONsController : ApiController
     {
 
-        private zeta_bdEntities9 db = new zeta_bdEntities9();
+        private zeta_bdEntities10 db = new zeta_bdEntities10();
 
         [Route("api/publicacion/baner")]
         [HttpGet]

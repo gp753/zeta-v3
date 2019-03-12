@@ -12,24 +12,19 @@ namespace zeta_v3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CATEGORIA_PRODUCTO
+    public partial class CATEGORIA_SUPERIOR
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CATEGORIA_PRODUCTO()
+        public CATEGORIA_SUPERIOR()
         {
-            this.CARACTERISTICAS = new HashSet<CARACTERISTICAS>();
-            this.PRODUCTOXCATEGORIA = new HashSet<PRODUCTOXCATEGORIA>();
+            this.CATEGORIA_PRODUCTO = new HashSet<CATEGORIA_PRODUCTO>();
         }
     
-        public decimal ID_CATEGORIA { get; set; }
-        public Nullable<decimal> ID_CATEGORIA_SUPERIOR { get; set; }
-        public string NOMBRE_CATEGORIA { get; set; }
-        public string DETALLE_CATEGORIA { get; set; }
+        public decimal ID_CATEGORIA_SUPERIOR { get; set; }
+        public string NOMBRE_CATEGORIA_SUPERIOR { get; set; }
+        public string DESCRIPCION_CATEGORIA_SUPERIOR { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CARACTERISTICAS> CARACTERISTICAS { get; set; }
-        public virtual CATEGORIA_SUPERIOR CATEGORIA_SUPERIOR { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRODUCTOXCATEGORIA> PRODUCTOXCATEGORIA { get; set; }
+        public virtual ICollection<CATEGORIA_PRODUCTO> CATEGORIA_PRODUCTO { get; set; }
     }
 }
