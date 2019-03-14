@@ -68,6 +68,29 @@ namespace zeta_v3.Controllers
             return Ok(productos);
         }
 
+        [Route("api/productos/prueba")]
+        [HttpPost]
+        public async Task<IHttpActionResult> productos_prueba(AuxModel.busqueda aux)
+        {
+            //falta devolver la cantidad en stock que hay de cada producto
+
+            //palabra_clave
+
+            int contador = 0;
+            
+
+            
+
+             foreach (AuxModel.busqueda.filtro filtro in aux.FILTROS)
+            {
+                    //INVESTIGAR
+                    
+                                
+            }
+            
+            return Ok(productos);
+        }
+
         [Route("api/productos/busqueda/{contenido}")]
         [HttpGet]
         public async Task<IHttpActionResult> productos_busqueda(string contenido)

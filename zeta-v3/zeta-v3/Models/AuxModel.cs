@@ -41,6 +41,20 @@ namespace zeta_v3.Models
 
         }
 
+        public class busqueda
+        {
+           
+            public class filtro
+            {
+                public decimal ID_CARACTERISTICA { get; set;}
+                public string FILTRO { get; set;}
+             }
+
+            public List<filtro> FILTROS { get; set; }
+
+            public string PALABRA_CLAVE { get; set; }
+        }
+
        
     }
 }
