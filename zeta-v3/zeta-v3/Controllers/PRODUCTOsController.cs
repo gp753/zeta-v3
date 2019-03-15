@@ -67,8 +67,8 @@ namespace zeta_v3.Controllers
                             select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA };
             return Ok(productos);
         }
-
-        [Route("api/productos/prueba")]
+        
+        [Route("api/productos/busqueda")]
         [HttpPost]
         public async Task<IHttpActionResult> productos_prueba(AuxModel.busqueda aux)
         {
@@ -76,21 +76,44 @@ namespace zeta_v3.Controllers
 
             //palabra_clave
 
-            int contador = 0;
-            
+            /*var productos = from PRODUCTO in db.PRODUCTO
+                            join CARACTERISTICA_PRODUCTO in db.CARACTERISTICA_PRODUCTO on PRODUCTO.ID_PRODUCTO equals CARACTERISTICA_PRODUCTO.ID_PRODUCTO
+                            select new { PRODUCTO, CARACTERISTICA_PRODUCTO };*/
 
-            
+            List<PRODUCTO> productos = new List<PRODUCTO>();
 
-             foreach (AuxModel.busqueda.filtro filtro in aux.FILTROS)
+            string palabra = " ";
+            if (aux.PALABRA_CLAVE != null)
             {
-                    //INVESTIGAR
-                    
-                                
+                palabra = aux.PALABRA_CLAVE;
             }
-            
-            return Ok(productos);
-        }
+            foreach (AuxModel.busqueda.filtro filtro in aux.FILTROS)
+            {
+                   
+                var busqueda = from PRODUCTO in db.PRODUCTO
+                                join CARACTERISTICA_PRODUCTO in db.CARACTERISTICA_PRODUCTO on PRODUCTO.ID_PRODUCTO equals CARACTERISTICA_PRODUCTO.ID_PRODUCTO
+                                where CARACTERISTICA_PRODUCTO.ID_CARACTERISTICA == filtro.ID_CARACTERISTICA && CARACTERISTICA_PRODUCTO.INFO_CAR == filtro.FILTRO && 
+                                (PRODUCTO.NOMBRE_PRODUCTO.Contains(palabra) || PRODUCTO.DESCRIPCION_CORTA.Contains(palabra) || PRODUCTO.DESCRIPCION_LARGA.Contains(palabra))
+                                select PRODUCTO;
 
+                foreach (PRODUCTO producto in busqueda)
+                {
+                    productos.Add(producto);
+                }
+                
+            }
+
+            var resultado = from PRODUCTO in productos
+                            join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
+                            join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
+                            join INGRESO_PRODUCTO in db.INGRESO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals INGRESO_PRODUCTO.ID_PRODUCTO
+                            select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA };
+
+            
+            
+            return Ok(resultado);
+        }
+        
         [Route("api/productos/busqueda/{contenido}")]
         [HttpGet]
         public async Task<IHttpActionResult> productos_busqueda(string contenido)

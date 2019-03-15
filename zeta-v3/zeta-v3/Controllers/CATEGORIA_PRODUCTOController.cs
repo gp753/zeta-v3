@@ -23,11 +23,27 @@ namespace zeta_v3.Controllers
         public IHttpActionResult GetCategorias()
         {
            
-            var categorias = from CATEGORIA_SUPERIOR in db.CATEGORIA_SUPERIOR
-                             select new { CATEGORIA_SUPERIOR.ID_CATEGORIA_SUPERIOR, CATEGORIA_SUPERIOR.NOMBRE_CATEGORIA_SUPERIOR, CATEGORIA_SUPERIOR.DESCRIPCION_CATEGORIA_SUPERIOR };
+            var categorias = from CATEGORIA_SUPERIOR in db.CATEGORIA_SUPERIOR                             
+                             select new { CATEGORIA_SUPERIOR.ID_CATEGORIA_SUPERIOR, CATEGORIA_SUPERIOR.NOMBRE_CATEGORIA_SUPERIOR, CATEGORIA_SUPERIOR.DESCRIPCION_CATEGORIA_SUPERIOR,
+                                subcategorias = ( from CATEGORIA_PRODUCTO in db.CATEGORIA_PRODUCTO
+                                                  where CATEGORIA_PRODUCTO.ID_CATEGORIA_SUPERIOR == CATEGORIA_SUPERIOR.ID_CATEGORIA_SUPERIOR
+                                                  select new {CATEGORIA_PRODUCTO.ID_CATEGORIA, CATEGORIA_PRODUCTO.NOMBRE_CATEGORIA}
+                                ) };
 
             return Ok(categorias);
         }
+
+      /*  [Route("api/caracteristica/{id_subcategoria}")]
+        [HttpGet]
+        public IHttpActionResult getcaracteristicas(decimal id_subcategoria)
+        {
+
+            var categorias = from CARACTERISTICAS in db.CARACTERISTICAS
+                             where CARACTERISTICAS.ID_CATEGORIA == id_subcategoria
+                             select new { CARACTERISTICAS.ID_CARACTERISTICA, CARACTERISTICAS.NOMBRE_CARACTERISTICA };
+
+            return Ok(categorias);
+        }*/
 
         [Route("api/{id_categoria}/subcategorias")]
         [HttpGet]
@@ -48,7 +64,11 @@ namespace zeta_v3.Controllers
 
             var caracteristicas = from CARACTERISTICAS in db.CARACTERISTICAS
                                   where CARACTERISTICAS.ID_CATEGORIA == id_subcategoria
-                                  select new { CARACTERISTICAS.ID_CARACTERISTICA, CARACTERISTICAS.NOMBRE_CARACTERISTICA };
+                                  select new { CARACTERISTICAS.ID_CARACTERISTICA, CARACTERISTICAS.NOMBRE_CARACTERISTICA,
+                                  filtros = ( from CARACTERISTICA_PRODUCTO in db.CARACTERISTICA_PRODUCTO
+                                              where CARACTERISTICA_PRODUCTO.ID_CARACTERISTICA == CARACTERISTICAS.ID_CARACTERISTICA
+                                              select new {CARACTERISTICA_PRODUCTO.INFO_CAR}
+                                  )  };
             return Ok(caracteristicas);
         }
 

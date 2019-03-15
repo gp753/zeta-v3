@@ -29,44 +29,172 @@ namespace zeta_v3.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var producto_extiste = from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
-                                   where CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO && CANTIDAD_PRODUCTO.ID_COLOR == aux.ID_COLOR && CANTIDAD_PRODUCTO.ID_TAMANO == aux.ID_TAMANO
-                                   select CANTIDAD_PRODUCTO.ID_CANTIDAD_PRODUCTO;
-
-            if( producto_extiste.ToList().Count() == 0)
+           
+            if(aux.ID_COLOR == 0 && aux.ID_TAMANO == 0 )
             {
-                CANTIDAD_PRODUCTO add_carrito = new CANTIDAD_PRODUCTO();
 
+                var producto_extiste = from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
+                                       where CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO 
+                                       select CANTIDAD_PRODUCTO.ID_CANTIDAD_PRODUCTO;
 
-                add_carrito.ID_CARRITO = 1;
-                add_carrito.ID_COLOR = aux.ID_COLOR;
-                add_carrito.ID_PRODUCTO = aux.ID_PRODUCTO;
-                add_carrito.ID_TAMANO = aux.ID_TAMANO;
-                add_carrito.CANTIDAD_PRODUCTO_CARRITO = aux.CANTIDAD;
+                if (producto_extiste.ToList().Count() == 0)
+                {
+                    CANTIDAD_PRODUCTO add_carrito = new CANTIDAD_PRODUCTO();
+                                                         
+                    add_carrito.ID_CARRITO = 1;
+                    //  add_carrito.ID_COLOR = aux.ID_COLOR;
+                    add_carrito.ID_PRODUCTO = aux.ID_PRODUCTO;
+                    // add_carrito.ID_TAMANO = aux.ID_TAMANO;
+                    add_carrito.CANTIDAD_PRODUCTO_CARRITO = aux.CANTIDAD;
 
-                db.CANTIDAD_PRODUCTO.Add(add_carrito);
-                await db.SaveChangesAsync();
+                    db.CANTIDAD_PRODUCTO.Add(add_carrito);
+                    await db.SaveChangesAsync();
+                }
+                else
+                {
+                    CANTIDAD_PRODUCTO cANTIDAD_PRODUCTO = await db.CANTIDAD_PRODUCTO.FindAsync(producto_extiste.ToList().FirstOrDefault());
+                    var productos = cANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO + aux.CANTIDAD;
+                    cANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO = productos;
+
+                    db.Entry(cANTIDAD_PRODUCTO).State = EntityState.Modified;
+
+                    try
+                    {
+                        await db.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        throw;
+                    }
+                }
             }
             else
             {
-                CANTIDAD_PRODUCTO cANTIDAD_PRODUCTO = await db.CANTIDAD_PRODUCTO.FindAsync(producto_extiste.ToList().FirstOrDefault());
-                var productos = cANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO + aux.CANTIDAD;
-                cANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO = productos;
-
-                db.Entry(cANTIDAD_PRODUCTO).State = EntityState.Modified;
-
-                try
+                if(aux.ID_COLOR > 0 && aux.ID_TAMANO == 0)
                 {
-                    await db.SaveChangesAsync();
+                    var producto_extiste = from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
+                                           where CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO && CANTIDAD_PRODUCTO.ID_COLOR == aux.ID_COLOR
+                                           select CANTIDAD_PRODUCTO.ID_CANTIDAD_PRODUCTO;
+
+                    if (producto_extiste.ToList().Count() == 0)
+                    {
+                        CANTIDAD_PRODUCTO add_carrito = new CANTIDAD_PRODUCTO();
+
+
+
+
+                        add_carrito.ID_CARRITO = 1;
+                        add_carrito.ID_COLOR = aux.ID_COLOR;
+                        add_carrito.ID_PRODUCTO = aux.ID_PRODUCTO;
+                        // add_carrito.ID_TAMANO = aux.ID_TAMANO;
+                        add_carrito.CANTIDAD_PRODUCTO_CARRITO = aux.CANTIDAD;
+
+                        db.CANTIDAD_PRODUCTO.Add(add_carrito);
+                        await db.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        CANTIDAD_PRODUCTO cANTIDAD_PRODUCTO = await db.CANTIDAD_PRODUCTO.FindAsync(producto_extiste.ToList().FirstOrDefault());
+                        var productos = cANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO + aux.CANTIDAD;
+                        cANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO = productos;
+
+                        db.Entry(cANTIDAD_PRODUCTO).State = EntityState.Modified;
+
+                        try
+                        {
+                            await db.SaveChangesAsync();
+                        }
+                        catch (DbUpdateConcurrencyException)
+                        {
+                            throw;
+                        }
+                    }
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                        throw;
+                    if (aux.ID_COLOR == 0 && aux.ID_TAMANO > 0)
+                    {
+                        var producto_extiste = from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
+                                               where CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO  && CANTIDAD_PRODUCTO.ID_TAMANO == aux.ID_TAMANO
+                                               select CANTIDAD_PRODUCTO.ID_CANTIDAD_PRODUCTO;
+
+                        if (producto_extiste.ToList().Count() == 0)
+                        {
+                            CANTIDAD_PRODUCTO add_carrito = new CANTIDAD_PRODUCTO();
+
+
+
+
+                            add_carrito.ID_CARRITO = 1;
+                            //  add_carrito.ID_COLOR = aux.ID_COLOR;
+                            add_carrito.ID_PRODUCTO = aux.ID_PRODUCTO;
+                            add_carrito.ID_TAMANO = aux.ID_TAMANO;
+                            add_carrito.CANTIDAD_PRODUCTO_CARRITO = aux.CANTIDAD;
+
+                            db.CANTIDAD_PRODUCTO.Add(add_carrito);
+                            await db.SaveChangesAsync();
+                        }
+                        else
+                        {
+                            CANTIDAD_PRODUCTO cANTIDAD_PRODUCTO = await db.CANTIDAD_PRODUCTO.FindAsync(producto_extiste.ToList().FirstOrDefault());
+                            var productos = cANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO + aux.CANTIDAD;
+                            cANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO = productos;
+
+                            db.Entry(cANTIDAD_PRODUCTO).State = EntityState.Modified;
+
+                            try
+                            {
+                                await db.SaveChangesAsync();
+                            }
+                            catch (DbUpdateConcurrencyException)
+                            {
+                                throw;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var producto_extiste = from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
+                                               where CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO && CANTIDAD_PRODUCTO.ID_COLOR == aux.ID_COLOR && CANTIDAD_PRODUCTO.ID_TAMANO == aux.ID_TAMANO
+                                               select CANTIDAD_PRODUCTO.ID_CANTIDAD_PRODUCTO;
+
+                        if (producto_extiste.ToList().Count() == 0)
+                        {
+                            CANTIDAD_PRODUCTO add_carrito = new CANTIDAD_PRODUCTO();
+
+
+
+
+                            add_carrito.ID_CARRITO = 1;
+                            add_carrito.ID_COLOR = aux.ID_COLOR;
+                            add_carrito.ID_PRODUCTO = aux.ID_PRODUCTO;
+                            add_carrito.ID_TAMANO = aux.ID_TAMANO;
+                            add_carrito.CANTIDAD_PRODUCTO_CARRITO = aux.CANTIDAD;
+
+                            db.CANTIDAD_PRODUCTO.Add(add_carrito);
+                            await db.SaveChangesAsync();
+                        }
+                        else
+                        {
+                            CANTIDAD_PRODUCTO cANTIDAD_PRODUCTO = await db.CANTIDAD_PRODUCTO.FindAsync(producto_extiste.ToList().FirstOrDefault());
+                            var productos = cANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO + aux.CANTIDAD;
+                            cANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO = productos;
+
+                            db.Entry(cANTIDAD_PRODUCTO).State = EntityState.Modified;
+
+                            try
+                            {
+                                await db.SaveChangesAsync();
+                            }
+                            catch (DbUpdateConcurrencyException)
+                            {
+                                throw;
+                            }
+                        }
+                    }
                 }
             }
-
-
+            
             var carrito = from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
                           join PRODUCTO in db.PRODUCTO on CANTIDAD_PRODUCTO.ID_PRODUCTO equals PRODUCTO.ID_PRODUCTO
                           join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
@@ -77,6 +205,8 @@ namespace zeta_v3.Controllers
 
             var cantidad = carrito.ToList().Count();
             return Created("DefaultApi", new { carrito, cantidad });
+           
+            
 
         }
 

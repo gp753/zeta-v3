@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -29,9 +30,11 @@ namespace zeta_v3.Models
 
         public class productoacarrito
         {
+            [Required]
             public decimal ID_PRODUCTO { get; set; }
             public decimal ID_COLOR { get; set; }
             public decimal ID_TAMANO { get; set; }
+            [Required]
             public int CANTIDAD { get; set; }
         }
 
