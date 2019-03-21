@@ -11,6 +11,7 @@ using Owin;
 using zeta_v3.Providers;
 using zeta_v3.Models;
 
+
 namespace zeta_v3
 {
     public partial class Startup
@@ -26,6 +27,8 @@ namespace zeta_v3
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
 
+
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             // Permitir que la aplicación use una cookie para almacenar información para el usuario que inicia sesión
             // y una cookie para almacenar temporalmente información sobre un usuario que inicia sesión con un proveedor de inicio de sesión de terceros
             app.UseCookieAuthentication(new CookieAuthenticationOptions());

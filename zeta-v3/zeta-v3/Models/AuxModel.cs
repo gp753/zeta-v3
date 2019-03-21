@@ -58,6 +58,15 @@ namespace zeta_v3.Models
             public string PALABRA_CLAVE { get; set; }
         }
 
+        public class cat_nueva
+        {
+            public decimal ID_CATEGORIA { get; set; }
+            public string NOMBRE_CATEGORIA { get; set; }
+            public string DETALLE_cATEGORIA { get; set; }
+
+            public List <string> caracteristicas { get; set; }
+        }
+
        
     }
 }

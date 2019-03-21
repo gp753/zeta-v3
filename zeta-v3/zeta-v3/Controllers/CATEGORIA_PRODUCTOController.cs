@@ -90,16 +90,30 @@ namespace zeta_v3.Controllers
         // POST: api/CATEGORIA_PRODUCTO
         [Route("api/categoria/subcategoria")]
         [ResponseType(typeof(CATEGORIA_PRODUCTO))]
-        public IHttpActionResult PostCATEGORIA_PRODUCTO(CATEGORIA_PRODUCTO cATEGORIA_PRODUCTO)
+        public IHttpActionResult PostCATEGORIA_PRODUCTO(AuxModel.cat_nueva aux)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            
+
+            CATEGORIA_PRODUCTO cATEGORIA_PRODUCTO = new CATEGORIA_PRODUCTO();
+
+            cATEGORIA_PRODUCTO.ID_CATEGORIA_SUPERIOR = aux.ID_CATEGORIA;
+            cATEGORIA_PRODUCTO.NOMBRE_CATEGORIA = aux.NOMBRE_CATEGORIA;
+            cATEGORIA_PRODUCTO.DETALLE_CATEGORIA = aux.DETALLE_cATEGORIA;
 
             db.CATEGORIA_PRODUCTO.Add(cATEGORIA_PRODUCTO);
             db.SaveChanges();
+
+            foreach (string caracteristica in aux.caracteristicas)
+            {
+                CARACTERISTICAS cARACTERISTICAS = new CARACTERISTICAS();
+                cARACTERISTICAS.NOMBRE_CARACTERISTICA = caracteristica;
+                cARACTERISTICAS.ID_CATEGORIA = cATEGORIA_PRODUCTO.ID_CATEGORIA;
+                db.CARACTERISTICAS.Add(cARACTERISTICAS);
+                db.SaveChanges();
+            }
 
             return Created("DefaultApi", new { cATEGORIA_PRODUCTO.ID_CATEGORIA, cATEGORIA_PRODUCTO.NOMBRE_CATEGORIA, cATEGORIA_PRODUCTO.ID_CATEGORIA_SUPERIOR });
 
