@@ -211,14 +211,36 @@ namespace zeta_v3.Controllers
         }
 
         // DELETE: api/CARRITOs/5
-        [Route("api/carrito/delete")]
-        public async Task<IHttpActionResult> DeleteCarritoProducto(AuxModel.productoacarrito aux)
+        [Route("api/carrito/eliminar")]
+        [HttpPost]
+        public async Task<IHttpActionResult> EliminarCarritoProducto(AuxModel.productoacarrito aux)
         {
-           var seleccion = from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
-                            where CANTIDAD_PRODUCTO.ID_CARRITO == 1 && CANTIDAD_PRODUCTO.ID_COLOR == aux.ID_COLOR && CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO && CANTIDAD_PRODUCTO.ID_TAMANO == aux.ID_TAMANO
-                            select CANTIDAD_PRODUCTO.ID_CANTIDAD_PRODUCTO;
+            //pulir esta parte para contemplar los null
 
-            CANTIDAD_PRODUCTO cANTIDAD_PRODUCTO = await db.CANTIDAD_PRODUCTO.FindAsync(seleccion.ToList().FirstOrDefault());
+            var seleccion = new decimal();
+            if(aux.ID_COLOR > 0 && aux.ID_TAMANO > 0)
+            {
+                 seleccion = (from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
+                                where CANTIDAD_PRODUCTO.ID_CARRITO == 1 && CANTIDAD_PRODUCTO.ID_COLOR == aux.ID_COLOR && CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO && CANTIDAD_PRODUCTO.ID_TAMANO == aux.ID_TAMANO
+                                select CANTIDAD_PRODUCTO.ID_CANTIDAD_PRODUCTO).ToList().FirstOrDefault();
+            }
+            else
+            {
+                if(aux.ID_COLOR == 0 && aux.ID_TAMANO > 0)
+                {
+                    seleccion = (from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
+                                 where CANTIDAD_PRODUCTO.ID_CARRITO == 1 && CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO && CANTIDAD_PRODUCTO.ID_TAMANO == aux.ID_TAMANO
+                                 select CANTIDAD_PRODUCTO.ID_CANTIDAD_PRODUCTO).ToList().FirstOrDefault();
+                }
+                else
+                {
+                    seleccion = (from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
+                                 where CANTIDAD_PRODUCTO.ID_CARRITO == 1 &&  CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO 
+                                 select CANTIDAD_PRODUCTO.ID_CANTIDAD_PRODUCTO).ToList().FirstOrDefault();
+                }
+            }
+
+            CANTIDAD_PRODUCTO cANTIDAD_PRODUCTO = await db.CANTIDAD_PRODUCTO.FindAsync(seleccion);
             if (cANTIDAD_PRODUCTO == null)
             {
                 return NotFound();

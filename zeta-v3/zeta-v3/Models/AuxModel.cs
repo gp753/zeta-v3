@@ -44,7 +44,7 @@ namespace zeta_v3.Models
 
         }
 
-        public class busqueda
+        public class buscar
         {
            
             public class filtro

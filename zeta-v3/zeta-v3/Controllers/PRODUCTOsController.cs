@@ -70,7 +70,7 @@ namespace zeta_v3.Controllers
         
         [Route("api/productos/busqueda")]
         [HttpPost]
-        public async Task<IHttpActionResult> productos_prueba(AuxModel.busqueda aux)
+        public async Task<IHttpActionResult> productos_prueba(AuxModel.buscar aux)
         {
             //falta devolver la cantidad en stock que hay de cada producto
 
@@ -87,7 +87,7 @@ namespace zeta_v3.Controllers
             {
                 palabra = aux.PALABRA_CLAVE;
             }
-            foreach (AuxModel.busqueda.filtro filtro in aux.FILTROS)
+            foreach (AuxModel.buscar.filtro filtro in aux.FILTROS)
             {
                    
                 var busqueda = from PRODUCTO in db.PRODUCTO
