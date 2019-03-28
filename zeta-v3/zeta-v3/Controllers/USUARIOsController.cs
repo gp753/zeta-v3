@@ -112,6 +112,104 @@ namespace zeta_v3.Controllers
             return CreatedAtRoute("DefaultApi", new { id = uSUARIO.ID_USUARIO }, uSUARIO);
         }
 
+        [Route("api/usuarios/direcciones")]
+        [HttpGet]
+        public async Task<IHttpActionResult> Direccion_get()
+        {
+            //falta devolver la cantidad en stock que hay de cada producto
+
+            
+            var dir = from DIRECION in db.DIRECION
+                      join CIUDAD in db.CIUDAD on DIRECION.ID_DIRECCION equals CIUDAD.ID_CIUDAD
+                      where DIRECION.ID_USUARIO == "1"
+                      select new { DIRECION.ID_DIRECCION, DIRECION.CALLE_1, DIRECION.CALLE_2, DIRECION.G_MAP, DIRECION.NRO_CASA, DIRECION.REFERENCIA, CIUDAD.ID_CIUDAD, CIUDAD.NOMBRE_CIUDAD };
+            return Ok(dir);
+        }
+
+        [Route("api/usuarios/direccion/nueva")]
+        [HttpPost]
+        public async Task<IHttpActionResult> Direccion_crear(DIRECION dIRECION)
+        {
+            dIRECION.ID_USUARIO = "1";
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.DIRECION.Add(dIRECION);
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                
+                throw;
+                
+            }
+
+
+
+            return CreatedAtRoute("DefaultApi", new { id = dIRECION.ID_DIRECCION }, new { dIRECION.ID_DIRECCION, dIRECION.CALLE_1, dIRECION.CALLE_2, dIRECION.NRO_CASA});
+        }
+
+        [Route("api/usuarios/direccion/editar")]
+        [HttpPost]
+        public async Task<IHttpActionResult> Direccion_editar(DIRECION dIRECION)
+        {
+           
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Entry(dIRECION).State = EntityState.Modified;
+           
+
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+
+                if(db.DIRECION.Count(e => e.ID_DIRECCION == dIRECION.ID_DIRECCION) > 0)
+                {
+                    throw;
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
+
+
+
+            return CreatedAtRoute("DefaultApi", new { id = dIRECION.ID_DIRECCION }, new { dIRECION.ID_DIRECCION, dIRECION.CALLE_1, dIRECION.CALLE_2, dIRECION.NRO_CASA });
+        }
+
+        [Route("api/usuarios/direccion/eliminar/{id_direccion}")]
+        [HttpDelete]
+        public async Task<IHttpActionResult> Direccion_eliminar(decimal id_direccion)
+        {
+            DIRECION dIRECION = await db.DIRECION.FindAsync(id_direccion);
+
+            if(dIRECION == null)
+            {
+                return NotFound();
+            }
+
+            db.DIRECION.Remove(dIRECION);
+            await db.SaveChangesAsync();
+
+
+           return Ok();
+        }
+
         //post para eliminar usuarios
         [Route("api/usuarios/delete/{id_usuario}")]
         public async Task<IHttpActionResult> eliminar_usuario(string id_usuario)

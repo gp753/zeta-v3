@@ -67,6 +67,8 @@ namespace zeta_v3.Models
             public List <string> caracteristicas { get; set; }
         }
 
+        
+
        
     }
 }
