@@ -343,6 +343,13 @@ namespace zeta_v3.Controllers
                 return GetErrorResult(result);
             }
 
+            ROL rOL = await db.ROL.FindAsync(model.Rol);
+
+            if (rOL == null)
+            {
+                return NotFound();
+            }
+
             USUARIO uSUARIO = new USUARIO();
             uSUARIO.NOMBRE = model.Nombre;
             uSUARIO.APELLIDO = model.Apellido;
@@ -350,8 +357,15 @@ namespace zeta_v3.Controllers
             uSUARIO.FECHA_INGRESO = DateTime.Today;
             uSUARIO.ID_USUARIO = user.Id;
             uSUARIO.EMAIL = model.Email;
-
+            uSUARIO.ROL.Add(rOL);
+            
             db.USUARIO.Add(uSUARIO);
+
+            CARRITO cARRITO = new CARRITO();
+            cARRITO.ID_USUARIO = uSUARIO.ID_USUARIO;
+            cARRITO.TIPO_CARRITO = 1;
+            db.CARRITO.Add(cARRITO);
+
             db.SaveChanges();
             
           

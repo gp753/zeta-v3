@@ -67,6 +67,11 @@ namespace zeta_v3.Models
             public List <string> caracteristicas { get; set; }
         }
 
+        public class producto_aceptado
+        {
+            public decimal ID_PRODUCTO { get; set; }
+            public int ESTADO { get; set; }
+        }
         
 
        

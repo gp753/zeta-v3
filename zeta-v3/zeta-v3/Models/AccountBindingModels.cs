@@ -53,6 +53,7 @@ namespace zeta_v3.Models
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Nick { get; set; }
+        public decimal Rol { get; set; }
 
 
     }

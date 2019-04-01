@@ -172,6 +172,19 @@ namespace zeta_v3.Controllers
             return Ok(products);
         }
 
+        [Route("api/productos/pendientes")]
+        [HttpGet]
+        public async Task<IHttpActionResult> productos_pendientes()
+        {
+            var products = from PRODUCTO in db.PRODUCTO
+                           join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
+                           join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
+                           where PRODUCTO.ESTADO_PUBLICACION == 0
+                           select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA };
+
+            return Ok(products);
+        }
+
         [Route("api/productos/populares")]
         [HttpGet]
         public async Task<IHttpActionResult> productos_populares()
@@ -249,6 +262,47 @@ namespace zeta_v3.Controllers
             await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = pRODUCTO.ID_PRODUCTO }, new { pRODUCTO.ID_PRODUCTO });
+        }
+
+        // POST: api/PRODUCTOs 
+        [Route("api/productos/cambiar_estado")]
+        public async Task<IHttpActionResult> cargar_categoria(AuxModel.producto_aceptado aux)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            PRODUCTO pRODUCTO = await db.PRODUCTO.FindAsync(aux.ID_PRODUCTO);
+
+            if(pRODUCTO == null)
+            {
+                return NotFound();
+            }
+
+            pRODUCTO.ESTADO_PUBLICACION = aux.ESTADO;
+
+
+            db.Entry(pRODUCTO).State = EntityState.Modified;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PRODUCTOExists(aux.ID_PRODUCTO))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            
+
+            return Ok();
         }
 
         // POST: api/PRODUCTOs categorias
