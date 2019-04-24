@@ -17,7 +17,7 @@ namespace zeta_v3.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LISTA_DESEOS()
         {
-            this.PRODUCTO = new HashSet<PRODUCTO>();
+            this.LISTAXPRODUCTO = new HashSet<LISTAXPRODUCTO>();
         }
     
         public decimal ID_LISTA_DESEOS { get; set; }
@@ -26,6 +26,6 @@ namespace zeta_v3.Models
     
         public virtual USUARIO USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRODUCTO> PRODUCTO { get; set; }
+        public virtual ICollection<LISTAXPRODUCTO> LISTAXPRODUCTO { get; set; }
     }
 }

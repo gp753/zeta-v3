@@ -18,13 +18,19 @@ namespace zeta_v3.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CARRITOsController : ApiController
     {
-        private zeta_bdEntities10 db = new zeta_bdEntities10();
+        private zeta_bdEntities12 db = new zeta_bdEntities12();
 
         //CARGAR CARRITO
         [Route("api/carrito/")]
         [HttpPost]
+        [Authorize]
         public async Task<IHttpActionResult> Cargar_carrito(AuxModel.productoacarrito aux)
         {
+            string id_usuario = User.Identity.GetUserId();
+            var id_carrito = from CARRITO in db.CARRITO
+                             where CARRITO.ID_USUARIO == id_usuario && CARRITO.TIPO_CARRITO == 1
+                             select CARRITO.ID_CARRITO;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -36,12 +42,12 @@ namespace zeta_v3.Controllers
                 var producto_extiste = from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
                                        where CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO 
                                        select CANTIDAD_PRODUCTO.ID_CANTIDAD_PRODUCTO;
-
+                
                 if (producto_extiste.ToList().Count() == 0)
                 {
                     CANTIDAD_PRODUCTO add_carrito = new CANTIDAD_PRODUCTO();
                                                          
-                    add_carrito.ID_CARRITO = 1;
+                    add_carrito.ID_CARRITO = id_carrito.ToList().First();
                     //  add_carrito.ID_COLOR = aux.ID_COLOR;
                     add_carrito.ID_PRODUCTO = aux.ID_PRODUCTO;
                     // add_carrito.ID_TAMANO = aux.ID_TAMANO;
@@ -83,7 +89,7 @@ namespace zeta_v3.Controllers
 
 
 
-                        add_carrito.ID_CARRITO = 1;
+                        add_carrito.ID_CARRITO = id_carrito.ToList().First(); 
                         add_carrito.ID_COLOR = aux.ID_COLOR;
                         add_carrito.ID_PRODUCTO = aux.ID_PRODUCTO;
                         // add_carrito.ID_TAMANO = aux.ID_TAMANO;
@@ -125,7 +131,7 @@ namespace zeta_v3.Controllers
 
 
 
-                            add_carrito.ID_CARRITO = 1;
+                            add_carrito.ID_CARRITO = id_carrito.ToList().First();
                             //  add_carrito.ID_COLOR = aux.ID_COLOR;
                             add_carrito.ID_PRODUCTO = aux.ID_PRODUCTO;
                             add_carrito.ID_TAMANO = aux.ID_TAMANO;
@@ -165,7 +171,7 @@ namespace zeta_v3.Controllers
 
 
 
-                            add_carrito.ID_CARRITO = 1;
+                            add_carrito.ID_CARRITO = id_carrito.ToList().First();
                             add_carrito.ID_COLOR = aux.ID_COLOR;
                             add_carrito.ID_PRODUCTO = aux.ID_PRODUCTO;
                             add_carrito.ID_TAMANO = aux.ID_TAMANO;
@@ -199,8 +205,8 @@ namespace zeta_v3.Controllers
                           join PRODUCTO in db.PRODUCTO on CANTIDAD_PRODUCTO.ID_PRODUCTO equals PRODUCTO.ID_PRODUCTO
                           join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
                           join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
-                          where CANTIDAD_PRODUCTO.ID_CARRITO == 1 //cambiar por el id de carrito del usuario
-                          select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA,CANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO, MULTIMEDIA.LINK_MULTIMEDIA };
+                          where CANTIDAD_PRODUCTO.ID_CARRITO == id_carrito.ToList().First() //cambiar por el id de carrito del usuario
+            select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA,CANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO, MULTIMEDIA.LINK_MULTIMEDIA };
 
 
             var cantidad = carrito.ToList().Count();
@@ -213,15 +219,20 @@ namespace zeta_v3.Controllers
         // DELETE: api/CARRITOs/5
         [Route("api/carrito/eliminar")]
         [HttpPost]
+        [Authorize]
         public async Task<IHttpActionResult> EliminarCarritoProducto(AuxModel.productoacarrito aux)
         {
             //pulir esta parte para contemplar los null
+            string id_usuario = User.Identity.GetUserId();
+            var id_carrito = from CARRITO in db.CARRITO
+                             where CARRITO.ID_USUARIO == id_usuario && CARRITO.TIPO_CARRITO == 1
+                             select CARRITO.ID_CARRITO;
 
             var seleccion = new decimal();
             if(aux.ID_COLOR > 0 && aux.ID_TAMANO > 0)
             {
                  seleccion = (from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
-                                where CANTIDAD_PRODUCTO.ID_CARRITO == 1 && CANTIDAD_PRODUCTO.ID_COLOR == aux.ID_COLOR && CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO && CANTIDAD_PRODUCTO.ID_TAMANO == aux.ID_TAMANO
+                                where CANTIDAD_PRODUCTO.ID_CARRITO == id_carrito.ToList().First() && CANTIDAD_PRODUCTO.ID_COLOR == aux.ID_COLOR && CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO && CANTIDAD_PRODUCTO.ID_TAMANO == aux.ID_TAMANO
                                 select CANTIDAD_PRODUCTO.ID_CANTIDAD_PRODUCTO).ToList().FirstOrDefault();
             }
             else
@@ -229,13 +240,13 @@ namespace zeta_v3.Controllers
                 if(aux.ID_COLOR == 0 && aux.ID_TAMANO > 0)
                 {
                     seleccion = (from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
-                                 where CANTIDAD_PRODUCTO.ID_CARRITO == 1 && CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO && CANTIDAD_PRODUCTO.ID_TAMANO == aux.ID_TAMANO
+                                 where CANTIDAD_PRODUCTO.ID_CARRITO == id_carrito.ToList().First() && CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO && CANTIDAD_PRODUCTO.ID_TAMANO == aux.ID_TAMANO
                                  select CANTIDAD_PRODUCTO.ID_CANTIDAD_PRODUCTO).ToList().FirstOrDefault();
                 }
                 else
                 {
                     seleccion = (from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
-                                 where CANTIDAD_PRODUCTO.ID_CARRITO == 1 &&  CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO 
+                                 where CANTIDAD_PRODUCTO.ID_CARRITO == id_carrito.ToList().First() &&  CANTIDAD_PRODUCTO.ID_PRODUCTO == aux.ID_PRODUCTO 
                                  select CANTIDAD_PRODUCTO.ID_CANTIDAD_PRODUCTO).ToList().FirstOrDefault();
                 }
             }
@@ -253,7 +264,7 @@ namespace zeta_v3.Controllers
                           join PRODUCTO in db.PRODUCTO on CANTIDAD_PRODUCTO.ID_PRODUCTO equals PRODUCTO.ID_PRODUCTO
                           join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
                           join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
-                          where CANTIDAD_PRODUCTO.ID_CARRITO == 1 //cambiar por el id de carrito del usuario
+                          where CANTIDAD_PRODUCTO.ID_CARRITO == id_carrito.ToList().First() //cambiar por el id de carrito del usuario
                           select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA};
             var cantidad = carrito.ToList().Count();
             return Ok( new { carrito, cantidad });
@@ -267,22 +278,18 @@ namespace zeta_v3.Controllers
 
 
         [Route("api/carritos/")]
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<IHttpActionResult> carrito_page()
         {
-            /*  var id_usr = User.Identity.GetUserName();
-              var usuario = from USUARIO in db.USUARIO
-                               where USUARIO.EMAIL == id_usr
-                               select USUARIO.ID_USUARIO;
-              //hasta aca ya tengo el usuario
-              */
-
-
+            string id_usuario = User.Identity.GetUserId();
             var id_carrito = from CARRITO in db.CARRITO
-                             where CARRITO.ID_USUARIO == "1" //usuario.FirstOrDefault()
-                             orderby CARRITO.FECHA_CREACION_CARRITO
+                             where CARRITO.ID_USUARIO == id_usuario && CARRITO.TIPO_CARRITO == 1
                              select CARRITO.ID_CARRITO;
+
+
+
+            
                              
 
            //consigo el id del carrito ORDENADO POR FECHA DE CREACION

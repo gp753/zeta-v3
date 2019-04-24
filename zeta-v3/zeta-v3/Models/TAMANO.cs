@@ -20,6 +20,8 @@ namespace zeta_v3.Models
             this.CANTIDAD_PRODUCTO = new HashSet<CANTIDAD_PRODUCTO>();
             this.FOTOS_PRODUCTOS = new HashSet<FOTOS_PRODUCTOS>();
             this.INGRESO_PRODUCTO = new HashSet<INGRESO_PRODUCTO>();
+            this.LISTAXPRODUCTO = new HashSet<LISTAXPRODUCTO>();
+            this.PRODUCTO_FACTURA = new HashSet<PRODUCTO_FACTURA>();
         }
     
         public decimal ID_TAMANO { get; set; }
@@ -32,6 +34,10 @@ namespace zeta_v3.Models
         public virtual ICollection<FOTOS_PRODUCTOS> FOTOS_PRODUCTOS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<INGRESO_PRODUCTO> INGRESO_PRODUCTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LISTAXPRODUCTO> LISTAXPRODUCTO { get; set; }
         public virtual PRODUCTO PRODUCTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PRODUCTO_FACTURA> PRODUCTO_FACTURA { get; set; }
     }
 }

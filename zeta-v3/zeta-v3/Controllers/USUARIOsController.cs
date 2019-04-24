@@ -15,7 +15,7 @@ namespace zeta_v3.Controllers
 {
     public class USUARIOsController : ApiController
     {
-        private zeta_bdEntities10 db = new zeta_bdEntities10();
+        private zeta_bdEntities12 db = new zeta_bdEntities12();
 
         /*// GET: api/USUARIOs
         public IQueryable<USUARIO> GetUSUARIO()

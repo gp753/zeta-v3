@@ -286,6 +286,8 @@
           </Key>
           <Property Name="ID_LISTA_DESEOS" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_COLOR" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ID_TAMANO" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="LOG">
           <Key>
@@ -343,8 +345,11 @@
           <Property Name="ID_PRODUCTO_FACTURA" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_FACTURA" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="ID_PRODUCTO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_TAMANO" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ID_COLOR" Type="numeric" Precision="18" Scale="0" />
           <Property Name="PRECIO_PRODUCTO_FACTURA" Type="money" />
           <Property Name="CANTIDAD_PRODUCTO_FACTURADO" Type="int" />
+          <Property Name="ESTADO" Type="int" />
         </EntityType>
         <EntityType Name="PRODUCTOXCATEGORIA">
           <Key>
@@ -964,6 +969,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LISTAXPR_RELATIONS_COLOR">
+          <End Role="COLOR" Type="Self.COLOR" Multiplicity="0..1" />
+          <End Role="LISTAXPRODUCTO" Type="Self.LISTAXPRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COLOR">
+              <PropertyRef Name="ID_COLOR" />
+            </Principal>
+            <Dependent Role="LISTAXPRODUCTO">
+              <PropertyRef Name="ID_COLOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LISTAXPR_RELATIONS_TAMANO">
+          <End Role="TAMANO" Type="Self.TAMANO" Multiplicity="0..1" />
+          <End Role="LISTAXPRODUCTO" Type="Self.LISTAXPRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAMANO">
+              <PropertyRef Name="ID_TAMANO" />
+            </Principal>
+            <Dependent Role="LISTAXPRODUCTO">
+              <PropertyRef Name="ID_TAMANO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_LOG_LOGXUSUAR_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
           <End Role="LOG" Type="Self.LOG" Multiplicity="*" />
@@ -1000,6 +1029,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PRODUCTO_COLORXFAC_COLOR">
+          <End Role="COLOR" Type="Self.COLOR" Multiplicity="0..1" />
+          <End Role="PRODUCTO_FACTURA" Type="Self.PRODUCTO_FACTURA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COLOR">
+              <PropertyRef Name="ID_COLOR" />
+            </Principal>
+            <Dependent Role="PRODUCTO_FACTURA">
+              <PropertyRef Name="ID_COLOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PRODUCTO_FK_PRODUC_FACTURA_">
           <End Role="FACTURA_VENTA" Type="Self.FACTURA_VENTA" Multiplicity="1" />
           <End Role="PRODUCTO_FACTURA" Type="Self.PRODUCTO_FACTURA" Multiplicity="*" />
@@ -1033,6 +1074,18 @@
             </Principal>
             <Dependent Role="PRODUCTOXCATEGORIA">
               <PropertyRef Name="ID_PRODUCTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_TAMANOXFA_TAMANO">
+          <End Role="TAMANO" Type="Self.TAMANO" Multiplicity="0..1" />
+          <End Role="PRODUCTO_FACTURA" Type="Self.PRODUCTO_FACTURA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAMANO">
+              <PropertyRef Name="ID_TAMANO" />
+            </Principal>
+            <Dependent Role="PRODUCTO_FACTURA">
+              <PropertyRef Name="ID_TAMANO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1386,6 +1439,14 @@
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="LISTAXPRODUCTO" EntitySet="LISTAXPRODUCTO" />
           </AssociationSet>
+          <AssociationSet Name="FK_LISTAXPR_RELATIONS_COLOR" Association="Self.FK_LISTAXPR_RELATIONS_COLOR">
+            <End Role="COLOR" EntitySet="COLOR" />
+            <End Role="LISTAXPRODUCTO" EntitySet="LISTAXPRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LISTAXPR_RELATIONS_TAMANO" Association="Self.FK_LISTAXPR_RELATIONS_TAMANO">
+            <End Role="TAMANO" EntitySet="TAMANO" />
+            <End Role="LISTAXPRODUCTO" EntitySet="LISTAXPRODUCTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_LOG_LOGXUSUAR_USUARIO" Association="Self.FK_LOG_LOGXUSUAR_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="LOG" EntitySet="LOG" />
@@ -1398,6 +1459,10 @@
             <End Role="CATEGORIA_PRODUCTO" EntitySet="CATEGORIA_PRODUCTO" />
             <End Role="PRODUCTOXCATEGORIA" EntitySet="PRODUCTOXCATEGORIA" />
           </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_COLORXFAC_COLOR" Association="Self.FK_PRODUCTO_COLORXFAC_COLOR">
+            <End Role="COLOR" EntitySet="COLOR" />
+            <End Role="PRODUCTO_FACTURA" EntitySet="PRODUCTO_FACTURA" />
+          </AssociationSet>
           <AssociationSet Name="FK_PRODUCTO_FK_PRODUC_FACTURA_" Association="Self.FK_PRODUCTO_FK_PRODUC_FACTURA_">
             <End Role="FACTURA_VENTA" EntitySet="FACTURA_VENTA" />
             <End Role="PRODUCTO_FACTURA" EntitySet="PRODUCTO_FACTURA" />
@@ -1409,6 +1474,10 @@
           <AssociationSet Name="FK_PRODUCTO_PRODUCTO__PRODUCTO" Association="Self.FK_PRODUCTO_PRODUCTO__PRODUCTO">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="PRODUCTOXCATEGORIA" EntitySet="PRODUCTOXCATEGORIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_TAMANOXFA_TAMANO" Association="Self.FK_PRODUCTO_TAMANOXFA_TAMANO">
+            <End Role="TAMANO" EntitySet="TAMANO" />
+            <End Role="PRODUCTO_FACTURA" EntitySet="PRODUCTO_FACTURA" />
           </AssociationSet>
           <AssociationSet Name="FK_PUBLICAC_PUBLICACI_USUARIO" Association="Self.FK_PUBLICAC_PUBLICACI_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
@@ -1670,6 +1739,8 @@
           <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_COLOR_COLOR_PRO_PRODUCTO" FromRole="COLOR" ToRole="PRODUCTO" />
           <NavigationProperty Name="FOTOS_PRODUCTOS" Relationship="Self.FK_FOTOS_PR_COLORXFOT_COLOR" FromRole="COLOR" ToRole="FOTOS_PRODUCTOS" />
           <NavigationProperty Name="INGRESO_PRODUCTO" Relationship="Self.FK_INGRESO__INGRESO_C_COLOR" FromRole="COLOR" ToRole="INGRESO_PRODUCTO" />
+          <NavigationProperty Name="LISTAXPRODUCTO" Relationship="Self.FK_LISTAXPR_RELATIONS_COLOR" FromRole="COLOR" ToRole="LISTAXPRODUCTO" />
+          <NavigationProperty Name="PRODUCTO_FACTURA" Relationship="Self.FK_PRODUCTO_COLORXFAC_COLOR" FromRole="COLOR" ToRole="PRODUCTO_FACTURA" />
         </EntityType>
         <EntityType Name="DEPARTAMENTO">
           <Key>
@@ -1789,7 +1860,21 @@
           <Property Name="ID_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="NOMBRE_LISTA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_LISTA_DE_FK_LISTA__USUARIO" FromRole="LISTA_DESEOS" ToRole="USUARIO" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.LISTAXPRODUCTO" FromRole="LISTA_DESEOS" ToRole="PRODUCTO" />
+          <NavigationProperty Name="LISTAXPRODUCTO" Relationship="Self.FK_LISTAXPR_FK_LISTAX_LISTA_DE" FromRole="LISTA_DESEOS" ToRole="LISTAXPRODUCTO" />
+        </EntityType>
+        <EntityType Name="LISTAXPRODUCTO">
+          <Key>
+            <PropertyRef Name="ID_LISTA_DESEOS" />
+            <PropertyRef Name="ID_PRODUCTO" />
+          </Key>
+          <Property Name="ID_LISTA_DESEOS" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_COLOR" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ID_TAMANO" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="COLOR" Relationship="Self.FK_LISTAXPR_RELATIONS_COLOR" FromRole="LISTAXPRODUCTO" ToRole="COLOR" />
+          <NavigationProperty Name="LISTA_DESEOS" Relationship="Self.FK_LISTAXPR_FK_LISTAX_LISTA_DE" FromRole="LISTAXPRODUCTO" ToRole="LISTA_DESEOS" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_LISTAXPR_FK_LISTAX_PRODUCTO" FromRole="LISTAXPRODUCTO" ToRole="PRODUCTO" />
+          <NavigationProperty Name="TAMANO" Relationship="Self.FK_LISTAXPR_RELATIONS_TAMANO" FromRole="LISTAXPRODUCTO" ToRole="TAMANO" />
         </EntityType>
         <EntityType Name="LOG">
           <Key>
@@ -1850,12 +1935,12 @@
           <NavigationProperty Name="COLOR" Relationship="Self.FK_COLOR_COLOR_PRO_PRODUCTO" FromRole="PRODUCTO" ToRole="COLOR" />
           <NavigationProperty Name="FOTOS_PRODUCTOS" Relationship="Self.FK_FOTOS_PR_PRODUCTOS_PRODUCTO" FromRole="PRODUCTO" ToRole="FOTOS_PRODUCTOS" />
           <NavigationProperty Name="INGRESO_PRODUCTO" Relationship="Self.FK_INGRESO__FK_INGRES_PRODUCTO" FromRole="PRODUCTO" ToRole="INGRESO_PRODUCTO" />
+          <NavigationProperty Name="LISTAXPRODUCTO" Relationship="Self.FK_LISTAXPR_FK_LISTAX_PRODUCTO" FromRole="PRODUCTO" ToRole="LISTAXPRODUCTO" />
           <NavigationProperty Name="PRODUCTO_FACTURA" Relationship="Self.FK_PRODUCTO_FK_PRODUC_PRODUCTO" FromRole="PRODUCTO" ToRole="PRODUCTO_FACTURA" />
           <NavigationProperty Name="PRODUCTOXCATEGORIA" Relationship="Self.FK_PRODUCTO_PRODUCTO__PRODUCTO" FromRole="PRODUCTO" ToRole="PRODUCTOXCATEGORIA" />
           <NavigationProperty Name="RECLAMO" Relationship="Self.FK_RECLAMO_FK_RECLAM_PRODUCTO" FromRole="PRODUCTO" ToRole="RECLAMO" />
           <NavigationProperty Name="TAMANO" Relationship="Self.FK_TAMANO_TAMANO_PR_PRODUCTO" FromRole="PRODUCTO" ToRole="TAMANO" />
           <NavigationProperty Name="VISITA_PRODUCTO" Relationship="Self.FK_VISITA_P_FK_VISITA_PRODUCTO" FromRole="PRODUCTO" ToRole="VISITA_PRODUCTO" />
-          <NavigationProperty Name="LISTA_DESEOS" Relationship="Self.LISTAXPRODUCTO" FromRole="PRODUCTO" ToRole="LISTA_DESEOS" />
         </EntityType>
         <EntityType Name="PRODUCTO_FACTURA">
           <Key>
@@ -1864,10 +1949,15 @@
           <Property Name="ID_PRODUCTO_FACTURA" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_FACTURA" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="ID_PRODUCTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_TAMANO" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ID_COLOR" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="PRECIO_PRODUCTO_FACTURA" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CANTIDAD_PRODUCTO_FACTURADO" Type="Int32" />
+          <Property Name="ESTADO" Type="Int32" />
+          <NavigationProperty Name="COLOR" Relationship="Self.FK_PRODUCTO_COLORXFAC_COLOR" FromRole="PRODUCTO_FACTURA" ToRole="COLOR" />
           <NavigationProperty Name="FACTURA_VENTA" Relationship="Self.FK_PRODUCTO_FK_PRODUC_FACTURA_" FromRole="PRODUCTO_FACTURA" ToRole="FACTURA_VENTA" />
           <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_PRODUCTO_FK_PRODUC_PRODUCTO" FromRole="PRODUCTO_FACTURA" ToRole="PRODUCTO" />
+          <NavigationProperty Name="TAMANO" Relationship="Self.FK_PRODUCTO_TAMANOXFA_TAMANO" FromRole="PRODUCTO_FACTURA" ToRole="TAMANO" />
         </EntityType>
         <EntityType Name="PRODUCTOXCATEGORIA">
           <Key>
@@ -1938,7 +2028,9 @@
           <NavigationProperty Name="CANTIDAD_PRODUCTO" Relationship="Self.FK_CANTIDAD_CARRITOXT_TAMANO" FromRole="TAMANO" ToRole="CANTIDAD_PRODUCTO" />
           <NavigationProperty Name="FOTOS_PRODUCTOS" Relationship="Self.FK_FOTOS_PR_RELATIONS_TAMANO" FromRole="TAMANO" ToRole="FOTOS_PRODUCTOS" />
           <NavigationProperty Name="INGRESO_PRODUCTO" Relationship="Self.FK_INGRESO__INGRESO_T_TAMANO" FromRole="TAMANO" ToRole="INGRESO_PRODUCTO" />
+          <NavigationProperty Name="LISTAXPRODUCTO" Relationship="Self.FK_LISTAXPR_RELATIONS_TAMANO" FromRole="TAMANO" ToRole="LISTAXPRODUCTO" />
           <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_TAMANO_TAMANO_PR_PRODUCTO" FromRole="TAMANO" ToRole="PRODUCTO" />
+          <NavigationProperty Name="PRODUCTO_FACTURA" Relationship="Self.FK_PRODUCTO_TAMANOXFA_TAMANO" FromRole="TAMANO" ToRole="PRODUCTO_FACTURA" />
         </EntityType>
         <EntityType Name="USUARIO">
           <Key>
@@ -2339,6 +2431,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LISTAXPR_RELATIONS_COLOR">
+          <End Role="COLOR" Type="Self.COLOR" Multiplicity="0..1" />
+          <End Role="LISTAXPRODUCTO" Type="Self.LISTAXPRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COLOR">
+              <PropertyRef Name="ID_COLOR" />
+            </Principal>
+            <Dependent Role="LISTAXPRODUCTO">
+              <PropertyRef Name="ID_COLOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_COLORXFAC_COLOR">
+          <End Role="COLOR" Type="Self.COLOR" Multiplicity="0..1" />
+          <End Role="PRODUCTO_FACTURA" Type="Self.PRODUCTO_FACTURA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COLOR">
+              <PropertyRef Name="ID_COLOR" />
+            </Principal>
+            <Dependent Role="PRODUCTO_FACTURA">
+              <PropertyRef Name="ID_COLOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DIRECION_FK_DIRECI_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="DIRECION" Type="Self.DIRECION" Multiplicity="*" />
@@ -2495,6 +2611,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LISTAXPR_FK_LISTAX_LISTA_DE">
+          <End Role="LISTA_DESEOS" Type="Self.LISTA_DESEOS" Multiplicity="1" />
+          <End Role="LISTAXPRODUCTO" Type="Self.LISTAXPRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LISTA_DESEOS">
+              <PropertyRef Name="ID_LISTA_DESEOS" />
+            </Principal>
+            <Dependent Role="LISTAXPRODUCTO">
+              <PropertyRef Name="ID_LISTA_DESEOS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LISTAXPR_FK_LISTAX_PRODUCTO">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
+          <End Role="LISTAXPRODUCTO" Type="Self.LISTAXPRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Principal>
+            <Dependent Role="LISTAXPRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LISTAXPR_RELATIONS_TAMANO">
+          <End Role="TAMANO" Type="Self.TAMANO" Multiplicity="0..1" />
+          <End Role="LISTAXPRODUCTO" Type="Self.LISTAXPRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAMANO">
+              <PropertyRef Name="ID_TAMANO" />
+            </Principal>
+            <Dependent Role="LISTAXPRODUCTO">
+              <PropertyRef Name="ID_TAMANO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_LOG_LOGXUSUAR_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
           <End Role="LOG" Type="Self.LOG" Multiplicity="*" />
@@ -2579,6 +2731,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PRODUCTO_TAMANOXFA_TAMANO">
+          <End Role="TAMANO" Type="Self.TAMANO" Multiplicity="0..1" />
+          <End Role="PRODUCTO_FACTURA" Type="Self.PRODUCTO_FACTURA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAMANO">
+              <PropertyRef Name="ID_TAMANO" />
+            </Principal>
+            <Dependent Role="PRODUCTO_FACTURA">
+              <PropertyRef Name="ID_TAMANO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PUBLICAC_PUBLICACI_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
           <End Role="PUBLICACION" Type="Self.PUBLICACION" Multiplicity="*" />
@@ -2607,10 +2771,6 @@
           <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
         </Association>
-        <Association Name="LISTAXPRODUCTO">
-          <End Role="LISTA_DESEOS" Type="Self.LISTA_DESEOS" Multiplicity="*" />
-          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
-        </Association>
         <Association Name="ROL_USUARIO">
           <End Role="ROL" Type="Self.ROL" Multiplicity="*" />
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
@@ -2619,7 +2779,7 @@
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
           <End Role="VISITA_PRODUCTO" Type="Self.VISITA_PRODUCTO" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="zeta_bdEntities10" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="zeta_bdEntities12" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
@@ -2647,6 +2807,7 @@
           <EntitySet Name="GASTO" EntityType="Self.GASTO" />
           <EntitySet Name="INGRESO_PRODUCTO" EntityType="Self.INGRESO_PRODUCTO" />
           <EntitySet Name="LISTA_DESEOS" EntityType="Self.LISTA_DESEOS" />
+          <EntitySet Name="LISTAXPRODUCTO" EntityType="Self.LISTAXPRODUCTO" />
           <EntitySet Name="LOG" EntityType="Self.LOG" />
           <EntitySet Name="MULTIMEDIA" EntityType="Self.MULTIMEDIA" />
           <EntitySet Name="PAGOS_BANCARD" EntityType="Self.PAGOS_BANCARD" />
@@ -2781,6 +2942,14 @@
             <End Role="COLOR" EntitySet="COLOR" />
             <End Role="INGRESO_PRODUCTO" EntitySet="INGRESO_PRODUCTO" />
           </AssociationSet>
+          <AssociationSet Name="FK_LISTAXPR_RELATIONS_COLOR" Association="Self.FK_LISTAXPR_RELATIONS_COLOR">
+            <End Role="COLOR" EntitySet="COLOR" />
+            <End Role="LISTAXPRODUCTO" EntitySet="LISTAXPRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_COLORXFAC_COLOR" Association="Self.FK_PRODUCTO_COLORXFAC_COLOR">
+            <End Role="COLOR" EntitySet="COLOR" />
+            <End Role="PRODUCTO_FACTURA" EntitySet="PRODUCTO_FACTURA" />
+          </AssociationSet>
           <AssociationSet Name="FK_DIRECION_FK_DIRECI_USUARIO" Association="Self.FK_DIRECION_FK_DIRECI_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="DIRECION" EntitySet="DIRECION" />
@@ -2833,6 +3002,18 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="LISTA_DESEOS" EntitySet="LISTA_DESEOS" />
           </AssociationSet>
+          <AssociationSet Name="FK_LISTAXPR_FK_LISTAX_LISTA_DE" Association="Self.FK_LISTAXPR_FK_LISTAX_LISTA_DE">
+            <End Role="LISTA_DESEOS" EntitySet="LISTA_DESEOS" />
+            <End Role="LISTAXPRODUCTO" EntitySet="LISTAXPRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LISTAXPR_FK_LISTAX_PRODUCTO" Association="Self.FK_LISTAXPR_FK_LISTAX_PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="LISTAXPRODUCTO" EntitySet="LISTAXPRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LISTAXPR_RELATIONS_TAMANO" Association="Self.FK_LISTAXPR_RELATIONS_TAMANO">
+            <End Role="TAMANO" EntitySet="TAMANO" />
+            <End Role="LISTAXPRODUCTO" EntitySet="LISTAXPRODUCTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_LOG_LOGXUSUAR_USUARIO" Association="Self.FK_LOG_LOGXUSUAR_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="LOG" EntitySet="LOG" />
@@ -2861,6 +3042,10 @@
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="VISITA_PRODUCTO" EntitySet="VISITA_PRODUCTO" />
           </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_TAMANOXFA_TAMANO" Association="Self.FK_PRODUCTO_TAMANOXFA_TAMANO">
+            <End Role="TAMANO" EntitySet="TAMANO" />
+            <End Role="PRODUCTO_FACTURA" EntitySet="PRODUCTO_FACTURA" />
+          </AssociationSet>
           <AssociationSet Name="FK_PUBLICAC_PUBLICACI_USUARIO" Association="Self.FK_PUBLICAC_PUBLICACI_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="PUBLICACION" EntitySet="PUBLICACION" />
@@ -2872,10 +3057,6 @@
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="LISTAXPRODUCTO" Association="Self.LISTAXPRODUCTO">
-            <End Role="LISTA_DESEOS" EntitySet="LISTA_DESEOS" />
-            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
           </AssociationSet>
           <AssociationSet Name="ROL_USUARIO" Association="Self.ROL_USUARIO">
             <End Role="ROL" EntitySet="ROL" />
@@ -2891,7 +3072,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="zeta_bdModelStoreContainer" CdmEntityContainer="zeta_bdEntities10">
+        <EntityContainerMapping StorageEntityContainer="zeta_bdModelStoreContainer" CdmEntityContainer="zeta_bdEntities12">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="zeta_bdModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -3182,6 +3363,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="LISTAXPRODUCTO">
+            <EntityTypeMapping TypeName="zeta_bdModel.LISTAXPRODUCTO">
+              <MappingFragment StoreEntitySet="LISTAXPRODUCTO">
+                <ScalarProperty Name="ID_LISTA_DESEOS" ColumnName="ID_LISTA_DESEOS" />
+                <ScalarProperty Name="ID_PRODUCTO" ColumnName="ID_PRODUCTO" />
+                <ScalarProperty Name="ID_COLOR" ColumnName="ID_COLOR" />
+                <ScalarProperty Name="ID_TAMANO" ColumnName="ID_TAMANO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="LOG">
             <EntityTypeMapping TypeName="zeta_bdModel.LOG">
               <MappingFragment StoreEntitySet="LOG">
@@ -3242,8 +3433,11 @@
                 <ScalarProperty Name="ID_PRODUCTO_FACTURA" ColumnName="ID_PRODUCTO_FACTURA" />
                 <ScalarProperty Name="ID_FACTURA" ColumnName="ID_FACTURA" />
                 <ScalarProperty Name="ID_PRODUCTO" ColumnName="ID_PRODUCTO" />
+                <ScalarProperty Name="ID_TAMANO" ColumnName="ID_TAMANO" />
+                <ScalarProperty Name="ID_COLOR" ColumnName="ID_COLOR" />
                 <ScalarProperty Name="PRECIO_PRODUCTO_FACTURA" ColumnName="PRECIO_PRODUCTO_FACTURA" />
                 <ScalarProperty Name="CANTIDAD_PRODUCTO_FACTURADO" ColumnName="CANTIDAD_PRODUCTO_FACTURADO" />
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3339,14 +3533,6 @@
             </EndProperty>
             <EndProperty Name="AspNetUsers">
               <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="LISTAXPRODUCTO" TypeName="zeta_bdModel.LISTAXPRODUCTO" StoreEntitySet="LISTAXPRODUCTO">
-            <EndProperty Name="LISTA_DESEOS">
-              <ScalarProperty Name="ID_LISTA_DESEOS" ColumnName="ID_LISTA_DESEOS" />
-            </EndProperty>
-            <EndProperty Name="PRODUCTO">
-              <ScalarProperty Name="ID_PRODUCTO" ColumnName="ID_PRODUCTO" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="ROL_USUARIO" TypeName="zeta_bdModel.ROL_USUARIO" StoreEntitySet="ROL_USUARIO">

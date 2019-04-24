@@ -11,6 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using zeta_v3.Models;
 using System.Web.Http.Cors;
+using Microsoft.AspNet.Identity;
 
 namespace zeta_v3.Controllers
 {
@@ -18,7 +19,7 @@ namespace zeta_v3.Controllers
     public class PRODUCTOsController : ApiController
     {
 
-        private zeta_bdEntities10 db = new zeta_bdEntities10();
+        private zeta_bdEntities12 db = new zeta_bdEntities12();
 
         // GET: api/PRODUCTOs
         public IQueryable<PRODUCTO> GetPRODUCTO()
@@ -248,14 +249,14 @@ namespace zeta_v3.Controllers
 
         // POST: api/PRODUCTOs
         [ResponseType(typeof(PRODUCTO))]
+        [Authorize]
         public async Task<IHttpActionResult> PostPRODUCTO(PRODUCTO pRODUCTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            
+            string id_usuario = User.Identity.GetUserId();
             pRODUCTO.ESTADO_PUBLICACION = 0;
             pRODUCTO.FECHA_PUBLICACION = DateTime.Today;
             db.PRODUCTO.Add(pRODUCTO);

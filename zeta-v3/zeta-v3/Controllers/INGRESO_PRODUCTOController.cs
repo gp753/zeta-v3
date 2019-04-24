@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -16,7 +17,7 @@ namespace zeta_v3.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class INGRESO_PRODUCTOController : ApiController
     {
-        private zeta_bdEntities10 db = new zeta_bdEntities10();
+        private zeta_bdEntities12 db = new zeta_bdEntities12();
 
         // GET: api/INGRESO_PRODUCTO
         public IQueryable<INGRESO_PRODUCTO> GetINGRESO_PRODUCTO()
@@ -74,14 +75,17 @@ namespace zeta_v3.Controllers
 
         // POST: api/INGRESO_PRODUCTO
         [ResponseType(typeof(INGRESO_PRODUCTO))]
+        [Authorize]
         public IHttpActionResult PostINGRESO_PRODUCTO(INGRESO_PRODUCTO iNGRESO_PRODUCTO)
         {
+            string id_usuario = User.Identity.GetUserId();
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            iNGRESO_PRODUCTO.ID_USUARIO = "1";
+            iNGRESO_PRODUCTO.ID_USUARIO = id_usuario;
             db.INGRESO_PRODUCTO.Add(iNGRESO_PRODUCTO);
             db.SaveChanges();
 

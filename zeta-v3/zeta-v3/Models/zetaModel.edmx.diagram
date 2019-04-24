@@ -4,48 +4,49 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="67ae81096d2c4abd9a17257b9a30fb93" Name="Diagram1">
-        <EntityTypeShape EntityType="zeta_bdModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.AspNetUsers" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.BUSQUEDA" Width="1.5" PointX="5.25" PointY="21.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.CALIFICACION" Width="1.5" PointX="9.75" PointY="36" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.CANCELACION" Width="1.5" PointX="12.75" PointY="27.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.CANTIDAD_PRODUCTO" Width="1.5" PointX="15" PointY="42" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.CARACTERISTICA_PRODUCTO" Width="1.5" PointX="9.75" PointY="41.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.CARACTERISTICAS" Width="1.5" PointX="7.5" PointY="54.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.CARRITO" Width="1.5" PointX="5.25" PointY="28.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.CATEGORIA_PRODUCTO" Width="1.5" PointX="5.25" PointY="54.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.CATEGORIA_SUPERIOR" Width="1.5" PointX="3" PointY="54.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.CHECKOUT" Width="1.5" PointX="10.5" PointY="28" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.CIUDAD" Width="1.5" PointX="6" PointY="38.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.COLOR" Width="1.5" PointX="9.75" PointY="44.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.DEPARTAMENTO" Width="1.5" PointX="3.75" PointY="38.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.DIRECION" Width="1.5" PointX="8.25" PointY="28.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.ESTADO_CANCELACION" Width="1.5" PointX="15" PointY="27.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.ESTADO_DELIVERY" Width="1.5" PointX="8.25" PointY="24.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.ESTADO_RECLAMO" Width="1.5" PointX="15" PointY="36.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.FACTURA_VENTA" Width="1.5" PointX="12.75" PointY="30.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.FOTOS_PRODUCTOS" Width="1.5" PointX="12" PointY="47.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.GASTO" Width="1.5" PointX="5.25" PointY="34.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.INGRESO_PRODUCTO" Width="1.5" PointX="12" PointY="40.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.LISTA_DESEOS" Width="1.5" PointX="5.25" PointY="43.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.LOG" Width="1.5" PointX="5.25" PointY="48" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.MULTIMEDIA" Width="1.5" PointX="9.75" PointY="48.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.PAGOS_BANCARD" Width="1.5" PointX="13.5" PointY="24.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.PAGOS_DELIVERY" Width="1.5" PointX="6" PointY="24.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.PRODUCTO" Width="1.5" PointX="7.5" PointY="41.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.PRODUCTO_FACTURA" Width="1.5" PointX="18" PointY="37.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.PRODUCTOXCATEGORIA" Width="1.5" PointX="12.75" PointY="44.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.PUBLICACION" Width="1.5" PointX="5.25" PointY="50.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.RECIBO_BANCARD" Width="1.5" PointX="15.75" PointY="30.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.RECLAMO" Width="1.5" PointX="12.75" PointY="36" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.ROL" Width="1.5" PointX="0.75" PointY="29.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.TAMANO" Width="1.5" PointX="9.75" PointY="53.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.USUARIO" Width="1.5" PointX="3" PointY="27.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="zeta_bdModel.VISITA_PRODUCTO" Width="1.5" PointX="9.75" PointY="33.375" IsExpanded="true" />
+      <Diagram DiagramId="8ff8a548f5e5476c9df2c3592c3cb56b" Name="Diagram1">
+        <EntityTypeShape EntityType="zeta_bdModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.AspNetRoles" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.AspNetUserClaims" Width="1.5" PointX="15.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.AspNetUserLogins" Width="1.5" PointX="15.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.AspNetUsers" Width="1.5" PointX="13" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.BUSQUEDA" Width="1.5" PointX="5.25" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.CALIFICACION" Width="1.5" PointX="5.25" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.CANCELACION" Width="1.5" PointX="15.75" PointY="24.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.CANTIDAD_PRODUCTO" Width="1.5" PointX="10.5" PointY="25.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.CARACTERISTICA_PRODUCTO" Width="1.5" PointX="9" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.CARACTERISTICAS" Width="1.5" PointX="6.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.CARRITO" Width="1.5" PointX="8.25" PointY="25.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.CATEGORIA_PRODUCTO" Width="1.5" PointX="8.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.CATEGORIA_SUPERIOR" Width="1.5" PointX="6.5" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.CHECKOUT" Width="1.5" PointX="13.5" PointY="24.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.CIUDAD" Width="1.5" PointX="3" PointY="30.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.COLOR" Width="1.5" PointX="6" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.DEPARTAMENTO" Width="1.5" PointX="0.75" PointY="31.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.DIRECION" Width="1.5" PointX="5.25" PointY="29.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.ESTADO_CANCELACION" Width="1.5" PointX="18" PointY="24.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.ESTADO_DELIVERY" Width="1.5" PointX="11.25" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.ESTADO_RECLAMO" Width="1.5" PointX="10.5" PointY="30" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.FACTURA_VENTA" Width="1.5" PointX="15.75" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.FOTOS_PRODUCTOS" Width="1.5" PointX="8.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.GASTO" Width="1.5" PointX="5.25" PointY="33.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.INGRESO_PRODUCTO" Width="1.5" PointX="8.25" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.LISTA_DESEOS" Width="1.5" PointX="5.25" PointY="40.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.LISTAXPRODUCTO" Width="1.5" PointX="7.5" PointY="39.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.LOG" Width="1.5" PointX="5.25" PointY="42.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.MULTIMEDIA" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.PAGOS_BANCARD" Width="1.5" PointX="18.5" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.PAGOS_DELIVERY" Width="1.5" PointX="9" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.PRODUCTO" Width="1.5" PointX="3.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.PRODUCTO_FACTURA" Width="1.5" PointX="18" PointY="28" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.PRODUCTOXCATEGORIA" Width="1.5" PointX="11" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.PUBLICACION" Width="1.5" PointX="5.25" PointY="45.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.RECIBO_BANCARD" Width="1.5" PointX="20.75" PointY="25.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.RECLAMO" Width="1.5" PointX="8.25" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.ROL" Width="1.5" PointX="0.75" PointY="26.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.TAMANO" Width="1.5" PointX="6" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.USUARIO" Width="1.5" PointX="3" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="zeta_bdModel.VISITA_PRODUCTO" Width="1.5" PointX="5.25" PointY="23" IsExpanded="true" />
         <AssociationConnector Association="zeta_bdModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_BUSQUEDA_USUARIOXB_USUARIO" ManuallyRouted="false" />
@@ -76,6 +77,8 @@
         <AssociationConnector Association="zeta_bdModel.FK_COLOR_COLOR_PRO_PRODUCTO" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_FOTOS_PR_COLORXFOT_COLOR" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_INGRESO__INGRESO_C_COLOR" ManuallyRouted="false" />
+        <AssociationConnector Association="zeta_bdModel.FK_LISTAXPR_RELATIONS_COLOR" ManuallyRouted="false" />
+        <AssociationConnector Association="zeta_bdModel.FK_PRODUCTO_COLORXFAC_COLOR" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_DIRECION_FK_DIRECI_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_ESTADO_D_FK_ESTADO_PAGOS_DE" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_PAGOS_DE_FK_PAGOS__ESTADO_D" ManuallyRouted="false" />
@@ -89,6 +92,9 @@
         <AssociationConnector Association="zeta_bdModel.FK_INGRESO__FK_INGRES_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_INGRESO__INGRESO_T_TAMANO" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_LISTA_DE_FK_LISTA__USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="zeta_bdModel.FK_LISTAXPR_FK_LISTAX_LISTA_DE" ManuallyRouted="false" />
+        <AssociationConnector Association="zeta_bdModel.FK_LISTAXPR_FK_LISTAX_PRODUCTO" ManuallyRouted="false" />
+        <AssociationConnector Association="zeta_bdModel.FK_LISTAXPR_RELATIONS_TAMANO" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_LOG_LOGXUSUAR_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_RECIBO_B_FK_RECIBO_PAGOS_BA" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_PRODUCTO_FK_PRODUC_PRODUCTO" ManuallyRouted="false" />
@@ -96,10 +102,10 @@
         <AssociationConnector Association="zeta_bdModel.FK_RECLAMO_FK_RECLAM_PRODUCTO" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_TAMANO_TAMANO_PR_PRODUCTO" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_VISITA_P_FK_VISITA_PRODUCTO" ManuallyRouted="false" />
+        <AssociationConnector Association="zeta_bdModel.FK_PRODUCTO_TAMANOXFA_TAMANO" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_PUBLICAC_PUBLICACI_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.FK_RECLAMO_FK_RECLAM_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="zeta_bdModel.LISTAXPRODUCTO" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.ROL_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="zeta_bdModel.USUARIO_VISITA" ManuallyRouted="false" />
       </Diagram>

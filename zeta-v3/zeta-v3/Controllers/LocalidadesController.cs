@@ -15,7 +15,7 @@ namespace zeta_v3.Controllers
 {
     public class LocalidadesController : ApiController
     {
-        private zeta_bdEntities10 db = new zeta_bdEntities10();
+        private zeta_bdEntities12 db = new zeta_bdEntities12();
 
         [Route("api/localidades/departamento")]
         public async Task<IHttpActionResult> crear_departamento(DEPARTAMENTO dEPARTAMENTO)

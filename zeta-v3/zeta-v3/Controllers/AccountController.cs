@@ -25,7 +25,7 @@ namespace zeta_v3.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
-        private zeta_bdEntities10 db = new zeta_bdEntities10();
+        private zeta_bdEntities12 db = new zeta_bdEntities12();
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
    
@@ -331,10 +331,15 @@ namespace zeta_v3.Controllers
             {
                 return BadRequest(ModelState);
             }
+            ROL rOL = await db.ROL.FindAsync(model.Rol);
+
+            if (rOL == null)
+            {
+                return NotFound();
+            }
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
             
-
             
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -343,12 +348,7 @@ namespace zeta_v3.Controllers
                 return GetErrorResult(result);
             }
 
-            ROL rOL = await db.ROL.FindAsync(model.Rol);
-
-            if (rOL == null)
-            {
-                return NotFound();
-            }
+            
 
             USUARIO uSUARIO = new USUARIO();
             uSUARIO.NOMBRE = model.Nombre;
