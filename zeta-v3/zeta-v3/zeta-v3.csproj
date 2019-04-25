@@ -307,6 +307,7 @@
     <Compile Include="Controllers\GASTOsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\INGRESO_PRODUCTOController.cs" />
+    <Compile Include="Controllers\ListaController.cs" />
     <Compile Include="Controllers\LocalidadesController.cs" />
     <Compile Include="Controllers\PRODUCTOsController.cs" />
     <Compile Include="Controllers\PUBLICACIONsController.cs" />

@@ -170,7 +170,7 @@ namespace zeta_v3.Controllers
                            join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
                            select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA };
 
-            return Ok(products);
+            return Ok(products.Take(3));
         }
 
         [Route("api/productos/pendientes")]
@@ -195,7 +195,7 @@ namespace zeta_v3.Controllers
                            join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
                            select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA };
 
-            return Ok(products);
+            return Ok(products.Take(3));
         }
 
         [Route("api/productos/{id}/colores_tamanos")]

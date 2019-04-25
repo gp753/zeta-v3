@@ -8,11 +8,11 @@ namespace zeta_v3.Models
 {
     public class AuxModel
     {
-        public class salida
+        public class lista_nueva
         {
-            public decimal ID_CARRITO { get; set;}
-
+            public string NOMBRE_LISTA { get; set; }
         }
+        
         public class tamanosycolores
         {
             public decimal ID_PRODUCTO { get; set; }

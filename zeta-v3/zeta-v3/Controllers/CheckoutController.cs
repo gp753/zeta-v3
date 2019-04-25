@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -19,16 +20,21 @@ namespace zeta_v3.Controllers
         [Route("api/checkout")]
         [HttpPost]
         [Authorize]
-        public async Task<IHttpActionResult> checkout(AuxModel.salida aux)
+        public async Task<IHttpActionResult> checkout()
         {
+            string id_usuario = User.Identity.GetUserId();
+            var id_carrito = from CARRITO in db.CARRITO
+                             where CARRITO.ID_USUARIO == id_usuario && CARRITO.TIPO_CARRITO == 1
+                             select CARRITO.ID_CARRITO;
+
             CHECKOUT cHECKOUT = new CHECKOUT();
-            cHECKOUT.ID_CARRITO = aux.ID_CARRITO;
+            cHECKOUT.ID_CARRITO = id_carrito.First() ;
             cHECKOUT.FECHA_CHECKOUT = DateTime.Now;
             db.CHECKOUT.Add(cHECKOUT);
             await db.SaveChangesAsync();
 
             var productos_carrito = from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
-                                    where CANTIDAD_PRODUCTO.ID_CARRITO == aux.ID_CARRITO
+                                    where CANTIDAD_PRODUCTO.ID_CARRITO == id_carrito.First()
                                     select CANTIDAD_PRODUCTO;
             
             

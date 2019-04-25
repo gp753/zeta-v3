@@ -304,7 +304,16 @@ namespace zeta_v3.Controllers
             //traigo los productos que pertencen a ese carrito
 
             var cantidad = carrito.ToList().Count();
-            return Ok(new { carrito, cantidad });
+            decimal monto = 0;
+            if (cantidad > 0)
+            {
+                foreach(var product in carrito)
+                {
+                    monto = monto + (product.PRECIO_VENTA).Value;
+                }
+            }
+
+            return Ok(new { carrito, cantidad, monto });
         }
 
         // GET: api/CARRITOs/5
