@@ -21,7 +21,7 @@ namespace zeta_v3.Controllers
         private zeta_bdEntities12 db = new zeta_bdEntities12();
 
         //CARGAR CARRITO
-        [Route("api/carrito/")]
+        [Route("api/carrito/add")]
         [HttpPost]
         [Authorize]
         public async Task<IHttpActionResult> Cargar_carrito(AuxModel.productoacarrito aux)
@@ -47,7 +47,7 @@ namespace zeta_v3.Controllers
                 {
                     CANTIDAD_PRODUCTO add_carrito = new CANTIDAD_PRODUCTO();
                                                          
-                    add_carrito.ID_CARRITO = id_carrito.ToList().First();
+                    add_carrito.ID_CARRITO = id_carrito.ToList().FirstOrDefault();
                     //  add_carrito.ID_COLOR = aux.ID_COLOR;
                     add_carrito.ID_PRODUCTO = aux.ID_PRODUCTO;
                     // add_carrito.ID_TAMANO = aux.ID_TAMANO;
@@ -89,7 +89,7 @@ namespace zeta_v3.Controllers
 
 
 
-                        add_carrito.ID_CARRITO = id_carrito.ToList().First(); 
+                        add_carrito.ID_CARRITO = id_carrito.ToList().FirstOrDefault(); 
                         add_carrito.ID_COLOR = aux.ID_COLOR;
                         add_carrito.ID_PRODUCTO = aux.ID_PRODUCTO;
                         // add_carrito.ID_TAMANO = aux.ID_TAMANO;
@@ -171,7 +171,7 @@ namespace zeta_v3.Controllers
 
 
 
-                            add_carrito.ID_CARRITO = id_carrito.ToList().First();
+                            add_carrito.ID_CARRITO = id_carrito.ToList().FirstOrDefault();
                             add_carrito.ID_COLOR = aux.ID_COLOR;
                             add_carrito.ID_PRODUCTO = aux.ID_PRODUCTO;
                             add_carrito.ID_TAMANO = aux.ID_TAMANO;
@@ -205,7 +205,7 @@ namespace zeta_v3.Controllers
                           join PRODUCTO in db.PRODUCTO on CANTIDAD_PRODUCTO.ID_PRODUCTO equals PRODUCTO.ID_PRODUCTO
                           join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
                           join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
-                          where CANTIDAD_PRODUCTO.ID_CARRITO == id_carrito.ToList().First() //cambiar por el id de carrito del usuario
+                          where CANTIDAD_PRODUCTO.ID_CARRITO == id_carrito.ToList().FirstOrDefault() //cambiar por el id de carrito del usuario
             select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA,CANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO, MULTIMEDIA.LINK_MULTIMEDIA };
 
 
@@ -264,7 +264,7 @@ namespace zeta_v3.Controllers
                           join PRODUCTO in db.PRODUCTO on CANTIDAD_PRODUCTO.ID_PRODUCTO equals PRODUCTO.ID_PRODUCTO
                           join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
                           join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
-                          where CANTIDAD_PRODUCTO.ID_CARRITO == id_carrito.ToList().First() //cambiar por el id de carrito del usuario
+                          where CANTIDAD_PRODUCTO.ID_CARRITO == id_carrito.ToList().FirstOrDefault() //cambiar por el id de carrito del usuario
                           select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA};
             var cantidad = carrito.ToList().Count();
             return Ok( new { carrito, cantidad });
@@ -309,7 +309,7 @@ namespace zeta_v3.Controllers
             {
                 foreach(var product in carrito)
                 {
-                    monto = monto + (product.PRECIO_VENTA).Value;
+                    monto = monto + ((product.PRECIO_VENTA).GetValueOrDefault(0)*(product.CANTIDAD_PRODUCTO_CARRITO).GetValueOrDefault(0));
                 }
             }
 

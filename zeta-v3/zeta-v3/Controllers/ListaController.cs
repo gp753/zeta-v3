@@ -53,6 +53,19 @@ namespace zeta_v3.Controllers
 
         }
 
+        //retorna todas las listas de un usuario
+        [Route("api/listas")]
+        [HttpGet]
+        [Authorize]
+        public async Task<IHttpActionResult> get_listas()
+        {
+            string id_usuario = User.Identity.GetUserId();
+            var listas = from LISTA_DESEOS in db.LISTA_DESEOS
+                         where LISTA_DESEOS.ID_USUARIO == id_usuario
+                         select new { LISTA_DESEOS.ID_LISTA_DESEOS, LISTA_DESEOS.NOMBRE_LISTA  };
+            return Ok(listas);
+        }
+
         //retorna productos de una lista
         [Route("api/lista/{id_lista}")]
         [HttpGet]
@@ -64,6 +77,7 @@ namespace zeta_v3.Controllers
                              join COLOR in db.COLOR on LISTAXPRODUCTO.ID_COLOR equals COLOR.ID_COLOR
                              join TAMANO in db.TAMANO on LISTAXPRODUCTO.ID_TAMANO equals TAMANO.ID_TAMANO
                              join LISTA_DESEOS in db.LISTA_DESEOS on LISTAXPRODUCTO.ID_LISTA_DESEOS equals LISTA_DESEOS.ID_LISTA_DESEOS
+                             where LISTA_DESEOS.ID_LISTA_DESEOS == id_lista
                              select new
                              {
                                  LISTA_DESEOS.ID_LISTA_DESEOS,
@@ -76,6 +90,10 @@ namespace zeta_v3.Controllers
                                  TAMANO.ID_TAMANO,
                                  TAMANO.NOMBRE_TAMANO
                              };
+            if (_productos.ToList().Count() == 0)
+            {
+                return NotFound();
+            }
 
             return Ok(_productos);
         }

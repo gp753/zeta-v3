@@ -22,7 +22,7 @@ namespace zeta_v3.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
     public class AccountController : ApiController
     {
         private zeta_bdEntities12 db = new zeta_bdEntities12();
