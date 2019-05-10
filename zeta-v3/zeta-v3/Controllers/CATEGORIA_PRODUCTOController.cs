@@ -33,17 +33,19 @@ namespace zeta_v3.Controllers
             return Ok(categorias);
         }
 
-      /*  [Route("api/caracteristica/{id_subcategoria}")]
-        [HttpGet]
-        public IHttpActionResult getcaracteristicas(decimal id_subcategoria)
-        {
+   
 
-            var categorias = from CARACTERISTICAS in db.CARACTERISTICAS
-                             where CARACTERISTICAS.ID_CATEGORIA == id_subcategoria
-                             select new { CARACTERISTICAS.ID_CARACTERISTICA, CARACTERISTICAS.NOMBRE_CARACTERISTICA };
+        /*  [Route("api/caracteristica/{id_subcategoria}")]
+          [HttpGet]
+          public IHttpActionResult getcaracteristicas(decimal id_subcategoria)
+          {
 
-            return Ok(categorias);
-        }*/
+              var categorias = from CARACTERISTICAS in db.CARACTERISTICAS
+                               where CARACTERISTICAS.ID_CATEGORIA == id_subcategoria
+                               select new { CARACTERISTICAS.ID_CARACTERISTICA, CARACTERISTICAS.NOMBRE_CARACTERISTICA };
+
+              return Ok(categorias);
+          }*/
 
         [Route("api/{id_categoria}/subcategorias")]
         [HttpGet]

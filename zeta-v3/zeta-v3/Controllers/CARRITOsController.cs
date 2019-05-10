@@ -205,8 +205,20 @@ namespace zeta_v3.Controllers
                           join PRODUCTO in db.PRODUCTO on CANTIDAD_PRODUCTO.ID_PRODUCTO equals PRODUCTO.ID_PRODUCTO
                           join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
                           join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
+                          join COLOR in db.COLOR on CANTIDAD_PRODUCTO.ID_COLOR equals COLOR.ID_COLOR
+                          join TAMANO in db.TAMANO on CANTIDAD_PRODUCTO.ID_TAMANO equals TAMANO.ID_TAMANO
                           where CANTIDAD_PRODUCTO.ID_CARRITO == id_carrito.ToList().FirstOrDefault() //cambiar por el id de carrito del usuario
-            select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA,CANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO, MULTIMEDIA.LINK_MULTIMEDIA };
+                            select new {
+                                PRODUCTO.ID_PRODUCTO,
+                                PRODUCTO.NOMBRE_PRODUCTO,
+                                CANTIDAD_PRODUCTO.ID_COLOR,
+                                COLOR.NOMBRE_COLOR,
+                                CANTIDAD_PRODUCTO.ID_TAMANO,
+                                TAMANO.NOMBRE_TAMANO,
+                                PRODUCTO.PRECIO_VENTA,
+                                CANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO,
+                                MULTIMEDIA.LINK_MULTIMEDIA
+                            };
 
 
             var cantidad = carrito.ToList().Count();
@@ -264,8 +276,18 @@ namespace zeta_v3.Controllers
                           join PRODUCTO in db.PRODUCTO on CANTIDAD_PRODUCTO.ID_PRODUCTO equals PRODUCTO.ID_PRODUCTO
                           join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
                           join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
+                          join COLOR in db.COLOR on CANTIDAD_PRODUCTO.ID_COLOR equals COLOR.ID_COLOR
+                          join TAMANO in db.TAMANO on CANTIDAD_PRODUCTO.ID_TAMANO equals TAMANO.ID_TAMANO
                           where CANTIDAD_PRODUCTO.ID_CARRITO == id_carrito.ToList().FirstOrDefault() //cambiar por el id de carrito del usuario
-                          select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA};
+                          select new {
+                              PRODUCTO.ID_PRODUCTO,
+                              CANTIDAD_PRODUCTO.ID_COLOR,
+                              COLOR.NOMBRE_COLOR,
+                              CANTIDAD_PRODUCTO.ID_TAMANO,
+                              TAMANO.NOMBRE_TAMANO,
+                              PRODUCTO.NOMBRE_PRODUCTO,
+                              PRODUCTO.PRECIO_VENTA,
+                              MULTIMEDIA.LINK_MULTIMEDIA};
             var cantidad = carrito.ToList().Count();
             return Ok( new { carrito, cantidad });
 
@@ -298,8 +320,21 @@ namespace zeta_v3.Controllers
                           join PRODUCTO in db.PRODUCTO on CANTIDAD_PRODUCTO.ID_PRODUCTO equals PRODUCTO.ID_PRODUCTO
                           join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
                           join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
+                          join COLOR in db.COLOR on CANTIDAD_PRODUCTO.ID_COLOR equals COLOR.ID_COLOR
+                          join TAMANO in db.TAMANO on CANTIDAD_PRODUCTO.ID_TAMANO equals TAMANO.ID_TAMANO
                           where CANTIDAD_PRODUCTO.ID_CARRITO == id_carrito.FirstOrDefault()
-                          select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA, CANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO };
+                          select new {
+                              PRODUCTO.ID_PRODUCTO,
+                              CANTIDAD_PRODUCTO.ID_COLOR,
+                              COLOR.NOMBRE_COLOR,
+                              TAMANO.NOMBRE_TAMANO,
+                              CANTIDAD_PRODUCTO.ID_TAMANO,
+                              PRODUCTO.NOMBRE_PRODUCTO,
+                              PRODUCTO.PRECIO_VENTA,
+                              MULTIMEDIA.LINK_MULTIMEDIA,
+                              CANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO,
+                              
+                          };
 
             //traigo los productos que pertencen a ese carrito
 

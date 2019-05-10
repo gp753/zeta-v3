@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -87,14 +88,18 @@ namespace zeta_v3.Controllers
 
         // POST: api/PUBLICACIONs
         [ResponseType(typeof(PUBLICACION))]
+        [Authorize]
         public IHttpActionResult PostPUBLICACION(PUBLICACION pUBLICACION)
         {
+            string id_usuario = User.Identity.GetUserId();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+
             pUBLICACION.FECHA_PUBLICACION_2 =DateTime.Today;
-            pUBLICACION.ID_USUARIO = "1";
+            pUBLICACION.ID_USUARIO = id_usuario;
             db.PUBLICACION.Add(pUBLICACION);
             db.SaveChanges();
             

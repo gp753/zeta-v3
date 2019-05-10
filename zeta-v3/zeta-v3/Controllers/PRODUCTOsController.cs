@@ -50,8 +50,25 @@ namespace zeta_v3.Controllers
             var tamanos = from TAMANO in db.TAMANO
                           where TAMANO.ID_PRODUCTO == pRODUCTO.ID_PRODUCTO
                           select new { TAMANO.ID_TAMANO, TAMANO.NOMBRE_TAMANO };
+
+            var categoria = from CATEGORIA_SUPERIOR in db.CATEGORIA_SUPERIOR
+                            join CATEGORIA_PRODUCTO in db.CATEGORIA_PRODUCTO on CATEGORIA_SUPERIOR.ID_CATEGORIA_SUPERIOR equals CATEGORIA_PRODUCTO.ID_CATEGORIA_SUPERIOR
+                            join PRODUCTOXCATEGORIA in db.PRODUCTOXCATEGORIA on CATEGORIA_PRODUCTO.ID_CATEGORIA equals PRODUCTOXCATEGORIA.ID_CATEGORIA
+                            where PRODUCTOXCATEGORIA.ID_PRODUCTO == pRODUCTO.ID_PRODUCTO
+                            select new { CATEGORIA_SUPERIOR.ID_CATEGORIA_SUPERIOR, CATEGORIA_SUPERIOR.NOMBRE_CATEGORIA_SUPERIOR, CATEGORIA_PRODUCTO.ID_CATEGORIA, CATEGORIA_PRODUCTO.NOMBRE_CATEGORIA };
+
+                            
             return Ok(new { pRODUCTO.ID_PRODUCTO, pRODUCTO.NOMBRE_PRODUCTO,pRODUCTO.DESCRIPCION_CORTA, pRODUCTO.DESCRIPCION_LARGA, pRODUCTO.PRECIO_VENTA, pRODUCTO.PRECIO_OFERTA
-                            , fotos, colores, tamanos});
+                            , fotos, colores, tamanos, categoria});
+        }
+
+        [Route("api/producto/cantidad/{id_producto}/{id_color}/{id_tamano}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> productos_stock_cantidad(decimal id_producto, decimal id_color, decimal id_tamano)
+        {
+            var cantidad = productos_stock_cantidad(id_producto, id_color, id_tamano);
+
+            return Ok(cantidad);
         }
 
 
@@ -65,10 +82,67 @@ namespace zeta_v3.Controllers
                             join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
                             join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
                             join INGRESO_PRODUCTO in db.INGRESO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals INGRESO_PRODUCTO.ID_PRODUCTO
-                            select new { PRODUCTO.ID_PRODUCTO, PRODUCTO.NOMBRE_PRODUCTO, PRODUCTO.PRECIO_VENTA, MULTIMEDIA.LINK_MULTIMEDIA };
+                            select new { PRODUCTO.ID_PRODUCTO,
+                                        PRODUCTO.NOMBRE_PRODUCTO,
+                                        PRODUCTO.PRECIO_VENTA,
+                                        MULTIMEDIA.LINK_MULTIMEDIA,
+                                        PRODUCTO.ESTADO_PUBLICACION,
+                                        CANTIDAD = Productos_cantidad(PRODUCTO.ID_PRODUCTO, INGRESO_PRODUCTO.ID_TAMANO, INGRESO_PRODUCTO.ID_COLOR)};
             return Ok(productos);
         }
-        
+
+
+        public int? Productos_cantidad(decimal id_producto, decimal? id_color, decimal? id_tamano)
+        {
+
+
+
+            int? ingreso = (from INGRESO_PRODUCTO in db.INGRESO_PRODUCTO
+                           where INGRESO_PRODUCTO.ID_COLOR == id_color && INGRESO_PRODUCTO.ID_TAMANO == id_tamano && INGRESO_PRODUCTO.ID_PRODUCTO == id_producto
+                           select INGRESO_PRODUCTO.CANTIDAD_INGRESO_PRODUCTO).Sum();
+
+            int? salida = (from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
+                          where CANTIDAD_PRODUCTO.ID_COLOR == id_color && CANTIDAD_PRODUCTO.ID_TAMANO == id_tamano && CANTIDAD_PRODUCTO.ID_PRODUCTO == id_producto
+                          select CANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO).Sum();
+
+            int? cantidad = ingreso - salida;
+
+            return cantidad;
+        }
+
+        [Route("api/productos/stock/vendedor")]
+        [HttpGet]
+        [Authorize]
+        public async Task<IHttpActionResult> productos_stock_vendedor()
+        {
+            //falta devolver la cantidad en stock que hay de cada producto
+
+            string id_usuario = User.Identity.GetUserId();
+
+            if (id_usuario == null)
+            {
+                return NotFound();
+            }
+
+            var productos = from PRODUCTO in db.PRODUCTO
+                            join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
+                            join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
+                            join INGRESO_PRODUCTO in db.INGRESO_PRODUCTO on PRODUCTO.ID_PRODUCTO equals INGRESO_PRODUCTO.ID_PRODUCTO
+                            where INGRESO_PRODUCTO.ID_USUARIO == id_usuario && PRODUCTO.ESTADO_PUBLICACION < 3
+                            select new
+                            {
+                                PRODUCTO.ID_PRODUCTO,
+                                PRODUCTO.NOMBRE_PRODUCTO,
+                                PRODUCTO.PRECIO_VENTA,
+                                MULTIMEDIA.LINK_MULTIMEDIA,
+                                PRODUCTO.ESTADO_PUBLICACION,
+                                cantidad = Productos_cantidad(PRODUCTO.ID_PRODUCTO, INGRESO_PRODUCTO.ID_TAMANO, INGRESO_PRODUCTO.ID_COLOR)
+                            };
+
+            //3 es eliminado
+            return Ok(productos);
+        }
+
         [Route("api/productos/busqueda")]
         [HttpPost]
         public async Task<IHttpActionResult> productos_prueba(AuxModel.buscar aux)
