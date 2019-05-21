@@ -66,11 +66,20 @@ namespace zeta_v3.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> productos_stock_cantidad(decimal id_producto, decimal id_color, decimal id_tamano)
         {
-            var cantidad = productos_stock_cantidad(id_producto, id_color, id_tamano);
+            var cantidad = Productos_cantidad(id_producto, id_color, id_tamano);
 
             return Ok(cantidad);
         }
 
+        public class aux_de_stock
+        {
+            public decimal ID_PRODUCTO { get; set; }
+            public string NOMBRE_PRODUCTO { get; set; }
+            public decimal? PRECIO_VENTA { get; set; }
+            public string LINK_MULTIMEDIA { get; set; }
+            public int? ESTADO_PUBLICACION { get; set; }
+            public List<cantidades_aux> cantidades {get; set;}
+        }
 
         [Route("api/productos/stock")]
         [HttpGet]
@@ -78,6 +87,7 @@ namespace zeta_v3.Controllers
         {
             //falta devolver la cantidad en stock que hay de cada producto
 
+            List<aux_de_stock> stock = new List<aux_de_stock>();
             var productos = from PRODUCTO in db.PRODUCTO
                             join FOTOS_PRODUCTOS in db.FOTOS_PRODUCTOS on PRODUCTO.ID_PRODUCTO equals FOTOS_PRODUCTOS.ID_PRODUCTO
                             join MULTIMEDIA in db.MULTIMEDIA on FOTOS_PRODUCTOS.ID_MULTIMEDIA equals MULTIMEDIA.ID_MULTIMEDIA
@@ -86,26 +96,138 @@ namespace zeta_v3.Controllers
                                         PRODUCTO.NOMBRE_PRODUCTO,
                                         PRODUCTO.PRECIO_VENTA,
                                         MULTIMEDIA.LINK_MULTIMEDIA,
-                                        PRODUCTO.ESTADO_PUBLICACION,
-                                        CANTIDAD = Productos_cantidad(PRODUCTO.ID_PRODUCTO, INGRESO_PRODUCTO.ID_TAMANO, INGRESO_PRODUCTO.ID_COLOR)};
-            return Ok(productos);
+                                        PRODUCTO.ESTADO_PUBLICACION                            
+                                        };
+
+            foreach (var producto2 in productos)
+            {
+                aux_de_stock stock1 = new aux_de_stock();
+                var productos3 = (from INGRESO_PRODUCTO in db.INGRESO_PRODUCTO
+                                 where INGRESO_PRODUCTO.ID_PRODUCTO == producto2.ID_PRODUCTO
+                                 select new { INGRESO_PRODUCTO.ID_TAMANO, INGRESO_PRODUCTO.ID_COLOR }).Distinct();
+
+                List<cantidades_aux> totales = new List<cantidades_aux>();
+
+                foreach (var iNGRESO_ in productos3)
+                {
+                    cantidades_aux aux = new cantidades_aux();
+                    aux.id_producto = producto2.ID_PRODUCTO;
+                    aux.id_color = iNGRESO_.ID_COLOR;
+                    aux.nombre_color = (from COLOR in db.COLOR
+                                        where COLOR.ID_COLOR == iNGRESO_.ID_COLOR
+                                        select COLOR.NOMBRE_COLOR).FirstOrDefault();
+                    aux.id_tamano = iNGRESO_.ID_TAMANO;
+                    aux.nombre_tamano = (from TAMANO in db.TAMANO
+                                         where TAMANO.ID_TAMANO == iNGRESO_.ID_TAMANO
+                                         select TAMANO.NOMBRE_TAMANO).FirstOrDefault();
+                    aux.total = Productos_cantidad(producto2.ID_PRODUCTO, iNGRESO_.ID_COLOR, iNGRESO_.ID_TAMANO);
+
+                    totales.Add(aux);
+                }
+                stock1.ID_PRODUCTO = producto2.ID_PRODUCTO;
+                stock1.NOMBRE_PRODUCTO = producto2.NOMBRE_PRODUCTO;
+                stock1.PRECIO_VENTA = producto2.PRECIO_VENTA;
+                stock1.LINK_MULTIMEDIA = producto2.LINK_MULTIMEDIA;
+                stock1.ESTADO_PUBLICACION = producto2.ESTADO_PUBLICACION;
+                stock1.cantidades = totales;
+
+                stock.Add(stock1);
+                
+            }
+
+
+            return Ok(stock);
+        }
+
+        public class cantidades_aux
+        {
+            public decimal id_producto { get; set; }
+            public decimal? id_color { get; set; }
+            public string nombre_color { get; set; }
+            public string nombre_tamano { get; set; }
+            public decimal? id_tamano { get; set; }
+            public decimal? total { get; set; }
+        }
+
+        
+
+        [Route("api/producto/stock/{id_producto}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> producto_stock(decimal id_producto)
+        {
+            //falta devolver la cantidad en stock que hay de cada producto
+
+
+
+            var productos = (from INGRESO_PRODUCTO in db.INGRESO_PRODUCTO
+                            where INGRESO_PRODUCTO.ID_PRODUCTO == id_producto
+                            select new {INGRESO_PRODUCTO.ID_TAMANO, INGRESO_PRODUCTO.ID_COLOR }).Distinct();
+
+            List<cantidades_aux> totales = new List<cantidades_aux>();
+
+            foreach (var iNGRESO_ in productos)
+            {
+                cantidades_aux aux = new cantidades_aux();
+                aux.id_producto = id_producto;
+                aux.id_color = iNGRESO_.ID_COLOR;
+                aux.nombre_color = (from COLOR in db.COLOR
+                                    where COLOR.ID_COLOR == iNGRESO_.ID_COLOR
+                                    select COLOR.NOMBRE_COLOR).FirstOrDefault();
+                aux.id_tamano = iNGRESO_.ID_TAMANO;
+                aux.nombre_tamano = (from TAMANO in db.TAMANO
+                                     where TAMANO.ID_TAMANO == iNGRESO_.ID_TAMANO
+                                     select TAMANO.NOMBRE_TAMANO).FirstOrDefault();
+                aux.total = Productos_cantidad(id_producto, iNGRESO_.ID_COLOR, iNGRESO_.ID_TAMANO);
+
+                totales.Add(aux);
+            }
+           
+
+
+
+
+            
+            return Ok(totales);
         }
 
 
-        public int? Productos_cantidad(decimal id_producto, decimal? id_color, decimal? id_tamano)
+        public decimal? Productos_cantidad(decimal id_producto, decimal? id_color, decimal? id_tamano)
         {
 
+            decimal? id_color2 = id_color;
+            if (id_color == null)
+            {
+                id_color2 = 0;
+            }
 
 
-            int? ingreso = (from INGRESO_PRODUCTO in db.INGRESO_PRODUCTO
-                           where INGRESO_PRODUCTO.ID_COLOR == id_color && INGRESO_PRODUCTO.ID_TAMANO == id_tamano && INGRESO_PRODUCTO.ID_PRODUCTO == id_producto
+            decimal? id_tamano2 = id_tamano;
+            if (id_tamano == null)
+            {
+                id_tamano2 = 0;
+            }
+            
+
+            
+
+
+            decimal? ingreso = (from INGRESO_PRODUCTO in db.INGRESO_PRODUCTO
+                           where INGRESO_PRODUCTO.ID_COLOR == id_color2 && INGRESO_PRODUCTO.ID_TAMANO == id_tamano2 && INGRESO_PRODUCTO.ID_PRODUCTO == id_producto
                            select INGRESO_PRODUCTO.CANTIDAD_INGRESO_PRODUCTO).Sum();
-
-            int? salida = (from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
-                          where CANTIDAD_PRODUCTO.ID_COLOR == id_color && CANTIDAD_PRODUCTO.ID_TAMANO == id_tamano && CANTIDAD_PRODUCTO.ID_PRODUCTO == id_producto
+            if (ingreso == null )
+            {
+                ingreso = 0;
+            }
+            decimal? salida = (from CANTIDAD_PRODUCTO in db.CANTIDAD_PRODUCTO
+                          where CANTIDAD_PRODUCTO.ID_COLOR == id_color2 && CANTIDAD_PRODUCTO.ID_TAMANO == id_tamano2 && CANTIDAD_PRODUCTO.ID_PRODUCTO == id_producto
                           select CANTIDAD_PRODUCTO.CANTIDAD_PRODUCTO_CARRITO).Sum();
 
-            int? cantidad = ingreso - salida;
+            if (salida == null)
+            {
+                salida = 0;
+            }
+
+            decimal? cantidad = ingreso - salida;
 
             return cantidad;
         }
