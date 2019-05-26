@@ -77,5 +77,48 @@ namespace zeta_v3.Controllers
              4 ENTREGADO
              */
         }
+
+
+        [Route("api/ordenes")]
+        [Authorize]
+        [HttpGet]
+        public async Task<IHttpActionResult> producto_stock(decimal id_producto)
+        {
+            string id_usuario = User.Identity.GetUserId();
+
+            var productos = from CARRITO in db.CARRITO
+                            join CHECKOUT in db.CHECKOUT on CARRITO.ID_CHECKOUT equals CHECKOUT.ID_CHECKOUT
+                            join FACTURA_VENTA in db.FACTURA_VENTA on CHECKOUT.ID_FACTURA equals FACTURA_VENTA.ID_FACTURA
+                            where CARRITO.ID_USUARIO == id_usuario && CARRITO.TIPO_CARRITO == 2
+                            select new
+                            {
+                                CARRITO.ID_CARRITO,
+                                CHECKOUT.HORA_CHECKOUT,
+                                FACTURA_VENTA.NRO_FACTURA,
+                                PRODUCTOS = 
+                                (
+                                    from PRODUCTO_FACTURA in db.PRODUCTO_FACTURA
+                                    join PRODUCTO in db.PRODUCTO on PRODUCTO_FACTURA.ID_PRODUCTO equals PRODUCTO.ID_PRODUCTO
+                                    join COLOR in db.COLOR on PRODUCTO_FACTURA.ID_COLOR equals COLOR.ID_COLOR
+                                    join TAMANO in db.TAMANO on PRODUCTO_FACTURA.ID_TAMANO equals TAMANO.ID_TAMANO
+                                    where PRODUCTO_FACTURA.ID_FACTURA == FACTURA_VENTA.ID_FACTURA
+                                    select new
+                                    {
+                                        PRODUCTO.ID_PRODUCTO,
+                                        PRODUCTO.NOMBRE_PRODUCTO,
+                                        COLOR.ID_COLOR,
+                                        COLOR.NOMBRE_COLOR,
+                                        TAMANO.ID_TAMANO,
+                                        TAMANO.NOMBRE_TAMANO,
+                                        PRODUCTO_FACTURA.PRECIO_PRODUCTO_FACTURA,
+                                        PRODUCTO_FACTURA.CANTIDAD_PRODUCTO_FACTURADO
+                                    }
+                                )
+                            };
+                            
+
+            return Ok(productos);
+        }
+
     }
 }
